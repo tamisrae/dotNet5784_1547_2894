@@ -2,11 +2,11 @@
 namespace Dal;
  static internal class DataSource
 {
-    internal static class Confing
+    internal static class Config
     {
         internal const int taskId = 1;
         private static int nextTaskId = taskId;
-        internal static int NextCourseId { get => nextTaskId++; }
+        internal static int NextTaskId { get => nextTaskId++; }
 
         internal const int dependencyId = 1000;
         private static int nextDependencyId = dependencyId;

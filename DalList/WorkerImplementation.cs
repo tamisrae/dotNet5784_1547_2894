@@ -8,27 +8,38 @@ public class WorkerImplementation : IWorker
 {
     public int Create(Worker item)
     {
-        Worker? cc = Workers.(cc => cc.Id == item.Id);
-        throw new NotImplementedException();
+        if (Read(item.Id) is not null)
+            throw new Exception($"Worker with ID={item.Id} already exists");
+        DataSource.Workers.Add(item);
+        return item.Id;
     }
     
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
+        if (worker == null)
+            throw new Exception($"Worker with ID={id} doe's NOT exists");
+        DataSource.Workers.Remove(new Worker { Id = id });
     }
 
     public Worker? Read(int id)
     {
-        throw new NotImplementedException();
+        Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
+        if (worker != null)
+            return worker;
+        return null;
     }
 
     public List<Worker> ReadAll()
     {
-        throw new NotImplementedException();
+        return new List<Worker>(DataSource.Workers);
     }
 
     public void Update(Worker item)
     {
-        throw new NotImplementedException();
+        if (Read(item.Id) == null)
+            throw new Exception($"Worker with ID={item.Id} doe's NOT exists");
+        Delete(item.Id);
+        Create(item);
     }
 }
