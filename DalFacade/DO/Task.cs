@@ -25,7 +25,7 @@ namespace DO;
 public record Task
 (
     int Id,
-    DO.WorkerExperience Compelexity,
+    DO.WorkerExperience Complexity,
     int WorkerId,
     TimeSpan? RequiredEffortTime = null,
     DateTime? StartDate = null,
@@ -42,12 +42,12 @@ public record Task
 {
     public Task() : this(0,0,0) { }//empty ctor
 
-    public Task(int id, DO.WorkerExperience copmelexity, int workerId, TimeSpan requiredEffortTime, DateTime startDate,
+    public Task(int id, DO.WorkerExperience complexity, int workerId, TimeSpan requiredEffortTime, DateTime startDate,
     DateTime scheduledDate, DateTime deadlinedate, DateTime completeDate, string deliverables,
     string remarks, string alias, string description, DateTime createdAtDate, bool isMilestone) : this()//ctor
     {
         Id = id;
-        Compelexity = copmelexity;
+        Complexity = complexity;
         WorkerId = workerId;
         RequiredEffortTime = requiredEffortTime;
         StartDate = startDate;

@@ -118,6 +118,13 @@ public static class Initialization
 
         string[] TaskRemarks =
         {
+            "Don't forget to add salt to the first course", "Don't forget to add salt to the second course", "Don't forget to melt chocolate before serving" ,
+            "Chop the onion finely", "cut them chopped", "Be careful not to burn the oil", "Don't forget to sharpen the knife", "Only what is really necessary",
+            "Don't forget to smile at the customer and bring a tooth pices", "Don't forget to wipe the tables", "Do not leave the cork on the diner's table",
+            "Don't forget to use hot water for greasy dishes","Don't forget before to pick things up from the floor", "Don't forget to wipe inside the glass",
+            "Put every tool in its place and do not change the order", "Don't forget to turn on the cooling in the truck", "Be careful not to break dishes when you bring them back", 
+            "Be careful not to spill the food in the car", "Don't forget to ask what event it is", "Ask whether to split into payments", "Check that there are no duplicates", 
+            "Don't forget to add bonuses", "Don't forget to talk to the chef to know what equipment is missing",
 
         };
 
@@ -128,24 +135,24 @@ public static class Initialization
             while (task != TaskAlias[i])
                 i++;
 
-            DO.WorkerExperience compelexity = 0;
+            DO.WorkerExperience complexity = 0;
             if (i == 0 || i == 1 || i == 2 || i == 3)
-                compelexity = (DO.WorkerExperience)0;
+                complexity = (DO.WorkerExperience)0;
             else if (i == 4 || i == 5 || i == 6 || i == 7)
-                compelexity = (DO.WorkerExperience)1;
+                complexity = (DO.WorkerExperience)1;
             else if (i == 8 || i == 9 || i == 10)
-                compelexity = (DO.WorkerExperience)2;
+                complexity = (DO.WorkerExperience)2;
             else if (i == 11 || i == 12 || i == 13 || i == 14)
-                compelexity = (DO.WorkerExperience)3;
+                complexity = (DO.WorkerExperience)3;
             else if (i == 15 || i == 16 || i == 17)
-                compelexity = (DO.WorkerExperience)4;
+                complexity = (DO.WorkerExperience)4;
             else if (i == 18 || i == 19 || i == 20)
-                compelexity = (DO.WorkerExperience)5;
+                complexity = (DO.WorkerExperience)5;
             else if (i == 21 || i == 22)
-                compelexity = (DO.WorkerExperience)6;
+                complexity = (DO.WorkerExperience)6;
 
 
-            int WorkerId = 0;//?????
+            int workerId = 0;//?????
 
             DateTime createdAtDate = DateTime.Now; 
             DateTime? startDate = null;
@@ -154,16 +161,27 @@ public static class Initialization
             DateTime? completeDate = null;
             TimeSpan? RequiredEffortTime = null;
 
+
             string deliverables = TaskDeliverables[i];
+            string description = TaskDescription[i];
+            string remarks = TaskRemarks[i];
 
             bool IsMilestone = false;
+
+            Task newTask = new Task(0, complexity, workerId, RequiredEffortTime, startDate, scheduledDate, deadlinedate,
+                                   completeDate, deliverables, remarks, task, description, createdAtDate, IsMilestone);
+
+            s_dalTask!.Create(newTask);
         }
     }
 
 
     private static void createDependency()
     {
+        foreach( int DependentTask ,int DependsOnTask);
+        {
 
+        }
     }
 
 }
