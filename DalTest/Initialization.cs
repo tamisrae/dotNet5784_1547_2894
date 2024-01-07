@@ -2,6 +2,7 @@
 namespace DalTest;
 using DalApi;
 using DO;
+
 public static class Initialization
 {
     private static IWorker? s_dalWorker; //stage 1
@@ -182,6 +183,7 @@ public static class Initialization
         {
 
         }
+        
     }
 
 }
