@@ -9,7 +9,7 @@ namespace DO;
 ///  Task Entity represents a task with all its props
 /// </summary>
 /// <param name="Id"> Personal unique ID of the task </param>
-/// <param name="Copmelexity"> The difficulty level of the task </param>
+/// <param name="Compelexity"> The difficulty level of the task </param>
 /// <param name="WorkerId"> ID number of the employee assigned to the task </param>
 /// <param name="RequiredEffortTime"> The amount of time required to perform the task </param>
 /// <param name="StartDate"> start date of work on the task </param>
@@ -25,7 +25,7 @@ namespace DO;
 public record Task
 (
     int Id,
-    DO.WorkerExperience Copmelexity,
+    DO.WorkerExperience Compelexity,
     int WorkerId,
     TimeSpan? RequiredEffortTime = null,
     DateTime? StartDate = null,
@@ -47,7 +47,7 @@ public record Task
     string remarks, string alias, string description, DateTime createdAtDate, bool isMilestone) : this()//ctor
     {
         Id = id;
-        Copmelexity = copmelexity;
+        Compelexity = copmelexity;
         WorkerId = workerId;
         RequiredEffortTime = requiredEffortTime;
         StartDate = startDate;
