@@ -2,9 +2,11 @@
 
 public enum WorkerExperience
 {
-    Beginner, 
-    AdvancedBeginner, 
-    Intermediate, 
-    Advanced, 
-    Expert
+    Chef,
+    SousChef,
+    Waiter,
+    Cleaner,
+    Driver,
+    Secretary,
+    Manager
 }
