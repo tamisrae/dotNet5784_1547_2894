@@ -12,9 +12,9 @@ namespace DalTest
         {
             try
             {
-               
+                Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
             }
-            catch (Exception ex)
+            catch (Exception ex )
             {
                 Console.WriteLine(ex.Message);
             }

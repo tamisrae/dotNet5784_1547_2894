@@ -2,6 +2,7 @@
 namespace DalTest;
 using DalApi;
 using DO;
+using System.Net.Http.Headers;
 
 public static class Initialization
 {
@@ -153,16 +154,22 @@ public static class Initialization
                 complexity = (DO.WorkerExperience)6;
 
 
-            int workerId = 0;//?????
-            
-            DateTime createdAtDate = DateTime.Now; 
+            int workerId = 0;
+
+
+            Random rand = new Random(DateTime.Now.Millisecond);
+            DateTime start = new DateTime(2024, 2, 8, 0, 0, 0);
+            int rangeStart = (start - DateTime.Today).Days;
+            DateTime RanDay = start.AddDays(rand.Next(rangeStart));
+
+            DateTime createdAtDate = RanDay; //להגריל את התאריך 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;
             DateTime? completeDate = null;
             TimeSpan? RequiredEffortTime = null;
 
-
+            
             string deliverables = TaskDeliverables[i];
             string description = TaskDescription[i];
             string remarks = TaskRemarks[i];
@@ -179,15 +186,57 @@ public static class Initialization
  
     private static void createDependency()
     {
-        foreach( int DependentTask ,int DependsOnTask);
-        {
-
-        }
-        
+        s_dalDependency!.Create(new Dependency(0, 0, 18));
+        s_dalDependency.Create(new Dependency(0, 0, 22));
+        s_dalDependency.Create(new Dependency(0, 1, 18));
+        s_dalDependency.Create(new Dependency(0,1 , 22));
+        s_dalDependency.Create(new Dependency(0, 2, 22));
+        s_dalDependency.Create(new Dependency(0, 2, 18));
+        s_dalDependency.Create(new Dependency(0, 3, 22));
+        s_dalDependency.Create(new Dependency(0, 3, 18));
+        s_dalDependency.Create(new Dependency(0, 4, 3));
+        s_dalDependency.Create(new Dependency(0, 5, 1));
+        s_dalDependency.Create(new Dependency(0, 5, 0));
+        s_dalDependency.Create(new Dependency(0, 6, 1));
+        s_dalDependency.Create(new Dependency(0, 6, 0));
+        s_dalDependency.Create(new Dependency(0, 7, 0));
+        s_dalDependency.Create(new Dependency(0, 7, 1));
+        s_dalDependency.Create(new Dependency(0, 7, 2));
+        s_dalDependency.Create(new Dependency(0, 7, 3));
+        s_dalDependency.Create(new Dependency(0, 8, 0));
+        s_dalDependency.Create(new Dependency(0, 8, 1));
+        s_dalDependency.Create(new Dependency(0, 8, 2));
+        s_dalDependency.Create(new Dependency(0, 8, 3));
+        s_dalDependency.Create(new Dependency(0, 8, 15));
+        s_dalDependency.Create(new Dependency(0, 9, 8));
+        s_dalDependency.Create(new Dependency(0, 10, 8));
+        s_dalDependency.Create(new Dependency(0, 11, 16));
+        s_dalDependency.Create(new Dependency(0, 12, 15));
+        s_dalDependency.Create(new Dependency(0, 12, 17));
+        s_dalDependency.Create(new Dependency(0, 13, 16));
+        s_dalDependency.Create(new Dependency(0, 13, 17));
+        s_dalDependency.Create(new Dependency(0, 14, 16));
+        s_dalDependency.Create(new Dependency(0, 14, 17));
+        s_dalDependency.Create(new Dependency(0, 15, 0));
+        s_dalDependency.Create(new Dependency(0, 15, 1));
+        s_dalDependency.Create(new Dependency(0, 15, 2));
+        s_dalDependency.Create(new Dependency(0, 15, 3));
+        s_dalDependency.Create(new Dependency(0, 16, 8));
+        s_dalDependency.Create(new Dependency(0, 17, 8));
+        s_dalDependency.Create(new Dependency(0, 19, 18));
+        s_dalDependency.Create(new Dependency(0, 20, 7));
+        s_dalDependency.Create(new Dependency(0, 22, 21));
     }
 
+
+    public static void Do(IWorker? dalWorker, ITask? dalTask, IDependency? dalDependency)
+    {
+        s_dalWorker = dalWorker ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+
+        createWorker();
+        createTask();
+        createDependency();
+    }
 }
-
-
-/// <param name="Remarks"> Remarks </param>
-
