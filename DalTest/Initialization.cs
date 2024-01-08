@@ -2,7 +2,6 @@
 namespace DalTest;
 using DalApi;
 using DO;
-using System.Data.Common;
 
 public static class Initialization
 {
@@ -184,6 +183,7 @@ public static class Initialization
         {
 
         }
+        
     }
 
 }
