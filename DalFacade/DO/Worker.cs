@@ -21,13 +21,6 @@ public record Worker
  )
 {
     public Worker() : this(0, 0) { }//empty ctor
-    public Worker(int id, DO.WorkerExperience level, string email, double cost, string name) : this()//ctor
-    {
-        Id = id;
-        Level = level; 
-        Email = email; 
-        Cost = cost;
-        Name = name;
-    }//erkey brirat mechdal!!!!!!!!!!!!!!!!!!!!!
+  
 }
 

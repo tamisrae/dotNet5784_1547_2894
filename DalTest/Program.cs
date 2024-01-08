@@ -14,7 +14,10 @@ namespace DalTest
             {
                
             }
-            catch{ Console.WriteLine(Exception  ); }
+            catch (Exception ex )
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

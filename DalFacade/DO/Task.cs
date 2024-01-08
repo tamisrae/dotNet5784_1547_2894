@@ -42,24 +42,6 @@ public record Task
 {
     public Task() : this(0,0,0) { }//empty ctor
 
-    public Task(int id, DO.WorkerExperience complexity, int workerId, TimeSpan requiredEffortTime, DateTime startDate,
-    DateTime scheduledDate, DateTime deadlinedate, DateTime completeDate, string deliverables,
-    string remarks, string alias, string description, DateTime createdAtDate, bool isMilestone) : this()//ctor
-    {
-        Id = id;
-        Complexity = complexity;
-        WorkerId = workerId;
-        RequiredEffortTime = requiredEffortTime;
-        StartDate = startDate;
-        ScheduledDate = scheduledDate;
-        Deadlinedate = deadlinedate;
-        CompleteDate = completeDate;
-        Deliverables = deliverables;
-        Remarks = remarks;
-        Alias = alias;
-        Description = description;
-        CreatedAtDate = createdAtDate;
-        IsMilestone = isMilestone;
     }
 }
 
