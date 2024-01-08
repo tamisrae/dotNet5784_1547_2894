@@ -15,12 +15,12 @@ public record Worker
 (
     int Id,
     DO.WorkerExperience Level,
-    string? Email = null,
-    double? Cost = null,
-    string? Name = null
+    string Email,
+    double Cost,
+    string Name
  )
 {
-    public Worker() : this(0, 0) { }//empty ctor
+    public Worker() : this(0, 0, "", 0.0, "") { }//empty ctor
   
 }
 

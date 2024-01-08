@@ -155,29 +155,29 @@ public static class Initialization
 
 
             int workerId = 0;
-
+            
 
             Random rand = new Random(DateTime.Now.Millisecond);
             DateTime start = new DateTime(2024, 2, 8, 0, 0, 0);
             int rangeStart = (start - DateTime.Today).Days;
             DateTime RanDay = start.AddDays(rand.Next(rangeStart));
 
-            DateTime createdAtDate = RanDay; //להגריל את התאריך 
+            DateTime createdAtDate = RanDay; 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;
             DateTime? completeDate = null;
-            TimeSpan? RequiredEffortTime = null;
+            TimeSpan? requiredEffortTime = null;
 
             
             string deliverables = TaskDeliverables[i];
             string description = TaskDescription[i];
             string remarks = TaskRemarks[i];
 
-            bool IsMilestone = false;
+            bool isMilestone = false;
 
-            Task newTask = new Task(0, complexity, workerId, RequiredEffortTime, startDate, scheduledDate, deadlinedate,
-                                   completeDate, deliverables, remarks, task, description, createdAtDate, IsMilestone);
+            Task newTask = new Task(task, description, createdAtDate, isMilestone, 0, complexity, workerId,
+                                   requiredEffortTime, startDate, scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
             s_dalTask!.Create(newTask);
         }

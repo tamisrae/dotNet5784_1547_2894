@@ -24,23 +24,23 @@ namespace DO;
 /// <param name="IsMilestone"> Is there a milestone? </param>
 public record Task
 (
-    int Id,
-    DO.WorkerExperience Complexity,
-    int WorkerId,
+    string Alias,
+    string Description,
+    DateTime CreatedAtDate,
+    bool IsMilestone,
+    int? Id = null,
+    DO.WorkerExperience? Complexity = null,
+    int? WorkerId = null,
     TimeSpan? RequiredEffortTime = null,
     DateTime? StartDate = null,
     DateTime? ScheduledDate = null,
     DateTime? Deadlinedate = null,
     DateTime? CompleteDate = null,
     string? Deliverables = null,
-    string? Remarks = null,
-    string? Alias = null,
-    string? Description = null,
-    DateTime? CreatedAtDate = null,
-    bool? IsMilestone= null
+    string? Remarks = null
 )
 {
-    public Task() : this(0,0,0) { }//empty ctor
+    public Task() : this("", "", DateTime.Now, false) { }//empty ctor
 
     
 }
