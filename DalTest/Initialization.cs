@@ -2,6 +2,7 @@
 namespace DalTest;
 using DalApi;
 using DO;
+using System.Net.Http.Headers;
 
 public static class Initialization
 {
@@ -155,14 +156,20 @@ public static class Initialization
 
             int workerId = 0;
 
-            DateTime createdAtDate = DateTime.Now; //להגריל את התאריך 
+
+            Random rand = new Random(DateTime.Now.Millisecond);
+            DateTime start = new DateTime(2024, 2, 8, 0, 0, 0);
+            int rangeStart = (start - DateTime.Today).Days;
+            DateTime RanDay = start.AddDays(rand.Next(rangeStart));
+
+            DateTime createdAtDate = RanDay; //להגריל את התאריך 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;
             DateTime? completeDate = null;
             TimeSpan? RequiredEffortTime = null;
 
-
+            
             string deliverables = TaskDeliverables[i];
             string description = TaskDescription[i];
             string remarks = TaskRemarks[i];
@@ -219,5 +226,17 @@ public static class Initialization
         s_dalDependency.Create(new Dependency(0, 19, 18));
         s_dalDependency.Create(new Dependency(0, 20, 7));
         s_dalDependency.Create(new Dependency(0, 22, 21));
+    }
+
+
+    public static void Do(IWorker? dalWorker, ITask? dalTask, IDependency? dalDependency)
+    {
+        s_dalWorker = dalWorker ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+
+        createWorker();
+        createTask();
+        createDependency();
     }
 }
