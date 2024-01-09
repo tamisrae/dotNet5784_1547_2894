@@ -28,7 +28,7 @@ public record Task
     string Description,
     DateTime CreatedAtDate,
     bool IsMilestone,
-    int? Id = null,
+    int Id,
     DO.WorkerExperience? Complexity = null,
     int? WorkerId = null,
     TimeSpan? RequiredEffortTime = null,
@@ -40,7 +40,7 @@ public record Task
     string? Remarks = null
 )
 {
-    public Task() : this("", "", DateTime.Now, false) { }//empty ctor
+    public Task() : this("", "", DateTime.Now, false, 0) { }//empty ctor
 
     
 }

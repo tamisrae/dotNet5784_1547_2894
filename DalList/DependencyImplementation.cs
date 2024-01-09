@@ -19,7 +19,7 @@ public class DependencyImplementation : IDependency
         Dependency? dependency = DataSource.Dependencys.Find(dependency => dependency.Id == id);
         if (dependency == null)
             throw new Exception($"Dependency with ID={id} doe's NOT exists");
-        DataSource.Dependencys.Remove(new Dependency { Id = id });
+        DataSource.Dependencys.Remove(dependency);
     }
 
     public Dependency? Read(int id)
@@ -39,7 +39,9 @@ public class DependencyImplementation : IDependency
     {
         if (Read(item.Id) == null)
             throw new Exception($"Dependency with ID={item.Id} doe's NOT exists");
+        int id = item.Id;
         Delete(item.Id);
-        Create(item);
+        Dependency dependency = new Dependency(id, item.DependentTask, item.DependsOnTask);
+        DataSource.Dependencys.Add(dependency);
     }
 }

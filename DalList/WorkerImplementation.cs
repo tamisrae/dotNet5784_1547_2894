@@ -19,7 +19,7 @@ public class WorkerImplementation : IWorker
         Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
         if (worker == null)
             throw new Exception($"Worker with ID={id} doe's NOT exists");
-        DataSource.Workers.Remove(new Worker { Id = id });
+        DataSource.Workers.Remove(worker);
     }
 
     public Worker? Read(int id)

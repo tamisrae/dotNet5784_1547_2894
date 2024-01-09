@@ -1,10 +1,10 @@
-﻿using Dal;
-using DalApi;
-using DO;
-using System.Reflection.Emit;
+﻿
 
 namespace DalTest
 {
+    using Dal;
+    using DalApi;
+    using DO;
     partial class Program
     {
         private static IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
@@ -16,39 +16,37 @@ namespace DalTest
             {
                 Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
 
-                Console.WriteLine("For Worker Entity press: w");
-                Console.WriteLine("For Task Entity press: t");
-                Console.WriteLine("For Dependency Entity press: d");
-                Console.WriteLine("For exit press: e");
-                char choise = (char)System.Console.Read();
+                while (true)
+                {
 
-                string str;
+                    Console.WriteLine("For Worker Entity press: 1");
+                    Console.WriteLine("For Task Entity press: 2");
+                    Console.WriteLine("For Dependency Entity press: 3");
+                    Console.WriteLine("For exit press: 0");
 
-                while (choise != 'e')
-                { 
-                    switch (choise)
+                    if (!int.TryParse(Console.ReadLine(), out int choice))
+                        throw new Exception("WORNG NUMBER");
+                    switch (choice)
                     {
-                        case 'w':
-                            str = "worker";
-                            SubMenuWorker(str);
+                        case 1:
+                            SubMenuWorker();
                             break;
-                        case 't':
-                            str = "task";
-                            SubMenuTask(str);
+                        case 2:
+                            SubMenuTask();
                             break;
-                        case 'd':
-                            str = "dependency";
-                            SubMenuDependency(str);
+                        case 3:
+                            SubMenuDependency();
+                            break;
+                        case 0:
+                            Environment.Exit(0);
                             break;
                         default:
                             Console.WriteLine("Invalid value Please try again");
                             break;
                     }
-                    if(choise =='e')
-                        Environment.Exit(0);
                 }
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -56,49 +54,121 @@ namespace DalTest
 
 
 
-        static void SubMenuWorker(string str)
+        static void SubMenuWorker()
         {
-            Console.WriteLine("For exit press: e");
-            Console.WriteLine("To add a new {0} press: c", str);
-            Console.WriteLine("To display {0} by ID press: r", str);
-            Console.WriteLine("To display a list of the {0} press: c", str + 's');
-            Console.WriteLine("To update {0} press: r", str);
-            Console.WriteLine("To delete {0} from the list press: r", str);
+            Console.WriteLine("For exit press: 0");
+            Console.WriteLine("To add a new worker press: 1");
+            Console.WriteLine("To display worker by ID press: 2");
+            Console.WriteLine("To display a list of the worker press: 3");
+            Console.WriteLine("To update worker press: 4");
+            Console.WriteLine("To delete worker from the list press: 5");
 
-            char choise = (char)System.Console.Read();
+            if (!int.TryParse(Console.ReadLine(), out int choice))
+                throw new Exception("WORNG NUMBER");
 
-            switch (choise)
+            switch (choice)
             {
-
+                case 1:
+                    CreateW();
+                    break;
+                case 2:
+                    ReadW();
+                    break;
+                case 3:
+                    ReadAllW();
+                    break;
+                case 4:
+                    UpdateW();
+                    break;
+                case 5:
+                    DeleteW();
+                    break;
+                case 0:
+                    return;
+                default:
+                    Console.WriteLine("Invalid value Please try again");
+                    break;
             }
-
         }
 
-        static void SubMenuTask(string str)
+        static void SubMenuTask()
         {
-            Console.WriteLine("For exit press: e");
-            Console.WriteLine("To add a new {0} press: c", str);
-            Console.WriteLine("To display {0} by ID press: r", str);
-            Console.WriteLine("To display a list of the {0} press: c", str + 's');
-            Console.WriteLine("To update {0} press: r", str);
-            Console.WriteLine("To delete {0} from the list press: r", str);
+            Console.WriteLine("For exit press: 0");
+            Console.WriteLine("To add a new task press: 1");
+            Console.WriteLine("To display task by ID press: 2");
+            Console.WriteLine("To display a list of the task press: 3");
+            Console.WriteLine("To update task press: 4");
+            Console.WriteLine("To delete task from the list press: 5");
 
-            char choise = (char)System.Console.Read();
+            if (!int.TryParse(Console.ReadLine(), out int choice))
+                throw new Exception("WORNG NUMBER");
+
+            switch (choice)
+            {
+                case 1:
+                    CreateT();
+                    break;
+                case 2:
+                    ReadT();
+                    break;
+                case 3:
+                    ReadAllT();
+                    break;
+                case 4:
+                    UpdateT();
+                    break;
+                case 5:
+                    DeleteT();
+                    break;
+                case 0:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid value Please try again");
+                    break;
+            }
         }
 
-        static void SubMenuDependency(string str)
+        static void SubMenuDependency()
         {
-            string strPlural = "dependencies";
+            Console.WriteLine("For exit press: 0");
+            Console.WriteLine("To add a new dependency press: 1");
+            Console.WriteLine("To display dependency by ID press: 2");
+            Console.WriteLine("To display a list of the dependency press: 3");
+            Console.WriteLine("To update dependency press: 4");
+            Console.WriteLine("To delete dependency from the list press: 5");
 
-            Console.WriteLine("For exit press: e");
-            Console.WriteLine("To add a new {0} press: c", str);
-            Console.WriteLine("To display {0} by ID press: r", str);
-            Console.WriteLine("To display a list of the {0} press: c", strPlural);
-            Console.WriteLine("To update {0} press: r", str);
-            Console.WriteLine("To delete {0} from the list press: r", str);
+            if (!int.TryParse(Console.ReadLine(), out int choice))
+                throw new Exception("WORNG NUMBER");
 
-            char choise = (char)System.Console.Read();
+            switch (choice)
+            {
+                case 1:
+                    CreateD();
+                    break;
+                case 2:
+                    ReadD();
+                    break;
+                case 3:
+                    ReadAllD();
+                    break;
+                case 4:
+                    UpdateD();
+                    break;
+                case 5:
+                    DeleteD();
+                    break;
+                case 0:
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid value Please try again");
+                    break;
+            }
+            return;
         }
+
+
 
         static void CreateW()
         {
@@ -108,13 +178,14 @@ namespace DalTest
                 throw new Exception("WORNG ID");
             if (!int.TryParse(Console.ReadLine(), out int level))
                 throw new Exception("WORNG LEVEL");
-            string email = Console.ReadLine()!;
             if (!double.TryParse(Console.ReadLine(), out double cost))
                 throw new Exception("WORNG COST");
+            string email = Console.ReadLine()!;
             string name = Console.ReadLine()!;
 
             DO.Worker worker = new DO.Worker(id, (DO.WorkerExperience)level, email, cost, name);
             Console.WriteLine(s_dalWorker!.Create(worker));
+            return;
         }
 
         static void ReadW()
@@ -123,6 +194,7 @@ namespace DalTest
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
             Console.WriteLine(s_dalWorker!.Read(id));
+            return;
         }
 
         static void ReadAllW()
@@ -133,7 +205,7 @@ namespace DalTest
                 Console.WriteLine(worker);
         }
 
-        static void Updatew()
+        static void UpdateW()
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int workeId))
@@ -146,12 +218,6 @@ namespace DalTest
             string email = worker.Email;
             double cost = worker.Cost;
             string name = worker.Name;
-
-            Console.WriteLine("If you want to change the ID enter the new ID, else press -1");
-            if (!int.TryParse(Console.ReadLine(), out int newId))
-                throw new Exception("WORNG ID");
-            if (newId != -1)
-                id = newId;
 
             Console.WriteLine("If you want to change the level of the worker enter the new level, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newLevel))
@@ -191,20 +257,20 @@ namespace DalTest
 
         static void CreateT()
         {
-            Console.WriteLine("Enter alias, description, created at date, is mile stone, id, complexity, worker id, deliverables, remarks");
+            Console.WriteLine("Enter alias, description, complexity, deliverables, remarks");
 
-            string alias = Console.ReadLine();
-            string description = Console.ReadLine();
+            string alias = Console.ReadLine()!;
+            string description = Console.ReadLine()!;
             DateTime createdAtDate = DateTime.Today;
             bool isMilestone = false;
             int id = 0;
             if (!int.TryParse(Console.ReadLine(), out int complexity))
                 throw new Exception("WORNG COMPLEXITY");
             int workerId = 0;
-            string deliverables = Console.ReadLine();
-            string remarks = Console.ReadLine();
+            string deliverables = Console.ReadLine()!;
+            string remarks = Console.ReadLine()!;
 
-            DO.Task task = new DO.Task(alias, description, createdAtDate, isMilestone, id, complexity, workerId, null, null, null, null, null, deliverables, remarks);
+            DO.Task task = new DO.Task(alias, description, createdAtDate, isMilestone, id, (DO.WorkerExperience)complexity, workerId, null, null, null, null, null, deliverables, remarks);
             Console.WriteLine(s_dalTask!.Create(task));
         }
 
@@ -235,15 +301,14 @@ namespace DalTest
 
             string alias = task.Alias;
             string description = task.Description;
-            //DateTime CreatedAtDate = task.CreatedAtDate;//ask!
             bool isMilestone = task.IsMilestone;
             DO.WorkerExperience? complexity = task.Complexity;
             int? workerId = task.WorkerId;
-            TimeSpan? requiredEffortTime = task.RequiredEffortTime;//ask!
-            DateTime? startDate = task.StartDate;//ask!
-            DateTime? scheduledDate = task.ScheduledDate;//ask!
+            TimeSpan? requiredEffortTime = task.RequiredEffortTime;
+            DateTime? startDate = task.StartDate;
+            DateTime? scheduledDate = task.ScheduledDate;
             DateTime? deadlinedate = task.Deadlinedate;//ask!
-            DateTime? completeDate = task.CompleteDate;//ask!
+            DateTime? completeDate = task.CompleteDate;
             string? deliverables = task.Deliverables;
             string? remarks = task.Remarks;
 
@@ -287,7 +352,37 @@ namespace DalTest
             if (newRemarks != "no")
                 remarks = newRemarks;
 
-            DO.Task task1 = new DO.Task(alias, description, task.CreatedAtDate, isMilestone, 0, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
+            Console.WriteLine("If you want to change the scheduled date enter yes else enter no");
+            string scheduledChoice = Console.ReadLine()!;
+            if (scheduledChoice == "yes")
+            {
+                Console.WriteLine("enter the new scheduled date:");
+                if (!DateTime.TryParse(Console.ReadLine(), out DateTime newScheduledDate))
+                    throw new Exception("WORNG DATE");
+                scheduledDate = newScheduledDate;
+            }
+
+            Console.WriteLine("If you want to change the required effort time enter yes else enter no");
+            string choiseRequiredEffortTime = Console.ReadLine()!;
+            if (choiseRequiredEffortTime == "yes")
+            {
+                Console.WriteLine("enter the new required effort time:");
+                if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan newRequiredEffortTime))
+                    throw new Exception("WORNG DATE");
+                requiredEffortTime = newRequiredEffortTime;
+            }
+
+            Console.WriteLine("If you want to change the dead line date enter yes else enter no");
+            string deadlinedateChoise = Console.ReadLine()!;
+            if (deadlinedateChoise == "yes")
+            {
+                Console.WriteLine("enter the new dead line date date:");
+                if (!DateTime.TryParse(Console.ReadLine(), out DateTime newDeadlinedate))
+                    throw new Exception("WORNG DATE");
+                deadlinedate = newDeadlinedate;
+            }
+
+            Task task1 = new Task(alias, description, task.CreatedAtDate, isMilestone, task.Id, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
                                        scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
             s_dalTask!.Update(task1);
@@ -299,6 +394,72 @@ namespace DalTest
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
             s_dalTask!.Delete(id);
+        }
+
+
+
+        static void CreateD()
+        {
+            Console.WriteLine("Enter The dependent task and depends on task:");
+
+            if (!int.TryParse(Console.ReadLine(), out int dependentTask))
+                throw new Exception("WORNG ID");
+            if (!int.TryParse(Console.ReadLine(), out int dependsOnTask))
+                throw new Exception("WORNG ID");
+
+            Dependency dependency = new Dependency(0, dependentTask, dependsOnTask);
+            Console.WriteLine(s_dalDependency!.Create(dependency));
+        }
+
+        static void ReadD()
+        {
+            Console.WriteLine("Enter ID:");
+            if (!int.TryParse(Console.ReadLine(), out int id))
+                throw new Exception("WORNG ID");
+            Console.WriteLine(s_dalDependency!.Read(id));
+        }
+
+        static void ReadAllD()
+        {
+            List<Dependency> list;
+            list = s_dalDependency!.ReadAll();
+            foreach (Dependency dependency in list)
+                Console.WriteLine(dependency);
+        }
+
+        static void UpdateD()
+        {
+            Console.WriteLine("Enter ID:");
+            if (!int.TryParse(Console.ReadLine(), out int dependencyId))
+                throw new Exception("WORNG ID");
+            Console.WriteLine(s_dalDependency!.Read(dependencyId));
+
+            Dependency dependency= s_dalDependency!.Read(dependencyId)!;
+            int dependentTask = dependency.DependentTask;
+            int dependsOnTask = dependency.DependsOnTask;
+
+            Console.WriteLine("If you want to change the dependent task enter the new dependent task, else press -1");
+            if (!int.TryParse(Console.ReadLine(), out int newDependentTask))
+                throw new Exception("WORNG ID");
+            if (newDependentTask != -1)
+                dependentTask = newDependentTask;
+
+            Console.WriteLine("If you want to change the depends on task enter the new dependent task, else press -1");
+            if (!int.TryParse(Console.ReadLine(), out int newDependsOnTask))
+                throw new Exception("WORNG ID");
+            if (newDependsOnTask != -1)
+                dependsOnTask = newDependsOnTask;
+
+            Dependency dependency1 = new Dependency (dependency.Id, dependentTask, dependsOnTask);
+            s_dalDependency!.Update(dependency1);
+        }
+
+        static void DeleteD()
+        {
+            Console.WriteLine("Enter ID:");
+            if (!int.TryParse(Console.ReadLine(), out int id))
+                throw new Exception("WORNG ID");
+            s_dalDependency!.Delete(id);
         }
     }
 }
