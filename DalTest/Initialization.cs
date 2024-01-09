@@ -188,7 +188,6 @@ public static class Initialization
     {
         s_dalDependency!.Create(new Dependency(0, 1, 19));
         s_dalDependency.Create(new Dependency(0, 1, 23));
-
         s_dalDependency.Create(new Dependency(0, 2, 19));
         s_dalDependency.Create(new Dependency(0,2 , 23));
         s_dalDependency.Create(new Dependency(0, 3, 23));
