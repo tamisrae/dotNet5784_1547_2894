@@ -19,7 +19,7 @@ namespace DalTest
                 while (true)
                 {
 
-                    Console.WriteLine("For Worker Entity press 1");
+                    Console.WriteLine("For Worker Entity press: 1");
                     Console.WriteLine("For Task Entity press: 2");
                     Console.WriteLine("For Dependency Entity press: 3");
                     Console.WriteLine("For exit press: 0");
