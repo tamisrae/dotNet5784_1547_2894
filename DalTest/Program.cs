@@ -307,7 +307,7 @@ namespace DalTest
             TimeSpan? requiredEffortTime = task.RequiredEffortTime;
             DateTime? startDate = task.StartDate;
             DateTime? scheduledDate = task.ScheduledDate;
-            DateTime? deadlinedate = task.Deadlinedate;//ask!
+            DateTime? deadlinedate = task.Deadlinedate;
             DateTime? completeDate = task.CompleteDate;
             string? deliverables = task.Deliverables;
             string? remarks = task.Remarks;

@@ -8,7 +8,7 @@ public class DependencyImplementation : IDependency
 {
     public int Create(Dependency item)
     {
-        int id = DataSource.Config.NextTaskId;
+        int id = DataSource.Config.NextDependencyId;
         Dependency copy = item with { Id = id };
         DataSource.Dependencys.Add(copy);
         return id;

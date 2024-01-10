@@ -8,7 +8,7 @@ namespace Dal;
         private static int nextTaskId = taskId;
         internal static int NextTaskId { get => nextTaskId++; }
 
-        internal const int dependencyId = 1000;
+        internal const int dependencyId = 1;
         private static int nextDependencyId = dependencyId;
         internal static int NextDependencyId { get => nextDependencyId++; }
 
