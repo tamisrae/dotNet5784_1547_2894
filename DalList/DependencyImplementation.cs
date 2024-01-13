@@ -3,6 +3,8 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using static DataSource;
+
 
 internal class DependencyImplementation : IDependency
 {
@@ -24,15 +26,29 @@ internal class DependencyImplementation : IDependency
 
     public Dependency? Read(int id)
     {
-        Dependency? dependency = DataSource.Dependencys.Find(dependency => dependency.Id == id);
-        if (dependency != null)
-            return dependency;
-        return null;
+        return DataSource.Dependencys.FirstOrDefault(dependency => dependency.Id == id);
+
+        //Dependency? dependency = DataSource.Dependencys.Find(dependency => dependency.Id == id); 
+        //if (dependency != null)
+        //    return dependency;
+        //return null;
     }
 
-    public List<Dependency> ReadAll()
+    //public List<Dependency> ReadAll()
+    //{
+    //    return new List<Dependency>(DataSource.Dependencys);
+    //}
+
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null) //stage 2
     {
-        return new List<Dependency>(DataSource.Dependencys);
+        if (filter != null)
+        {
+            return from item in DataSource.Dependencys
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Dependencys
+               select item;
     }
 
     public void Update(Dependency item)
@@ -44,4 +60,8 @@ internal class DependencyImplementation : IDependency
         Dependency dependency = new Dependency(id, item.DependentTask, item.DependsOnTask);
         DataSource.Dependencys.Add(dependency);
     }
+
+
+    public Dependency? Read(Func<Dependency, bool> filter) => Dependencys.FirstOrDefault(filter);
+
 }
