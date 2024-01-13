@@ -21,7 +21,7 @@ internal class WorkerImplementation : IWorker
             throw new Exception($"Worker with ID={id} doe's NOT exists");
         DataSource.Workers.Remove(worker);
     }
-
+    
     public Worker? Read(int id)
     {
         return from item in DataSource.Workers
