@@ -4,7 +4,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class DependencyImplementation : IDependency
+internal class DependencyImplementation : IDependency
 {
     public int Create(Dependency item)
     {
@@ -16,7 +16,7 @@ public class DependencyImplementation : IDependency
 
     public void Delete(int id)
     {
-        Dependency? dependency = DataSource.Dependencys.Find(dependency => dependency.Id == id);
+        Dependency? dependency = Read(id);
         if (dependency == null)
             throw new Exception($"Dependency with ID={id} doe's NOT exists");
         DataSource.Dependencys.Remove(dependency);

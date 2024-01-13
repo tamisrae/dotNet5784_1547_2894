@@ -4,7 +4,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class TaskImplementation : ITask
+internal class TaskImplementation : ITask
 {
     public int Create(Task item)
     {
@@ -16,7 +16,7 @@ public class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        Task? task = DataSource.Tasks.Find(task => task.Id == id);
+        Task? task = Read(id);
         if (task == null)
             throw new Exception($"Task with ID={id} doe's NOT exists");
         DataSource.Tasks.Remove(task);
