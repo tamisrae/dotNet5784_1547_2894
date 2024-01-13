@@ -5,16 +5,19 @@ namespace DalTest
     using Dal;
     using DalApi;
     using DO;
+    using DalList;
     partial class Program
     {
-        private static IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
-        private static ITask? s_dalTask = new TaskImplementation(); //stage 1
-        private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
+        private static IDal s_dal = new Dal.DalList(); //stage 2
+
+        //private static IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
+        //private static ITask? s_dalTask = new TaskImplementation(); //stage 1
+        //private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
         static void Main(string[] args)
         {
             try
             {
-                Initialization.Do(s_dalWorker, s_dalTask, s_dalDependency);
+                Initialization.Do(s_dal);
 
                 while (true)
                 {
@@ -184,7 +187,7 @@ namespace DalTest
             string name = Console.ReadLine()!;
 
             DO.Worker worker = new DO.Worker(id, (DO.WorkerExperience)level, email, cost, name);
-            Console.WriteLine(s_dalWorker!.Create(worker));
+            Console.WriteLine(s_dal!.Worker.Create(worker));
             return;
         }
 
@@ -193,14 +196,14 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalWorker!.Read(id));
+            Console.WriteLine(s_dal!.Worker.Read(id));
             return;
         }
 
         static void ReadAllW()
         {
             List<Worker> list;
-            list = s_dalWorker!.ReadAll();
+            list = s_dal!.Worker.ReadAll();
             foreach (Worker worker in list)
                 Console.WriteLine(worker);
         }
@@ -210,9 +213,9 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int workeId))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalWorker!.Read(workeId));
+            Console.WriteLine(s_dal!.Worker.Read(workeId));
 
-            Worker worker = s_dalWorker!.Read(workeId)!;
+            Worker worker = s_dal!.Worker.Read(workeId)!;
             int id = worker.Id;
             DO.WorkerExperience level = worker.Level;
             string email = worker.Email;
@@ -242,7 +245,7 @@ namespace DalTest
                 name = newName;
 
             Worker worker1 = new Worker(id, level, email, cost, name);
-            s_dalWorker!.Update(worker1);
+            s_dal!.Worker.Update(worker1);
         }
 
         static void DeleteW()
@@ -250,7 +253,7 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            s_dalWorker!.Delete(id);
+            s_dal!.Worker.Delete(id);
         }
 
 
@@ -271,7 +274,7 @@ namespace DalTest
             string remarks = Console.ReadLine()!;
 
             DO.Task task = new DO.Task(alias, description, createdAtDate, isMilestone, id, (DO.WorkerExperience)complexity, workerId, null, null, null, null, null, deliverables, remarks);
-            Console.WriteLine(s_dalTask!.Create(task));
+            Console.WriteLine(s_dal!.Task.Create(task));
         }
 
         static void ReadT()
@@ -279,13 +282,13 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalTask!.Read(id));
+            Console.WriteLine(s_dal!.Task.Read(id));
         }
 
         static void ReadAllT()
         {
             List<DO.Task> list;
-            list = s_dalTask!.ReadAll();
+            list = s_dal!.Task.ReadAll();
             foreach (DO.Task task in list)
                 Console.WriteLine(task);
         }
@@ -295,9 +298,9 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int taskId))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalTask!.Read(taskId));
+            Console.WriteLine(s_dal!.Task.Read(taskId));
 
-            DO.Task task = s_dalTask!.Read(taskId)!;
+            DO.Task task = s_dal!.Task.Read(taskId)!;
 
             string alias = task.Alias;
             string description = task.Description;
@@ -385,7 +388,7 @@ namespace DalTest
             Task task1 = new Task(alias, description, task.CreatedAtDate, isMilestone, task.Id, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
                                        scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
-            s_dalTask!.Update(task1);
+            s_dal!.Task.Update(task1);
         }
 
         static void DeleteT()
@@ -393,7 +396,7 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            s_dalTask!.Delete(id);
+            s_dal!.Task.Delete(id);
         }
 
 
@@ -408,7 +411,7 @@ namespace DalTest
                 throw new Exception("WORNG ID");
 
             Dependency dependency = new Dependency(0, dependentTask, dependsOnTask);
-            Console.WriteLine(s_dalDependency!.Create(dependency));
+            Console.WriteLine(s_dal!.Dependency.Create(dependency));
         }
 
         static void ReadD()
@@ -416,13 +419,13 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalDependency!.Read(id));
+            Console.WriteLine(s_dal!.Dependency.Read(id));
         }
 
         static void ReadAllD()
         {
             List<Dependency> list;
-            list = s_dalDependency!.ReadAll();
+            list = s_dal!.Dependency.ReadAll();
             foreach (Dependency dependency in list)
                 Console.WriteLine(dependency);
         }
@@ -432,9 +435,9 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int dependencyId))
                 throw new Exception("WORNG ID");
-            Console.WriteLine(s_dalDependency!.Read(dependencyId));
+            Console.WriteLine(s_dal!.Dependency.Read(dependencyId));
 
-            Dependency dependency= s_dalDependency!.Read(dependencyId)!;
+            Dependency dependency= s_dal!.Dependency.Read(dependencyId)!;
             int dependentTask = dependency.DependentTask;
             int dependsOnTask = dependency.DependsOnTask;
 
@@ -451,7 +454,7 @@ namespace DalTest
                 dependsOnTask = newDependsOnTask;
 
             Dependency dependency1 = new Dependency (dependency.Id, dependentTask, dependsOnTask);
-            s_dalDependency!.Update(dependency1);
+            s_dal!.Dependency.Update(dependency1);
         }
 
         static void DeleteD()
@@ -459,7 +462,7 @@ namespace DalTest
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
                 throw new Exception("WORNG ID");
-            s_dalDependency!.Delete(id);
+            s_dal!.Dependency.Delete(id);
         }
     }
 }
