@@ -202,9 +202,9 @@ namespace DalTest
 
         static void ReadAllW()
         {
-            List<Worker> list;
-            list = s_dal!.Worker.ReadAll();
-            foreach (Worker worker in list)
+            List<Worker?> list;
+            list = s_dal!.Worker.ReadAll().ToList();
+            foreach (Worker? worker in list)
                 Console.WriteLine(worker);
         }
 
@@ -287,9 +287,9 @@ namespace DalTest
 
         static void ReadAllT()
         {
-            List<DO.Task> list;
-            list = s_dal!.Task.ReadAll();
-            foreach (DO.Task task in list)
+            List<Task?> list;
+            list = s_dal!.Task.ReadAll().ToList();
+            foreach (Task? task in list)
                 Console.WriteLine(task);
         }
 
@@ -424,9 +424,9 @@ namespace DalTest
 
         static void ReadAllD()
         {
-            List<Dependency> list;
-            list = s_dal!.Dependency.ReadAll();
-            foreach (Dependency dependency in list)
+            List<Dependency?> list;
+            list = s_dal!.Dependency.ReadAll().ToList();
+            foreach (Dependency? dependency in list)
                 Console.WriteLine(dependency);
         }
 

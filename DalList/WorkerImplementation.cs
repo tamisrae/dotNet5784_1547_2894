@@ -3,6 +3,7 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using static DataSource;
 
 internal class WorkerImplementation : IWorker
 {
@@ -24,18 +25,28 @@ internal class WorkerImplementation : IWorker
     
     public Worker? Read(int id)
     {
-        return from item in DataSource.Workers
-               where (item.Id) == id
-               select item;
+        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id);
         //Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
         //if (worker != null)
         //    return worker;
         //return null;
     }
 
-    public List<Worker> ReadAll()
+    //public List<Worker> ReadAll()
+    //{
+    //    return new List<Worker>(DataSource.Workers);
+    //}
+
+    public IEnumerable<Worker> ReadAll(Func<Worker, bool>? filter = null) //stage 2
     {
-        return new List<Worker>(DataSource.Workers);
+        if (filter != null)
+        {
+            return from item in DataSource.Workers
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Workers
+               select item;
     }
 
     public void Update(Worker item)
@@ -45,4 +56,6 @@ internal class WorkerImplementation : IWorker
         Delete(item.Id);
         Create(item);
     }
+
+    public Worker? Read(Func<Worker, bool> filter) => Workers.FirstOrDefault(filter);
 }

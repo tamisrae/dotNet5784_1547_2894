@@ -3,6 +3,7 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using static DataSource;
 
 internal class TaskImplementation : ITask
 {
@@ -24,15 +25,28 @@ internal class TaskImplementation : ITask
 
     public Task? Read(int id)
     {
-        Task? task = DataSource.Tasks.Find(task => task.Id == id);
-        if (task != null)
-            return task;
-        return null;
+        return DataSource.Tasks.FirstOrDefault(task => task.Id == id);
+        //Task? task = DataSource.Tasks.Find(task => task.Id == id);
+        //if (task != null)
+        //    return task;
+        //return null;
     }
 
-    public List<Task> ReadAll()
+    //public List<Task> ReadAll()
+    //{
+    //    return new List<Task>(DataSource.Tasks);
+    //}
+
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
-        return new List<Task>(DataSource.Tasks);
+        if (filter != null)
+        {
+            return from item in DataSource.Tasks
+                   where filter(item)
+                   select item;
+        }
+        return from item in DataSource.Tasks
+               select item;
     }
 
     public void Update(Task item)
@@ -45,4 +59,7 @@ internal class TaskImplementation : ITask
             item.StartDate, item.ScheduledDate, item.Deadlinedate, item.CompleteDate, item.Deliverables, item.Remarks);
         DataSource.Tasks.Add(task); 
     }
+
+
+    public Task? Read(Func<Task, bool> filter) => Tasks.FirstOrDefault(filter);
 }
