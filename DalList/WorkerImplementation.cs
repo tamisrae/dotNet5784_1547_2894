@@ -16,7 +16,7 @@ public class WorkerImplementation : IWorker
     
     public void Delete(int id)
     {
-        Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
+        Worker? worker = Read(id);//DataSource.Workers.Find(worker => worker.Id == id);
         if (worker == null)
             throw new Exception($"Worker with ID={id} doe's NOT exists");
         DataSource.Workers.Remove(worker);
