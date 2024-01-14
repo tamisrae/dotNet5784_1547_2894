@@ -68,7 +68,10 @@
         }
 
 
-
+        /// <summary>
+        /// Submenu function for the worker 
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void SubMenuWorker()
         {
             Console.WriteLine("For exit press: 0");
@@ -106,6 +109,10 @@
             }
         }
 
+        /// <summary>
+        /// Submenu function for the task 
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void SubMenuTask()
         {
             Console.WriteLine("For exit press: 0");
@@ -144,6 +151,10 @@
             }
         }
 
+        /// <summary>
+        /// Submenu function for the dependency
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void SubMenuDependency()
         {
             Console.WriteLine("For exit press: 0");
@@ -185,6 +196,10 @@
 
 
 
+        /// <summary>
+        /// Create a new worker
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void CreateW()
         {
             Console.WriteLine("Enter ID, the worker's level, cost per hour, email and name:");
@@ -203,6 +218,10 @@
             return;
         }
 
+        /// <summary>
+        /// Read a worker from the list
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void ReadW()
         {
             Console.WriteLine("Enter ID:");
@@ -212,6 +231,9 @@
             return;
         }
 
+        /// <summary>
+        /// Read all the workers from the list
+        /// </summary>
         static void ReadAllW()
         {
             List<Worker?> list;
@@ -220,6 +242,10 @@
                 Console.WriteLine(worker);
         }
 
+        /// <summary>
+        /// Update a worker
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void UpdateW()
         {
             Console.WriteLine("Enter ID:");
@@ -260,6 +286,10 @@
             s_dal!.Worker.Update(worker1);
         }
 
+        /// <summary>
+        /// Delete a worker
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void DeleteW()
         {
             Console.WriteLine("Enter ID:");
@@ -270,6 +300,10 @@
 
 
 
+        /// <summary>
+        /// Create a new task
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void CreateT()
         {
             Console.WriteLine("Enter alias, description, complexity, deliverables, remarks");
@@ -289,6 +323,10 @@
             Console.WriteLine(s_dal!.Task.Create(task));
         }
 
+        /// <summary>
+        /// Read a task from the list
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void ReadT()
         {
             Console.WriteLine("Enter ID:");
@@ -297,6 +335,9 @@
             Console.WriteLine(s_dal!.Task.Read(id));
         }
 
+        /// <summary>
+        /// Read all the tasks from the list
+        /// </summary>
         static void ReadAllT()
         {
             List<Task?> list;
@@ -305,6 +346,10 @@
                 Console.WriteLine(task);
         }
 
+        /// <summary>
+        /// Update a task
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void UpdateT()
         {
             Console.WriteLine("Enter ID:");
@@ -403,6 +448,10 @@
             s_dal!.Task.Update(task1);
         }
 
+        /// <summary>
+        /// Delete a task
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void DeleteT()
         {
             Console.WriteLine("Enter ID:");
@@ -413,6 +462,10 @@
 
 
 
+        /// <summary>
+        /// Create a new dependency
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void CreateD()
         {
             Console.WriteLine("Enter The dependent task and depends on task:");
@@ -426,6 +479,10 @@
             Console.WriteLine(s_dal!.Dependency.Create(dependency));
         }
 
+        /// <summary>
+        /// Read a dependency from the list
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void ReadD()
         {
             Console.WriteLine("Enter ID:");
@@ -434,6 +491,9 @@
             Console.WriteLine(s_dal!.Dependency.Read(id));
         }
 
+        /// <summary>
+        /// Read all the dependencies from the list
+        /// </summary>
         static void ReadAllD()
         {
             List<Dependency?> list;
@@ -442,6 +502,10 @@
                 Console.WriteLine(dependency);
         }
 
+        /// <summary>
+        /// Update a dependency
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void UpdateD()
         {
             Console.WriteLine("Enter ID:");
@@ -469,6 +533,10 @@
             s_dal!.Dependency.Update(dependency1);
         }
 
+        /// <summary>
+        /// Delete a dependency
+        /// </summary>
+        /// <exception cref="DalWorngValueException"></exception>
         static void DeleteD()
         {
             Console.WriteLine("Enter ID:");
