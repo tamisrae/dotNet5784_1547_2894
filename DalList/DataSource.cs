@@ -18,6 +18,6 @@ namespace Dal;
     }
     internal static List<DO.Worker> Workers { get; } = new();
     internal static List<DO.Task> Tasks { get; } = new();
-    internal static List<DO.Dependency> Dependencys { get; } = new();
+    internal static List<DO.Dependency> Dependencies { get; } = new();
 
 }

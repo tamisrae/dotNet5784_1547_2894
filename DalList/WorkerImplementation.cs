@@ -3,14 +3,16 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Data;
 using static DataSource;
 
 internal class WorkerImplementation : IWorker
 {
+    //const string entityName = nameof(Worker);
     public int Create(Worker item)
     {
         if (Read(item.Id) is not null)
-            throw new Exception($"Worker with ID={item.Id} already exists");
+            throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         DataSource.Workers.Add(item);
         return item.Id;
     }
@@ -19,19 +21,21 @@ internal class WorkerImplementation : IWorker
     {
         Worker? worker = Read(id);
         if (worker == null)
-            throw new Exception($"Worker with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
         DataSource.Workers.Remove(worker);
     }
     
     public Worker? Read(int id)
     {
-        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id);
+        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id); //?? throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
+        //stage 1:
         //Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
         //if (worker != null)
         //    return worker;
         //return null;
     }
 
+    //stage 1:
     //public List<Worker> ReadAll()
     //{
     //    return new List<Worker>(DataSource.Workers);
@@ -52,7 +56,7 @@ internal class WorkerImplementation : IWorker
     public void Update(Worker item)
     {
         if (Read(item.Id) == null)
-            throw new Exception($"Worker with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistException($"Worker with ID={item.Id} doe's NOT exists");
         Delete(item.Id);
         Create(item);
     }

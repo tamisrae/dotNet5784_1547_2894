@@ -19,7 +19,7 @@ internal class TaskImplementation : ITask
     {
         Task? task = Read(id);
         if (task == null)
-            throw new Exception($"Task with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistException($"Task with ID={id} doe's NOT exists");
         DataSource.Tasks.Remove(task);
     }
 
@@ -52,7 +52,7 @@ internal class TaskImplementation : ITask
     public void Update(Task item)
     {
         if (Read(item.Id) == null)
-            throw new Exception($"Task with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistException($"Task with ID={item.Id} doe's NOT exists");
         int id = item.Id;
         Delete(item.Id);
         Task task = new Task(item.Alias, item.Description, item.CreatedAtDate, item.IsMilestone, id, item.Complexity, item.WorkerId, item.RequiredEffortTime,

@@ -15,20 +15,21 @@ namespace DalTest
         //private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
         static void Main(string[] args)
         {
-            try
+
+            Initialization.Do(s_dal);
+
+            while (true) 
             {
-                Initialization.Do(s_dal);
 
-                while (true)
+                Console.WriteLine("For Worker Entity press: 1");
+                Console.WriteLine("For Task Entity press: 2");
+                Console.WriteLine("For Dependency Entity press: 3");
+                Console.WriteLine("For exit press: 0");
+
+                try
                 {
-
-                    Console.WriteLine("For Worker Entity press: 1");
-                    Console.WriteLine("For Task Entity press: 2");
-                    Console.WriteLine("For Dependency Entity press: 3");
-                    Console.WriteLine("For exit press: 0");
-
-                    if (!int.TryParse(Console.ReadLine(), out int choice))
-                        throw new Exception("WORNG NUMBER");
+                    if (!int.TryParse(Console.ReadLine(), out int choice)) 
+                        throw new DalWorngValueException("WORNG VALUE");
                     switch (choice)
                     {
                         case 1:
@@ -48,11 +49,24 @@ namespace DalTest
                             break;
                     }
                 }
+                catch (DalDoesNotExistException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (DalAlreadyExistsException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (DalWorngValueException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+
         }
 
 
@@ -67,7 +81,7 @@ namespace DalTest
             Console.WriteLine("To delete worker from the list press: 5");
 
             if (!int.TryParse(Console.ReadLine(), out int choice))
-                throw new Exception("WORNG NUMBER");
+                throw new DalWorngValueException("WORNG VALUE");
 
             switch (choice)
             {
@@ -104,7 +118,7 @@ namespace DalTest
             Console.WriteLine("To delete task from the list press: 5");
 
             if (!int.TryParse(Console.ReadLine(), out int choice))
-                throw new Exception("WORNG NUMBER");
+                throw new DalWorngValueException("WORNG VALUE");
 
             switch (choice)
             {
@@ -142,7 +156,7 @@ namespace DalTest
             Console.WriteLine("To delete dependency from the list press: 5");
 
             if (!int.TryParse(Console.ReadLine(), out int choice))
-                throw new Exception("WORNG NUMBER");
+                throw new DalWorngValueException("WORNG VALUE");
 
             switch (choice)
             {
@@ -178,15 +192,15 @@ namespace DalTest
             Console.WriteLine("Enter ID, the worker's level, cost per hour, email and name:");
 
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             if (!int.TryParse(Console.ReadLine(), out int level))
-                throw new Exception("WORNG LEVEL");
+                throw new DalWorngValueException("WORNG LEVEL");
             if (!double.TryParse(Console.ReadLine(), out double cost))
-                throw new Exception("WORNG COST");
+                throw new DalWorngValueException("WORNG COST");
             string email = Console.ReadLine()!;
             string name = Console.ReadLine()!;
 
-            DO.Worker worker = new DO.Worker(id, (DO.WorkerExperience)level, email, cost, name);
+            Worker worker = new Worker(id, (WorkerExperience)level, email, cost, name);
             Console.WriteLine(s_dal!.Worker.Create(worker));
             return;
         }
@@ -195,7 +209,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Worker.Read(id));
             return;
         }
@@ -212,7 +226,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int workeId))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Worker.Read(workeId));
 
             Worker worker = s_dal!.Worker.Read(workeId)!;
@@ -224,7 +238,7 @@ namespace DalTest
 
             Console.WriteLine("If you want to change the level of the worker enter the new level, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newLevel))
-                throw new Exception("WORNG LEVEL");
+                throw new DalWorngValueException("WORNG LEVEL");
             if (newLevel != -1)
                 level = (DO.WorkerExperience)newLevel;
 
@@ -235,7 +249,7 @@ namespace DalTest
 
             Console.WriteLine("If you want to change the cost enter the new cost, else press -1");
             if (!double.TryParse(Console.ReadLine(), out double newCost))
-                throw new Exception("WORNG COST");
+                throw new DalWorngValueException("WORNG COST");
             if (newCost != -1)
                 cost = newCost;
 
@@ -252,7 +266,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             s_dal!.Worker.Delete(id);
         }
 
@@ -268,7 +282,7 @@ namespace DalTest
             bool isMilestone = false;
             int id = 0;
             if (!int.TryParse(Console.ReadLine(), out int complexity))
-                throw new Exception("WORNG COMPLEXITY");
+                throw new DalWorngValueException("WORNG COMPLEXITY");
             int workerId = 0;
             string deliverables = Console.ReadLine()!;
             string remarks = Console.ReadLine()!;
@@ -281,7 +295,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Task.Read(id));
         }
 
@@ -297,7 +311,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int taskId))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Task.Read(taskId));
 
             DO.Task task = s_dal!.Task.Read(taskId)!;
@@ -328,20 +342,20 @@ namespace DalTest
 
             Console.WriteLine("If you want to change the isMilestone of the task enter the new isMilestone press 0, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newisMilestone))
-                throw new Exception("WORNG isMilestone");
+                throw new DalWorngValueException("WORNG isMilestone");
             if (newisMilestone == 0)
                 isMilestone = !isMilestone;
 
             Console.WriteLine("If you want to change the complexity of the task enter the new complexity, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newComplexity))
-                throw new Exception("WORNG LEVEL");
+                throw new DalWorngValueException("WORNG LEVEL");
             if (newComplexity != -1)
                 complexity = (DO.WorkerExperience)newComplexity;
 
 
             Console.WriteLine("If you want to change the worker ID of the task enter the new worker ID, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newWorkerId))
-                throw new Exception("WORNG WORKER ID");
+                throw new DalWorngValueException("WORNG WORKER ID");
             if (newComplexity != -1)
                 workerId = newWorkerId;
 
@@ -361,7 +375,7 @@ namespace DalTest
             {
                 Console.WriteLine("enter the new scheduled date:");
                 if (!DateTime.TryParse(Console.ReadLine(), out DateTime newScheduledDate))
-                    throw new Exception("WORNG DATE");
+                    throw new DalWorngValueException("WORNG DATE");
                 scheduledDate = newScheduledDate;
             }
 
@@ -371,7 +385,7 @@ namespace DalTest
             {
                 Console.WriteLine("enter the new required effort time:");
                 if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan newRequiredEffortTime))
-                    throw new Exception("WORNG DATE");
+                    throw new DalWorngValueException("WORNG DATE");
                 requiredEffortTime = newRequiredEffortTime;
             }
 
@@ -381,7 +395,7 @@ namespace DalTest
             {
                 Console.WriteLine("enter the new dead line date date:");
                 if (!DateTime.TryParse(Console.ReadLine(), out DateTime newDeadlinedate))
-                    throw new Exception("WORNG DATE");
+                    throw new DalWorngValueException("WORNG DATE");
                 deadlinedate = newDeadlinedate;
             }
 
@@ -395,7 +409,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             s_dal!.Task.Delete(id);
         }
 
@@ -406,9 +420,9 @@ namespace DalTest
             Console.WriteLine("Enter The dependent task and depends on task:");
 
             if (!int.TryParse(Console.ReadLine(), out int dependentTask))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             if (!int.TryParse(Console.ReadLine(), out int dependsOnTask))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
 
             Dependency dependency = new Dependency(0, dependentTask, dependsOnTask);
             Console.WriteLine(s_dal!.Dependency.Create(dependency));
@@ -418,7 +432,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Dependency.Read(id));
         }
 
@@ -434,7 +448,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int dependencyId))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             Console.WriteLine(s_dal!.Dependency.Read(dependencyId));
 
             Dependency dependency= s_dal!.Dependency.Read(dependencyId)!;
@@ -443,13 +457,13 @@ namespace DalTest
 
             Console.WriteLine("If you want to change the dependent task enter the new dependent task, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newDependentTask))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             if (newDependentTask != -1)
                 dependentTask = newDependentTask;
 
             Console.WriteLine("If you want to change the depends on task enter the new dependent task, else press -1");
             if (!int.TryParse(Console.ReadLine(), out int newDependsOnTask))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             if (newDependsOnTask != -1)
                 dependsOnTask = newDependsOnTask;
 
@@ -461,7 +475,7 @@ namespace DalTest
         {
             Console.WriteLine("Enter ID:");
             if (!int.TryParse(Console.ReadLine(), out int id))
-                throw new Exception("WORNG ID");
+                throw new DalWorngValueException("WORNG ID");
             s_dal!.Dependency.Delete(id);
         }
     }

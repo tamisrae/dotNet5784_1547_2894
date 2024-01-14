@@ -12,7 +12,7 @@ internal class DependencyImplementation : IDependency
     {
         int id = DataSource.Config.NextDependencyId;
         Dependency copy = item with { Id = id };
-        DataSource.Dependencys.Add(copy);
+        DataSource.Dependencies.Add(copy);
         return id;
     }
 
@@ -20,13 +20,13 @@ internal class DependencyImplementation : IDependency
     {
         Dependency? dependency = Read(id);
         if (dependency == null)
-            throw new Exception($"Dependency with ID={id} doe's NOT exists");
-        DataSource.Dependencys.Remove(dependency);
+            throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
+        DataSource.Dependencies.Remove(dependency);
     }
 
     public Dependency? Read(int id)
     {
-        return DataSource.Dependencys.FirstOrDefault(dependency => dependency.Id == id);
+        return DataSource.Dependencies.FirstOrDefault(dependency => dependency.Id == id);
 
         //Dependency? dependency = DataSource.Dependencys.Find(dependency => dependency.Id == id); 
         //if (dependency != null)
@@ -43,25 +43,25 @@ internal class DependencyImplementation : IDependency
     {
         if (filter != null)
         {
-            return from item in DataSource.Dependencys
+            return from item in DataSource.Dependencies
                    where filter(item)
                    select item;
         }
-        return from item in DataSource.Dependencys
+        return from item in DataSource.Dependencies
                select item;
     }
 
     public void Update(Dependency item)
     {
         if (Read(item.Id) == null)
-            throw new Exception($"Dependency with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} doe's NOT exists");
         int id = item.Id;
         Delete(item.Id);
         Dependency dependency = new Dependency(id, item.DependentTask, item.DependsOnTask);
-        DataSource.Dependencys.Add(dependency);
+        DataSource.Dependencies.Add(dependency);
     }
 
 
-    public Dependency? Read(Func<Dependency, bool> filter) => Dependencys.FirstOrDefault(filter);
+    public Dependency? Read(Func<Dependency, bool> filter) => Dependencies.FirstOrDefault(filter);
 
 }

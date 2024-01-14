@@ -29,10 +29,28 @@ public static class Initialization
 
         foreach (string name in WorkerNames)
         {
-            int workerId, MinWorkerId = 200000000, MaxWorkerId = 400000000;
+            int workerId = 0, minWorkerId = 200000000, maxWorkerId = 400000000;
+            //bool exceptionWasThrown;
+
             do
-                workerId = s_rand.Next(MinWorkerId, MaxWorkerId);
+                workerId = s_rand.Next(minWorkerId, maxWorkerId);
             while (s_dal!.Worker.Read(workerId) != null);
+
+            //do
+            //{
+            //    try
+            //    {
+            //        exceptionWasThrown = false;
+            //        workerId = s_rand.Next(minWorkerId, maxWorkerId);
+            //        s_dal!.Worker.Read(workerId);
+            //    }
+            //    catch (DalDoesNotExistException ex)
+            //    {
+            //        //Console.WriteLine(ex.Message);
+            //        exceptionWasThrown = true;
+            //    }
+            //}
+            //while (!exceptionWasThrown);
 
             int i = 0;
             while (name != WorkerNames[i])
