@@ -9,5 +9,4 @@ public interface ITask : ICrud<Task>
     //List<Task> ReadAll(); //stage 1 only, Reads all entity objects
     //void Update(Task item); //Updates entity object
     //void Delete(int id); //Deletes an object by its Id
-
 }

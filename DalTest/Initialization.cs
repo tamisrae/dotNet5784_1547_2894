@@ -13,6 +13,9 @@ public static class Initialization
 
     private static readonly Random s_rand = new();
 
+    /// <summary>
+    /// Create workers and push them to the list
+    /// </summary>
     private static void createWorker()
     {
         string[] WorkerNames =
@@ -29,28 +32,10 @@ public static class Initialization
 
         foreach (string name in WorkerNames)
         {
-            int workerId = 0, minWorkerId = 200000000, maxWorkerId = 400000000;
-            //bool exceptionWasThrown;
+            int minWorkerId = 200000000, maxWorkerId = 400000000;
 
-            do
-                workerId = s_rand.Next(minWorkerId, maxWorkerId);
-            while (s_dal!.Worker.Read(workerId) != null);
-
-            //do
-            //{
-            //    try
-            //    {
-            //        exceptionWasThrown = false;
-            //        workerId = s_rand.Next(minWorkerId, maxWorkerId);
-            //        s_dal!.Worker.Read(workerId);
-            //    }
-            //    catch (DalDoesNotExistException ex)
-            //    {
-            //        //Console.WriteLine(ex.Message);
-            //        exceptionWasThrown = true;
-            //    }
-            //}
-            //while (!exceptionWasThrown);
+            int workerId = s_rand.Next(minWorkerId, maxWorkerId);
+           
 
             int i = 0;
             while (name != WorkerNames[i])
@@ -93,9 +78,11 @@ public static class Initialization
             s_dal!.Worker.Create(newWorker);
         }
     }
-   
 
-    
+
+    /// <summary>
+    /// Create tasks and push them to the list
+    /// </summary>
     private static void createTask()
     {
         string[] TaskAlias =
@@ -202,7 +189,9 @@ public static class Initialization
         }
     }
 
- 
+    /// <summary>
+    /// Create dependencies and push them to the list
+    /// </summary>
     private static void createDependency()
     {
         s_dal!.Dependency.Create(new Dependency(0, 1, 19));

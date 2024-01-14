@@ -14,10 +14,9 @@ namespace Dal;
 
         public static DateTime? StartProjectDate { get; set; } = null;
         public static DateTime? EndProjectDate { get; set; } = null;
-
     }
+
     internal static List<DO.Worker> Workers { get; } = new();
     internal static List<DO.Task> Tasks { get; } = new();
     internal static List<DO.Dependency> Dependencies { get; } = new();
-
 }

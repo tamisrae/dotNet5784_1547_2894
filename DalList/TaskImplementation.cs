@@ -3,10 +3,16 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using static DataSource;
 
 internal class TaskImplementation : ITask
 {
+    /// <summary>
+    /// Craete a new task
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int Create(Task item)
     {
         int id = DataSource.Config.NextTaskId;
@@ -15,6 +21,11 @@ internal class TaskImplementation : ITask
         return id;
     }
 
+    /// <summary>
+    /// Delete a task from the list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         Task? task = Read(id);
@@ -23,20 +34,22 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.Remove(task);
     }
 
+    /// <summary>
+    /// Read a task form the list by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public Task? Read(int id)
     {
-        return DataSource.Tasks.FirstOrDefault(task => task.Id == id);
-        //Task? task = DataSource.Tasks.Find(task => task.Id == id);
-        //if (task != null)
-        //    return task;
-        //return null;
+        return DataSource.Tasks.FirstOrDefault(task => task.Id == id) ?? throw new DalDoesNotExistException($"Task with ID={id} doe's NOT exists");
     }
 
-    //public List<Task> ReadAll()
-    //{
-    //    return new List<Task>(DataSource.Tasks);
-    //}
-
+    /// <summary>
+    /// Read all the tasks that meet the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
         if (filter != null)
@@ -49,6 +62,11 @@ internal class TaskImplementation : ITask
                select item;
     }
 
+    /// <summary>
+    /// Update a task by ID
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Task item)
     {
         if (Read(item.Id) == null)
@@ -57,9 +75,13 @@ internal class TaskImplementation : ITask
         Delete(item.Id);
         Task task = new Task(item.Alias, item.Description, item.CreatedAtDate, item.IsMilestone, id, item.Complexity, item.WorkerId, item.RequiredEffortTime,
             item.StartDate, item.ScheduledDate, item.Deadlinedate, item.CompleteDate, item.Deliverables, item.Remarks);
-        DataSource.Tasks.Add(task); 
+        DataSource.Tasks.Add(task);
     }
 
-
+    /// <summary>
+    /// Read a task that meets the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Task? Read(Func<Task, bool> filter) => Tasks.FirstOrDefault(filter);
 }

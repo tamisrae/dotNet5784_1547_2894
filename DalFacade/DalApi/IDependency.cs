@@ -9,5 +9,4 @@ public interface IDependency : ICrud<Dependency>
     //List<Dependency> ReadAll(); //stage 1 only, Reads all entity objects
     //void Update(Dependency item); //Updates entity object
     //void Delete(int id); //Deletes an object by its Id
-
 }

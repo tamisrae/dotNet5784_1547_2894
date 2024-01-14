@@ -8,15 +8,28 @@ using static DataSource;
 
 internal class WorkerImplementation : IWorker
 {
-    //const string entityName = nameof(Worker);
+    /// <summary>
+    /// Create a new worker
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Worker item)
     {
-        if (Read(item.Id) is not null)
-            throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
+        foreach(Worker worker in DataSource.Workers)
+        {
+            if (worker.Id == item.Id)
+                throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
+        }
         DataSource.Workers.Add(item);
         return item.Id;
     }
-    
+
+    /// <summary>
+    /// Delete a worker from the list
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         Worker? worker = Read(id);
@@ -24,23 +37,23 @@ internal class WorkerImplementation : IWorker
             throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
         DataSource.Workers.Remove(worker);
     }
-    
+
+    /// <summary>
+    /// Read a worker form the list by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public Worker? Read(int id)
     {
-        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id); //?? throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
-        //stage 1:
-        //Worker? worker = DataSource.Workers.Find(worker => worker.Id == id);
-        //if (worker != null)
-        //    return worker;
-        //return null;
+        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id) ?? throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
     }
 
-    //stage 1:
-    //public List<Worker> ReadAll()
-    //{
-    //    return new List<Worker>(DataSource.Workers);
-    //}
-
+    /// <summary>
+    /// Read all the workers that meet the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Worker> ReadAll(Func<Worker, bool>? filter = null) //stage 2
     {
         if (filter != null)
@@ -53,6 +66,11 @@ internal class WorkerImplementation : IWorker
                select item;
     }
 
+    /// <summary>
+    /// Uapdate a worker by ID
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Worker item)
     {
         if (Read(item.Id) == null)
@@ -61,5 +79,10 @@ internal class WorkerImplementation : IWorker
         Create(item);
     }
 
+    /// <summary>
+    /// Read a worker that meets the filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Worker? Read(Func<Worker, bool> filter) => Workers.FirstOrDefault(filter);
 }
