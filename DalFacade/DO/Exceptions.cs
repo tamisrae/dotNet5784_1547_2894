@@ -18,3 +18,9 @@ public class DalWorngValueException : Exception//If the user entered worng value
 {
     public DalWorngValueException(string? message) : base(message) { }
 }
+
+[Serializable]
+public class DalXMLFileLoadCreateException : Exception
+{ 
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
+}
