@@ -40,8 +40,6 @@ public record Task
     string? Remarks = null
 )
 {
-    public Task() : this("", "", DateTime.Now, false, 0) { }//empty ctor
-
-    
+    public Task() : this("", "", DateTime.Now, false, 0) { }//empty ctor    
 }
 
