@@ -83,4 +83,9 @@ internal class DependencyImplementation : IDependency
     /// <param name="filter"></param>
     /// <returns></returns>
     public Dependency? Read(Func<Dependency, bool> filter) => Dependencies.FirstOrDefault(filter);
+
+    public void Clear()
+    {
+        Dependencies.Clear();
+    }
 }

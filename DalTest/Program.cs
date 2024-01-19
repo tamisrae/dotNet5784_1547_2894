@@ -25,6 +25,7 @@ partial class Program
             Console.WriteLine("For Task Entity press: 2");
             Console.WriteLine("For Dependency Entity press: 3");
             Console.WriteLine("To initialize data press 4");
+            Console.WriteLine("To clear data press 5");
             Console.WriteLine("For exit press: 0");
 
             try
@@ -46,7 +47,17 @@ partial class Program
                         Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
                         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                         if (ans == "Y") //stage 3
+                        {
+                            s_dal.Worker.Clear();
+                            s_dal.Task.Clear();
+                            s_dal.Dependency.Clear();
                             Initialization.Do(s_dal); //stage 2
+                        }
+                        break;
+                    case 5:
+                        s_dal.Worker.Clear();
+                        s_dal.Task.Clear();
+                        s_dal.Dependency.Clear();
                         break;
                     case 0:
                         Environment.Exit(0);

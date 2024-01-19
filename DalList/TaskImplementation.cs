@@ -84,4 +84,9 @@ internal class TaskImplementation : ITask
     /// <param name="filter"></param>
     /// <returns></returns>
     public Task? Read(Func<Task, bool> filter) => Tasks.FirstOrDefault(filter);
+
+    public void Clear()
+    {
+        Tasks.Clear();
+    }
 }

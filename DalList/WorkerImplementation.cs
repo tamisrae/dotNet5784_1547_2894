@@ -85,4 +85,9 @@ internal class WorkerImplementation : IWorker
     /// <param name="filter"></param>
     /// <returns></returns>
     public Worker? Read(Func<Worker, bool> filter) => Workers.FirstOrDefault(filter);
+
+    public void Clear()
+    {
+        Workers.Clear();
+    }
 }

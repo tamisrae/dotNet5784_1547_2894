@@ -15,5 +15,6 @@ namespace DalApi
         void Update(T item); //Updates entity object
         void Delete(int id); //Deletes an object by its Id
         T? Read(Func<T, bool> filter); //stage 2 Reads all entities that meet the filter
+        void Clear();
     }
 }

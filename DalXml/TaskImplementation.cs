@@ -12,15 +12,22 @@ internal class TaskImplementation : ITask
 {
     readonly string s_tasks_xml = "tasks";
 
+    public void Clear()
+    {
+        List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
+        tasks.Clear();
+        XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, s_tasks_xml);
+    }
+
     public int Create(DO.Task item)
     {
         List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
 
-        int id = Config.NextTaskId;
-        DO.Task copy = item with { Id = id };
+        //int id = Config.NextTaskId;
+        DO.Task copy = item with { Id = Config.NextTaskId };
         tasks.Add(copy);
         XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, s_tasks_xml);
-        return id;
+        return copy.Id;
     }
 
     public void Delete(int id)

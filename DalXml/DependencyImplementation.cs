@@ -5,6 +5,8 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 internal class DependencyImplementation : IDependency
@@ -21,6 +23,13 @@ internal class DependencyImplementation : IDependency
         };
     }
 
+    public void Clear()
+    {
+        XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
+        dpncRoot.RemoveAll();
+        XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
+    }
+
     public int Create(Dependency item)
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
@@ -29,10 +38,18 @@ internal class DependencyImplementation : IDependency
             throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         else
         {
-            dpncRoot.Add(item);
+            int id = Config.NextDependencyId;
+            DO.Dependency copy = item with { Id = id };
+            dpncRoot.Add(copy);
             XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
             return item.Id;
         }
+        //List<DO.Dependency> dependencies = XMLTools.LoadListFromXMLSerializer<DO.Dependency>(s_dependencies_xml);
+        //int id = Config.NextDependencyId;
+        //Dependency copy = item with { Id = id };
+        //dependencies.Add(copy);
+        //XMLTools.SaveListToXMLSerializer<DO.Dependency>(dependencies, s_dependencies_xml);
+        //return id;
     }
 
     public void Delete(int id)
