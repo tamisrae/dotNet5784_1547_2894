@@ -79,7 +79,6 @@ public static class Initialization
         }
     }
 
-
     /// <summary>
     /// Create tasks and push them to the list
     /// </summary>

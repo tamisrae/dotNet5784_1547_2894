@@ -1,7 +1,7 @@
 ﻿
 namespace Dal;
  static internal class DataSource
-{
+ {
     internal static class Config
     {
         internal const int taskId = 1;
@@ -19,4 +19,4 @@ namespace Dal;
     internal static List<DO.Worker> Workers { get; } = new();
     internal static List<DO.Task> Tasks { get; } = new();
     internal static List<DO.Dependency> Dependencies { get; } = new();
-}
+ }

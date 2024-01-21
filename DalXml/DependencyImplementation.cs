@@ -13,6 +13,7 @@ internal class DependencyImplementation : IDependency
 {
     readonly string s_dependencies_xml = "dependencies";
 
+
     static Dependency getDependency(XElement dpnc)
     {
         return new Dependency()
@@ -23,6 +24,9 @@ internal class DependencyImplementation : IDependency
         };
     }
 
+    /// <summary>
+    /// This function clear all the data from the xml file
+    /// </summary>
     public void Clear()
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
@@ -30,33 +34,35 @@ internal class DependencyImplementation : IDependency
         XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
     }
 
+    /// <summary>
+    /// This function create a new dependency
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
     public int Create(Dependency item)
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
-        XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("id") == item.Id);
-        if (element != null)
-            throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
-        else
-        {
-            int id = Config.NextDependencyId;
-            DO.Dependency copy = item with { Id = id };
-            dpncRoot.Add(copy);
-            XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
-            return item.Id;
-        }
-        //List<DO.Dependency> dependencies = XMLTools.LoadListFromXMLSerializer<DO.Dependency>(s_dependencies_xml);
-        //int id = Config.NextDependencyId;
-        //Dependency copy = item with { Id = id };
-        //dependencies.Add(copy);
-        //XMLTools.SaveListToXMLSerializer<DO.Dependency>(dependencies, s_dependencies_xml);
-        //return id;
+        XElement? element = new XElement("dependencies");
+
+        element.Add(new XElement("Id", Config.NextDependencyId));
+        element.Add(new XElement("DependentTask", item.DependentTask));
+        element.Add(new XElement("DependsOnTask", item.DependsOnTask));
+
+        dpncRoot.Add(element);
+        XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
+        return int.Parse(element.Element("Id")!.Value);
     }
 
+    /// <summary>
+    /// This function delete dependency from the xml file
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
 
-        XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("id") == id);
+        XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("Id") == id);
         if (element != null)
         {
             element.Remove();
@@ -66,6 +72,11 @@ internal class DependencyImplementation : IDependency
             throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
     }
 
+    /// <summary>
+    /// This function read dependency from the xml file by ID
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     public Dependency? Read(int id)
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
@@ -73,14 +84,24 @@ internal class DependencyImplementation : IDependency
         if (element != null)
             return getDependency(element);
         else
-            return null;
+            throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
     }
 
+    /// <summary>
+    /// This function read dependency from the xml file by filter
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public Dependency? Read(Func<Dependency, bool> filter)
     {
         return XMLTools.LoadListFromXMLElement(s_dependencies_xml).Elements().Select(dpnc => getDependency(dpnc)).FirstOrDefault(filter);
     }
 
+    /// <summary>
+    /// This function read all the dependencies that fit the filter from the xml file
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
         if (filter == null)
@@ -89,21 +110,29 @@ internal class DependencyImplementation : IDependency
             return XMLTools.LoadListFromXMLElement(s_dependencies_xml).Elements().Select(dpnc => getDependency(dpnc)).Where(filter);
     }
 
+    /// <summary>
+    /// This function update a dependency
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Dependency item)
     {
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
 
-        XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("id") == item.Id);
-        if (element == null)
-            throw new DalDoesNotExistException($"Dependency with ID={item.Id} doe's NOT exists");
-        else
+        XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("Id") == item.Id);
+        if (element != null)
         {
-            int id = item.Id;
-            DO.Dependency dpnc = new Dependency(id, item.DependentTask, item.DependsOnTask);
-            Delete(item.Id);
-            dpncRoot.Add(dpnc);
+            //dpncRoot.Elements("dependencies").Where(dpnc => int.Parse(dpnc.Element("Id")!.Value) == item.Id).FirstOrDefault()?.Remove();
+            //dpncRoot.Element("DependentTask")!.Value = item.DependentTask.ToString();
+            //dpncRoot.Element("DependsOnTask")!.Value = item.DependsOnTask.ToString();
+
+            element!.Element("DependentTask")!.Value = Convert.ToString(item.DependentTask);
+            element!.Element("DependsOnTask")!.Value = Convert.ToString(item.DependsOnTask);
+
             XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
         }
+        else
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} doe's NOT exists");
 
     }
 }

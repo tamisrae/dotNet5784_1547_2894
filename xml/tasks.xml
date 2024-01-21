@@ -1,2 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Task>
+    <Alias>Prepare the first course</Alias>
+    <Description>Check which course the orders have chosen for the first course, tell the sous chef what he should prepare and then cook the courses</Description>
+    <CreatedAtDate>2024-02-21T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1553</Id>
+    <Complexity>Chef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>First Courses</Deliverables>
+    <Remarks>Don't forget to add salt to the first course</Remarks>
+  </Task>
+  <Task>
+    <Alias>Prepare the second course</Alias>
+    <Description>Check which course the orders have chosen for the second course, tell the sous chef what he should prepare and then cook the courses</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1554</Id>
+    <Complexity>Chef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Second Courses</Deliverables>
+    <Remarks>Don't forget to add salt to the second course</Remarks>
+  </Task>
+  <Task>
+    <Alias>Make the desserts</Alias>
+    <Description>Check which types of desserts the orders have chosen, tell the sous chef what he needs to prepares and cook the desserts</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1555</Id>
+    <Complexity>Chef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Desserts</Deliverables>
+    <Remarks>Don't forget to melt chocolate before serving</Remarks>
+  </Task>
+  <Task>
+    <Alias>Make the salads</Alias>
+    <Description>Check which types of salads the orders have chosen, tell the sous chef what he needs to prepares and cook the salads</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1556</Id>
+    <Complexity>Chef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Salads</Deliverables>
+    <Remarks>Chop the onion finely</Remarks>
+  </Task>
+  <Task>
+    <Alias>Cut the vegetables</Alias>
+    <Description>Prepare for cooking all the vegetables that the chef asked for</Description>
+    <CreatedAtDate>2024-02-16T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1557</Id>
+    <Complexity>SousChef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Vegetables ready to cook</Deliverables>
+    <Remarks>cut them chopped</Remarks>
+  </Task>
+  <Task>
+    <Alias>Boil the oil</Alias>
+    <Description>Prepare the pans, pots and ovens for cooking</Description>
+    <CreatedAtDate>2024-02-23T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1558</Id>
+    <Complexity>SousChef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Dishes ready for cooking</Deliverables>
+    <Remarks>Be careful not to burn the oil</Remarks>
+  </Task>
+  <Task>
+    <Alias>Slice the meat</Alias>
+    <Description>Prepare the meat that the chef asked for cooking</Description>
+    <CreatedAtDate>2024-02-24T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1559</Id>
+    <Complexity>SousChef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Meat ready for cooking</Deliverables>
+    <Remarks>Don't forget to sharpen the knife</Remarks>
+  </Task>
+  <Task>
+    <Alias>Make a grocery list</Alias>
+    <Description>Check which of the ingredients the chef asked to prepare are in stock and make a list of all the ingredients that are missing</Description>
+    <CreatedAtDate>2024-02-25T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1560</Id>
+    <Complexity>SousChef</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Grocery list</Deliverables>
+    <Remarks>Only what is really necessary</Remarks>
+  </Task>
+  <Task>
+    <Alias>Serveing</Alias>
+    <Description>Serve the food</Description>
+    <CreatedAtDate>2024-02-24T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1561</Id>
+    <Complexity>Waiter</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Ready tables</Deliverables>
+    <Remarks>Don't forget to smile at the customer and bring a tooth pices</Remarks>
+  </Task>
+  <Task>
+    <Alias>Clear the tables</Alias>
+    <Description>Clear the food from the tables between the courses</Description>
+    <CreatedAtDate>2024-02-22T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1562</Id>
+    <Complexity>Waiter</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Clear tables</Deliverables>
+    <Remarks>Don't forget to wipe the tables</Remarks>
+  </Task>
+  <Task>
+    <Alias>Open the bottles of wine</Alias>
+    <Description>Serve the wine bottles to the tables, open them and pour into glasses</Description>
+    <CreatedAtDate>2024-02-21T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1563</Id>
+    <Complexity>Waiter</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Wine in the glasses</Deliverables>
+    <Remarks>Do not leave the cork on the diner's table</Remarks>
+  </Task>
+  <Task>
+    <Alias>Wash the dishes</Alias>
+    <Description>wash the dirty dishes</Description>
+    <CreatedAtDate>2024-02-12T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1564</Id>
+    <Complexity>Cleaner</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Clean dishes</Deliverables>
+    <Remarks>Don't forget to use hot water for greasy dishes</Remarks>
+  </Task>
+  <Task>
+    <Alias>Wash the floor</Alias>
+    <Description>Wash the floor after finishing preparing the food</Description>
+    <CreatedAtDate>2024-02-19T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1565</Id>
+    <Complexity>Cleaner</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Clean floor</Deliverables>
+    <Remarks>Don't forget before to pick things up from the floor</Remarks>
+  </Task>
+  <Task>
+    <Alias>Wipe the dishes</Alias>
+    <Description>wipe the wet dishes</Description>
+    <CreatedAtDate>2024-02-19T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1566</Id>
+    <Complexity>Cleaner</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Dry dishes</Deliverables>
+    <Remarks>Don't forget to wipe inside the glass</Remarks>
+  </Task>
+  <Task>
+    <Alias>Put the dishes in place</Alias>
+    <Description>Put the dishes in place after the wiping</Description>
+    <CreatedAtDate>2024-02-20T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1567</Id>
+    <Complexity>Cleaner</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>Dishes at place</Deliverables>
+    <Remarks>Put every tool in its place and do not change the order</Remarks>
+  </Task>
+  <Task>
+    <Alias>Drives the food</Alias>
+    <Description>Transport the food from the catering kitchen to the event location</Description>
+    <CreatedAtDate>2024-02-24T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1568</Id>
+    <Complexity>Driver</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The food at the event location</Deliverables>
+    <Remarks>Don't forget to turn on the cooling in the truck</Remarks>
+  </Task>
+  <Task>
+    <Alias>Returns the dishes</Alias>
+    <Description>Return the dishes that belong to the catering kitchen after the end of the event</Description>
+    <CreatedAtDate>2024-02-09T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1569</Id>
+    <Complexity>Driver</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The dishes at the catering kitchen</Deliverables>
+    <Remarks>Be careful not to break dishes when you bring them back</Remarks>
+  </Task>
+  <Task>
+    <Alias>Load the food</Alias>
+    <Description>Load the food to the truck</Description>
+    <CreatedAtDate>2024-02-14T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1570</Id>
+    <Complexity>Driver</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The food at the truck</Deliverables>
+    <Remarks>Be careful not to spill the food in the car</Remarks>
+  </Task>
+  <Task>
+    <Alias>Accepting the order</Alias>
+    <Description>Coordinates the details of the transaction with the customer</Description>
+    <CreatedAtDate>2024-02-25T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1571</Id>
+    <Complexity>Secretary</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The transaction details are coordinated with the customer</Deliverables>
+    <Remarks>Don't forget to ask what event it is</Remarks>
+  </Task>
+  <Task>
+    <Alias>Collects the payment</Alias>
+    <Description>Collects the payment from the orders</Description>
+    <CreatedAtDate>2024-02-17T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1572</Id>
+    <Complexity>Secretary</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The transaction payment has been made</Deliverables>
+    <Remarks>Ask whether to split into payments</Remarks>
+  </Task>
+  <Task>
+    <Alias>Take care of a shopping list</Alias>
+    <Description>Ordering the groceries from the grocery list</Description>
+    <CreatedAtDate>2024-02-17T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1573</Id>
+    <Complexity>Secretary</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The shoppings has been made</Deliverables>
+    <Remarks>Check that there are no duplicates</Remarks>
+  </Task>
+  <Task>
+    <Alias>Take care of the salaries of the employees</Alias>
+    <Description>Transfers the salaries to the employees on the 10th of the month</Description>
+    <CreatedAtDate>2024-02-18T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1574</Id>
+    <Complexity>Manager</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>All the employees got their salaryies</Deliverables>
+    <Remarks>Don't forget to add bonuses</Remarks>
+  </Task>
+  <Task>
+    <Alias>Coordinate with suppliers</Alias>
+    <Description>Talks with the suppliers and makes sure that there is no shortage of equipment in the kitchen</Description>
+    <CreatedAtDate>2024-02-18T00:00:00</CreatedAtDate>
+    <IsMilestone>false</IsMilestone>
+    <Id>1575</Id>
+    <Complexity>Manager</Complexity>
+    <WorkerId>0</WorkerId>
+    <Deliverables>The catering kitchen is equipped with all the necessary dishes</Deliverables>
+    <Remarks>Don't forget to talk to the chef to know what equipment is missing</Remarks>
+  </Task>
+</ArrayOfTask>
