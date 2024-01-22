@@ -122,10 +122,6 @@ internal class DependencyImplementation : IDependency
         XElement? element = dpncRoot.Elements().FirstOrDefault(dpnc => (int?)dpnc.Element("Id") == item.Id);
         if (element != null)
         {
-            //dpncRoot.Elements("dependencies").Where(dpnc => int.Parse(dpnc.Element("Id")!.Value) == item.Id).FirstOrDefault()?.Remove();
-            //dpncRoot.Element("DependentTask")!.Value = item.DependentTask.ToString();
-            //dpncRoot.Element("DependsOnTask")!.Value = item.DependsOnTask.ToString();
-
             element!.Element("DependentTask")!.Value = Convert.ToString(item.DependentTask);
             element!.Element("DependsOnTask")!.Value = Convert.ToString(item.DependsOnTask);
 

@@ -59,7 +59,8 @@ partial class Program
                     default:
                         Console.WriteLine("Invalid value Please try again");
                         break;
-                }
+                }       
+                
             }
             catch (DalDoesNotExistException ex)
             {
