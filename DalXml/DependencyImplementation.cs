@@ -50,7 +50,7 @@ internal class DependencyImplementation : IDependency
 
         dpncRoot.Add(element);
         XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
-        return int.Parse(element.Element("Id")!.Value);
+        return int.TryParse((string?)element.Element("Id"),out var id) ? id : throw new DalWorngValueException("can't convert the ID");
     }
 
     /// <summary>

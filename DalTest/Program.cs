@@ -10,8 +10,8 @@ using System.Diagnostics;
 
 partial class Program
 {
-    static readonly IDal s_dal = new DalXml(); //stage 3
-
+    static readonly IDal s_dal = Factory.Get; //stage 4
+    //static readonly IDal s_dal = new DalXml(); //stage 3
     //private static IDal s_dal = new Dal.DalList(); //stage 2
 
     //private static IWorker? s_dalWorker = new WorkerImplementation(); //stage 1
@@ -50,7 +50,8 @@ partial class Program
                             s_dal.Worker.Clear();
                             s_dal.Task.Clear();
                             s_dal.Dependency.Clear();
-                            Initialization.Do(s_dal); //stage 2
+                            //Initialization.Do(s_dal); //stage 2
+                            Initialization.Do(); //stage 4
                         }
                         break;
                     case 0:
