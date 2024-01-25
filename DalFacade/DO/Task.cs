@@ -48,6 +48,6 @@ public record Task
     public bool ShouldSerializeCompleteDate() { return CompleteDate.HasValue; }
     public bool ShouldSerializeDeliverables() { return !string.IsNullOrEmpty(Deliverables); }
     public bool ShouldSerializeRemarks() { return !string.IsNullOrEmpty(Remarks); }
-    public bool ShouldSerializeEngineerId() { return WorkerId.HasValue; }
+    public bool ShouldSerializeWorkerId() { return WorkerId.HasValue; }
     public bool ShouldSerializeComplexity() { return Complexity.HasValue; }
 }
