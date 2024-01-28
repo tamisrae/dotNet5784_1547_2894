@@ -54,8 +54,23 @@ internal class WorkerImplementation : BlApi.IWorker
 
             int level = (int)doWorker.Level;
 
-            //BO.Worker worker = new BO.Worker
-            //(doWorker.Id, (BO.WorkerExperience)level, doWorker.Email, doWorker.Cost, doWorker.Name);
+            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
+            (int, string)? currentTask;
+
+            if (task == null)
+                currentTask = null;
+            else
+                currentTask = (task.Id, task.Alias);
+
+            return new BO.Worker()
+            {
+                Id = id,
+                Level = (BO.WorkerExperience)level,
+                Email = doWorker.Email,
+                Cost = doWorker.Cost,
+                Name = doWorker.Name,
+                CurrentTask = currentTask
+            };
         }
         catch (DO.DalDoesNotExistsException ex)
         {
@@ -65,11 +80,29 @@ internal class WorkerImplementation : BlApi.IWorker
 
     public IEnumerable<WorkerInList> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        return from item in dal.Worker.ReadAll()
+                      where filter!(Read(item.Id)!)
+                      select new BO.WorkerInList
+                      {
+                          Name = item.Name,
+                          Id = item.Id,
+                      };
     }
 
     public void Update(BO.Worker worker)
     {
-        throw new NotImplementedException();
+        int level = (int)worker.Level;
+
+        DO.Worker doWorker = new DO.Worker
+           (worker.Id, (DO.WorkerExperience)level, worker.Email, worker.Cost, worker.Name);
+
+        try
+        {
+            dal.Worker.Update(doWorker);
+        }
+        catch (DO.DalDoesNotExistsException ex)
+        {
+            throw new BO.BlDoesNotExistsException($"Student with ID={worker.Id} already exists", ex);
+        }
     }
 }

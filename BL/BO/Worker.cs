@@ -13,9 +13,9 @@ public class Worker
     public int Id {  get; init; }
     public WorkerExperience Level { get; set; }
     public required string Email { get; set; }
-    public int Cost { get; set; }
+    public double Cost { get; set; }
     public required string Name { get; set; }
-    public (int, string) CurrentTask { get; set; }
+    public (int, string)? CurrentTask { get; set; }
 
     public override string ToString() => this.ToStringProperty();
 }
