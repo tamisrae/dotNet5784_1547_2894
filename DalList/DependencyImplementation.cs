@@ -30,7 +30,7 @@ internal class DependencyImplementation : IDependency
     {
         Dependency? dependency = Read(id);
         if (dependency == null)
-            throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Dependency with ID={id} doe's NOT exists");
         DataSource.Dependencies.Remove(dependency);
     }
 
@@ -42,7 +42,7 @@ internal class DependencyImplementation : IDependency
     /// <exception cref="DalDoesNotExistException"></exception>
     public Dependency? Read(int id)
     {
-        return DataSource.Dependencies.FirstOrDefault(dependency => dependency.Id == id) ?? throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
+        return DataSource.Dependencies.FirstOrDefault(dependency => dependency.Id == id) ?? throw new DalDoesNotExistsException($"Dependency with ID={id} doe's NOT exists");
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ internal class DependencyImplementation : IDependency
     public void Update(Dependency item)
     {
         if (Read(item.Id) == null)
-            throw new DalDoesNotExistException($"Dependency with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Dependency with ID={item.Id} doe's NOT exists");
         int id = item.Id;
         Delete(item.Id);
         Dependency dependency = new Dependency(id, item.DependentTask, item.DependsOnTask);

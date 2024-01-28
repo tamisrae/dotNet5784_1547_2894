@@ -63,7 +63,7 @@ partial class Program
                 }       
                 
             }
-            catch (DalDoesNotExistException ex)
+            catch (DalDoesNotExistsException ex)
             {
                 Console.WriteLine(ex.Message);
             }

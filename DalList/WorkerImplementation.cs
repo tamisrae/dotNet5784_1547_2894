@@ -34,7 +34,7 @@ internal class WorkerImplementation : IWorker
     {
         Worker? worker = Read(id);
         if (worker == null)
-            throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Worker with ID={id} doe's NOT exists");
         DataSource.Workers.Remove(worker);
     }
 
@@ -46,7 +46,7 @@ internal class WorkerImplementation : IWorker
     /// <exception cref="DalDoesNotExistException"></exception>
     public Worker? Read(int id)
     {
-        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id) ?? throw new DalDoesNotExistException($"Worker with ID={id} doe's NOT exists");
+        return DataSource.Workers.FirstOrDefault(worker => worker.Id == id) ?? throw new DalDoesNotExistsException($"Worker with ID={id} doe's NOT exists");
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ internal class WorkerImplementation : IWorker
     public void Update(Worker item)
     {
         if (Read(item.Id) == null)
-            throw new DalDoesNotExistException($"Worker with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Worker with ID={item.Id} doe's NOT exists");
         Delete(item.Id);
         Create(item);
     }
