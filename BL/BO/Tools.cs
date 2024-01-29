@@ -39,7 +39,7 @@ static class Tools
         return string.IsNullOrWhiteSpace(str);
     }
 
-    public static Status StatusCalculation(DO.Task task)
+    public static Status GetStatus(this DO.Task task)
     {
         Status status;
         if (task.ScheduledDate == null)
@@ -54,7 +54,7 @@ static class Tools
         return status;
     }
 
-    public static DateTime? ForeCastDateCalculation(DO.Task task)
+    public static DateTime? ForeCastDateCalculation(this DO.Task task)
     {
         DateTime? startDate;
         if (task.StartDate > task.ScheduledDate)

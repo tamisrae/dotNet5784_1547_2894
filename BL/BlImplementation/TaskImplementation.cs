@@ -50,10 +50,10 @@ internal class TaskImplementation : BlApi.ITask
                where filter!(Read(item.Id)!)
                select new BO.TaskInList
                {
-                   Id=item.Id,
-                   Alias=item.Alias,
-                   Description=item.Description,
-                   Status= Tools.StatusCalculation(item)
+                   Id = item.Id,
+                   Alias = item.Alias,
+                   Description = item.Description,
+                   Status = item.GetStatus()
                };
     }
 
