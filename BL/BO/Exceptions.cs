@@ -24,3 +24,15 @@ public class BlNullPropertyException : Exception
     public BlNullPropertyException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlWorngValueException : Exception
+{
+    public BlWorngValueException(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlWorkerInTaskException : Exception
+{
+    public BlWorkerInTaskException(string? message) : base(message) { }
+}
+

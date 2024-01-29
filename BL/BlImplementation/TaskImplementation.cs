@@ -41,42 +41,22 @@ internal class TaskImplementation : BlApi.ITask
 
     public BO.Task? Read(int id)
     {
-        try
-        {
-            DO.Task? doTask = dal.Task.Read(id);
-            if (doTask == null)
-                throw new BO.BlDoesNotExistsException($"Student with ID={id} already exists");
-
-            return new BO.Task()
-            {
-               Id=id,
-               Alias=doTask.Alias,
-               Description=doTask.Description,
-               Status=
-            };
-        }
-            /*
-           public int Id { get; init; }
-    public required string Alias { get; set; }
-    public required string Description { get; set; }
-    public Status Status { get; set; }
-    public TaskInList? DependencyList { get; set; } = null;
-    public DateTime CreatedAtDate {  get; set; }
-    public DateTime? ScheduledDate { get; set; } = null;
-    public DateTime? StartDate { get; set; } = null;
-    public DateTime? EstimatedCompletionDate { get; set; } = null;
-    public DateTime? CompleteDate { get; set; } = null;
-    public TimeSpan? RequiredEffortTime { get; set; } = null;
-    public string? Deliverables { get; set; } = null;
-    public string? Remarks { get; set; } = null;
-    public DO.WorkerExperience? Complexity { get; set; } = null;
-    public int? WorkerId { get; set; } = null;
-     */
+        throw new Exception($"You are tambal!");
+    }
 
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        return from item in dal.Task.ReadAll()
+               where filter!(Read(item.Id)!)
+               select new BO.TaskInList
+               {
+                   Id=item.Id,
+                   Alias=item.Alias,
+                   Description=item.Description,
+                   Status= Tools.StatusCalculation(item)
+               };
     }
+
 
     public void Update(BO.Task task)
     {

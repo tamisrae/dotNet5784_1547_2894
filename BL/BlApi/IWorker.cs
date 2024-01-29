@@ -14,4 +14,5 @@ public interface IWorker
     public void Update(BO.Worker worker);
     public void Delete(int id);
     public BO.WorkerInList GetDetailedTaskForWorker(int workerId, int taskId);
+    public BO.TaskInWorker? CurrentTask(int id);
 }

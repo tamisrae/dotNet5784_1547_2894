@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public class WorkerInList
+public class WorkerInTask
 {
     public int Id { get; init; }
     public required string Name { get; set; }
-    public BO.TaskInWorker? CurrentTask { get; set; } = null;
-
-    public override string ToString() => this.ToStringProperty();
 }

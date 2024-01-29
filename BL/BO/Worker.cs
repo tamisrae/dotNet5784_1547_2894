@@ -15,7 +15,6 @@ public class Worker
     public required string Email { get; set; }
     public double Cost { get; set; }
     public required string Name { get; set; }
-    public (int, string)? CurrentTask { get; set; }
-
+    public BO.TaskInWorker? CurrentTask { get; set; } = null;
     public override string ToString() => this.ToStringProperty();
 }
