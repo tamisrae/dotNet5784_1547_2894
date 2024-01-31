@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -13,21 +14,26 @@ static class Tools
     public static string ToStringProperty<T>(this T obj)
     {
         string str = "";
-        foreach (PropertyInfo item in obj.GetType().GetProperties())
-            str += "\n" + item.Name + ": " + item.GetValue(obj, null);
-        return str;
-    }
-
-    public static string ToStringPropertyArray<T>(this T[] obj)
-    {
-        string str = "";
-        foreach (T element in obj)
+        foreach (PropertyInfo item in obj?.GetType().GetProperties()!)
         {
-            foreach (PropertyInfo item in obj.GetType().GetProperties())
+            if (obj is IEnumerable<T> && !(obj is string))
+            {
+                foreach (T element in (IEnumerable<T>)obj)
+                    str += "\n" + item.Name + ": " + item.GetValue(obj, null);
+            }
+            else
                 str += "\n" + item.Name + ": " + item.GetValue(obj, null);
         }
         return str;
     }
+
+    //public static string ToStringPropertyIEnumerable<T>(this IEnumerable<T> obj)
+    //{
+    //    string str = "";
+    //    foreach (T element in obj)
+    //        str = element.ToStringProperty();
+    //    return str;
+    //}
 
     public static bool IsGreaterThanZero<T>(this T value) where T : IComparable<T>
     {
@@ -54,7 +60,7 @@ static class Tools
         return status;
     }
 
-    public static DateTime? ForeCastDateCalculation(this DO.Task task)
+    public static DateTime? GetForeCastDate(this DO.Task task)
     {
         DateTime? startDate;
         if (task.StartDate > task.ScheduledDate)

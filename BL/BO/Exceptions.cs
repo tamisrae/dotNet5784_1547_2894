@@ -36,3 +36,9 @@ public class BlWorkerInTaskException : Exception
     public BlWorkerInTaskException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlCantUpdateException : Exception
+{
+    public BlCantUpdateException(string? message) : base(message) { }
+}
+

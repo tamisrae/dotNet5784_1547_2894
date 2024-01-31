@@ -20,11 +20,11 @@ public class Task
     public DateTime? StartDate { get; set; } = null;
     public DateTime? CompleteDate { get; set; } = null;
     public DateTime? ForeCastDate { get; set; } = null;
+    public DateTime? DeadlineDate { get; set; } = null;
     public TimeSpan? RequiredEffortTime { get; set; } = null;
     public string? Deliverables { get; set; } = null;
     public string? Remarks { get; set; } = null;
-    public DO.WorkerExperience? Complexity { get; set; } = null;
-    public int? WorkerId { get; set; } = null;
+    public BO.WorkerExperience? Complexity { get; set; } = null;
 
     public override string ToString() => this.ToStringProperty();
 }

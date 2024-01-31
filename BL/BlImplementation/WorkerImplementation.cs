@@ -3,6 +3,7 @@ using BlApi;
 using BO;
 using DalApi;
 using DO;
+using System.ComponentModel.Design;
 
 namespace BlImplementation;
 
@@ -30,36 +31,21 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
-    public BO.TaskInWorker? CurrentTask(int id)
-    {
-        DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
-        BO.TaskInWorker? taskInWorker = null;
-
-        if (task != null)
-            taskInWorker = new BO.TaskInWorker { Id = id, Alias = task.Alias };
-        return taskInWorker;
-    }
-
     public void Delete(int id)
     {
         DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
 
         if (task != null)
             throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
-        
+
         try
         {
             dal.Worker.Delete(id);
         }
         catch (DO.DalDoesNotExistsException ex)
         {
-            throw new BO.BlDoesNotExistsException($"Worker with ID={id} already exists", ex);
+            throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists", ex);
         }
-    }
-
-    public WorkerInList GetDetailedTaskForWorker(int WorkerId, int TaskId)
-    {
-        throw new NotImplementedException();
     }
 
     public BO.Worker? Read(int id)
@@ -68,7 +54,7 @@ internal class WorkerImplementation : BlApi.IWorker
         {
             DO.Worker? doWorker = dal.Worker.Read(id);
             if (doWorker == null)
-                throw new BO.BlDoesNotExistsException($"Worker with ID={id} already exists");
+                throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists");
 
             int level = (int)doWorker.Level;
 
@@ -90,20 +76,33 @@ internal class WorkerImplementation : BlApi.IWorker
         }
         catch (DO.DalDoesNotExistsException ex)
         {
-            throw new BO.BlDoesNotExistsException($"Worker with ID={id} already exists", ex);
+            throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists", ex);
         }
     }
 
     public IEnumerable<WorkerInList> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
-        return from item in dal.Worker.ReadAll()
-               where filter!(Read(item.Id)!)
-               select new BO.WorkerInList
-               {
-                   Name = item.Name,
-                   Id = item.Id,
-                   CurrentTask = CurrentTask(item.Id)
-               };
+        if (filter == null)
+        {
+            return from item in dal.Worker.ReadAll()
+                   select new BO.WorkerInList
+                   {
+                       Name = item.Name,
+                       Id = item.Id,
+                       CurrentTask = CurrentTask(item.Id)
+                   };
+        }
+        else
+        {
+            return from item in dal.Worker.ReadAll()
+                   where filter!(Read(item.Id)!)
+                   select new BO.WorkerInList
+                   {
+                       Name = item.Name,
+                       Id = item.Id,
+                       CurrentTask = CurrentTask(item.Id)
+                   };
+        }
     }
 
     public void Update(BO.Worker worker)
@@ -122,7 +121,18 @@ internal class WorkerImplementation : BlApi.IWorker
         }
         catch (DO.DalDoesNotExistsException ex)
         {
-            throw new BO.BlDoesNotExistsException($"Worker with ID={worker.Id} already exists", ex);
+            throw new BO.BlDoesNotExistsException($"Worker with ID={worker.Id} doe's NOT exists", ex);
         }
+    }
+
+    private BO.TaskInWorker? CurrentTask(int id)
+    {
+        DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
+        BO.TaskInWorker? taskInWorker = null;
+
+
+        if (task != null)
+            taskInWorker = new BO.TaskInWorker { Id = id, Alias = task.Alias };
+        return taskInWorker;
     }
 }
