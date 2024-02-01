@@ -209,6 +209,31 @@ internal class TaskImplementation : BlApi.ITask
         }
         return true;
     }
+
+
+    //private bool GetDependency(int taskId, List<DO.Dependency>? list)//not correct!!!!
+    //{
+    //    if (list == null)
+    //        return true;
+    //    else
+    //    {
+    //        foreach (DO.Dependency dependency in list)
+    //        {
+    //            if (dependency.DependentTask == taskId)
+    //                return false;
+    //            else
+    //                if (false == GetDependency(taskId, FindDependencies(dependency.Id)))
+    //                    return false;
+
+
+    //        }
+    //        return true;
+    //    }
+    //    //return true;
+    //}
+
+
+
 }
 
 /*

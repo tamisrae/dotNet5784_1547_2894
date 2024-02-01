@@ -69,7 +69,7 @@ internal class DependencyImplementation : IDependency
             XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
         }
         else
-            throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Dependency with ID={id} doe's NOT exists");
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ internal class DependencyImplementation : IDependency
         if (element != null)
             return getDependency(element);
         else
-            throw new DalDoesNotExistException($"Dependency with ID={id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Dependency with ID={id} doe's NOT exists");
     }
 
     /// <summary>
@@ -102,7 +102,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null)
     {
         if (filter == null)
             return XMLTools.LoadListFromXMLElement(s_dependencies_xml).Elements().Select(dpnc => getDependency(dpnc));
@@ -128,7 +128,7 @@ internal class DependencyImplementation : IDependency
             XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
         }
         else
-            throw new DalDoesNotExistException($"Dependency with ID={item.Id} doe's NOT exists");
+            throw new DalDoesNotExistsException($"Dependency with ID={item.Id} doe's NOT exists");
 
     }
 }
