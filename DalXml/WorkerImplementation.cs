@@ -85,7 +85,7 @@ internal class WorkerImplementation : IWorker
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Worker?> ReadAll(Func<Worker, bool>? filter = null)
+    public IEnumerable<Worker> ReadAll(Func<Worker, bool>? filter = null)
     {
         List<DO.Worker> workers = XMLTools.LoadListFromXMLSerializer<DO.Worker>(s_workers_xml);
 

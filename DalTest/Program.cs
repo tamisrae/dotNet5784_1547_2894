@@ -252,7 +252,7 @@ partial class Program
     /// </summary>
     static void ReadAllW()
     {
-        List<Worker?> list;
+        List<Worker> list;
         list = s_dal!.Worker.ReadAll().ToList();
         foreach (Worker? worker in list)
             Console.WriteLine(worker);
@@ -356,7 +356,7 @@ partial class Program
     /// </summary>
     static void ReadAllT()
     {
-        List<Task?> list;
+        List<Task> list;
         list = s_dal!.Task.ReadAll().ToList();
         foreach (Task? task in list)
             Console.WriteLine(task);
@@ -512,7 +512,7 @@ partial class Program
     /// </summary>
     static void ReadAllD()
     {
-        List<Dependency?> list;
+        List<Dependency> list;
         list = s_dal!.Dependency.ReadAll().ToList();
         foreach (Dependency? dependency in list)
             Console.WriteLine(dependency);
