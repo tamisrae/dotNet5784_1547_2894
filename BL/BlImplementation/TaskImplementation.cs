@@ -11,7 +11,7 @@ internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
-    public int Create(BO.Task task)    
+    public int Create(BO.Task task)
     {
         if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
             throw new BlWorngValueException("The task has WORNG VALUE!");
@@ -135,6 +135,45 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    public List<TaskInList>? TasksForWorker(int workerId)
+    {
+        try
+        {
+            DO.Worker? worker = dal.Worker.Read(workerId);
+            if (worker != null)
+            {
+                List<BO.TaskInList>? tasks = (from task in dal.Task.ReadAll()
+                                              where task.WorkerId == null && task.Complexity == worker.Level
+                                              select new BO.TaskInList
+                                              {
+                                                  Id = task.Id,
+                                                  Alias = task.Alias,
+                                                  Description = task.Description,
+                                                  Status = task.GetStatus()
+                                              }).ToList();
+
+                foreach (BO.TaskInList task in tasks)
+                {
+                    BO.Task? extendedTask = Read(task.Id);
+                    if (extendedTask != null && extendedTask.Dependencies != null)
+                    {
+                        foreach (BO.TaskInList dependOnTask in extendedTask.Dependencies)
+                        {
+                            if (dependOnTask.Status != Status.Done)
+                                tasks.Remove(dependOnTask);
+                        }
+                    }
+                }
+                return tasks;
+            }
+        }
+        catch (DO.DalDoesNotExistsException ex)
+        {
+            throw new BO.BlDoesNotExistsException($"Worker with ID={workerId} doe's NOT exists", ex);
+        }
+        return null;
+    }
+
     public void Update(BO.Task task)
     {
         if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
@@ -142,8 +181,8 @@ internal class TaskImplementation : BlApi.ITask
 
         if (task.Dependencies != null)
         {
-            List<DO.Dependency>? list = FindDependencies(task.Id);
-            if (GetDependency(task.Id, list))
+            IEnumerable<DO.Dependency>? dependencies = FindDependencies(task.Id);
+            if (GetDependency(task.Id, dependencies))
             {
                 foreach (BO.TaskInList item in task.Dependencies)
                 {
@@ -183,34 +222,13 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-
-    private List<DO.Dependency>? FindDependencies(int id)
+    private IEnumerable<DO.Dependency>? FindDependencies(int id)
     {
-        List<DO.Dependency>? list = (from dependency in dal.Dependency.ReadAll()
-                                     where dependency.DependentTask == id
-                                     select dependency).ToList();
-        return list;
+        IEnumerable<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
+                                                    where dependency.DependentTask == id
+                                                    select dependency);
+        return dependencies;
     }
-
-
-    private bool GetDependency(int taskId, List<DO.Dependency>? list)//not correct!!!!
-    {
-        if (list == null)
-            return true;
-        else
-        {
-            foreach (DO.Dependency dependency in list)
-            {
-                if (dependency.DependentTask == taskId)
-                    return false;
-                else
-                    return GetDependency(taskId, FindDependencies(dependency.Id));
-            }
-        }
-        return true;
-    }
-
-
     //private bool GetDependency(int taskId, List<DO.Dependency>? list)//not correct!!!!
     //{
     //    if (list == null)
@@ -222,18 +240,29 @@ internal class TaskImplementation : BlApi.ITask
     //            if (dependency.DependentTask == taskId)
     //                return false;
     //            else
-    //                if (false == GetDependency(taskId, FindDependencies(dependency.Id)))
-    //                    return false;
-
-
+    //                return GetDependency(taskId, FindDependencies(dependency.Id));
     //        }
-    //        return true;
     //    }
-    //    //return true;
+    //    return true;
     //}
 
-
-
+    private bool GetDependency(int taskId, IEnumerable<DO.Dependency>? dependencies)
+    {
+        if (dependencies == null)
+            return true;
+        else
+        {
+            foreach (DO.Dependency dependency in dependencies)
+            {
+                if (dependency.DependentTask == taskId)
+                    return false;
+                else
+                    if (GetDependency(taskId, FindDependencies(dependency.Id)) == false)
+                    return false;
+            }
+            return true;
+        }
+    }
 }
 
 /*

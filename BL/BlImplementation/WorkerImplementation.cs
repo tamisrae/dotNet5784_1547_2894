@@ -16,10 +16,8 @@ internal class WorkerImplementation : BlApi.IWorker
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
 
-        int level = (int)worker.Level;
-
         DO.Worker doWorker = new DO.Worker
-           (worker.Id, (DO.WorkerExperience)level, worker.Email, worker.Cost, worker.Name);
+           (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
         try
         {
             int idWorker = dal.Worker.Create(doWorker);
@@ -33,13 +31,17 @@ internal class WorkerImplementation : BlApi.IWorker
 
     public void Delete(int id)
     {
-        DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
-
-        if (task != null)
-            throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
-
         try
         {
+        //BO.Worker? worker = Read(id);
+        //    BO.Task? task = null;
+        //if (worker!=null && worker.CurrentTask != null)
+        //     task = BlApi.ITask.Read(worker.CurrentTask.Id);
+            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
+
+            if (task != null)
+                throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
+
             dal.Worker.Delete(id);
         }
         catch (DO.DalDoesNotExistsException ex)
@@ -67,7 +69,7 @@ internal class WorkerImplementation : BlApi.IWorker
             return new BO.Worker()
             {
                 Id = id,
-                Level = (BO.WorkerExperience)level,
+                Level = (BO.WorkerExperience)((int)doWorker.Level),
                 Email = doWorker.Email,
                 Cost = doWorker.Cost,
                 Name = doWorker.Name,
@@ -89,6 +91,7 @@ internal class WorkerImplementation : BlApi.IWorker
                    {
                        Name = item.Name,
                        Id = item.Id,
+                       Level = (BO.WorkerExperience)((int)item.Level),
                        CurrentTask = CurrentTask(item.Id)
                    };
         }
@@ -100,6 +103,7 @@ internal class WorkerImplementation : BlApi.IWorker
                    {
                        Name = item.Name,
                        Id = item.Id,
+                       Level = (BO.WorkerExperience)((int)item.Level),
                        CurrentTask = CurrentTask(item.Id)
                    };
         }
@@ -110,10 +114,8 @@ internal class WorkerImplementation : BlApi.IWorker
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
 
-        int level = (int)worker.Level;
-
         DO.Worker doWorker = new DO.Worker
-           (worker.Id, (DO.WorkerExperience)level, worker.Email, worker.Cost, worker.Name);
+           (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
 
         try
         {
