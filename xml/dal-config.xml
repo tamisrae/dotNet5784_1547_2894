@@ -3,6 +3,8 @@
 	<dal>list</dal>
 	<dal-packages>
 		<list>DalList</list>
-		<xml>DalXml</xml>
+		<xml>DalXml</xml>		
 	</dal-packages>
 </config>
+
+
