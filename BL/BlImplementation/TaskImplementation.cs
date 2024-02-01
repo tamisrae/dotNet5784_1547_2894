@@ -11,7 +11,7 @@ internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
-    public int Create(BO.Task task)
+    public int Create(BO.Task task)    
     {
         if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
             throw new BlWorngValueException("The task has WORNG VALUE!");
