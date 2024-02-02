@@ -5,6 +5,7 @@ using DO;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace BlImplementation;
 internal class TaskImplementation : BlApi.ITask
@@ -40,7 +41,7 @@ internal class TaskImplementation : BlApi.ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BO.BlAlreadyExistsException($"Student with ID={task.Id} already exists", ex);
+            throw new BO.BlAlreadyExistsException($"Task with ID={task.Id} already exists", ex);
         }
     }
 
@@ -48,11 +49,21 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
+            DO.Task? task = dal.Task.Read(id);
+            if (task == null)
+                throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
+
+            IEnumerable<DO.Dependency>? dependencies = from DO.Dependency item in dal.Dependency.ReadAll()
+                                                       where item.DependsOnTask == id
+                                                       select item;
+            if (dependencies != null)
+                throw new BlCantDeleteException("This Task Cannot be deleted");
+
             dal.Task.Delete(id);
         }
         catch (DO.DalDoesNotExistsException ex)
         {
-            throw new BO.BlDoesNotExistsException($"Student with ID={id} already exists", ex);
+            throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists", ex);
         }
     }
 
@@ -197,7 +208,7 @@ internal class TaskImplementation : BlApi.ITask
                 }
             }
             else
-                throw new BlCantUpdateException("This thask cannot be update!");
+                throw new BlCantUpdateException("This task cannot be update");
         }
 
         int? temp = (int?)task.Complexity;
@@ -218,7 +229,36 @@ internal class TaskImplementation : BlApi.ITask
         }
         catch (DO.DalDoesNotExistsException ex)
         {
-            throw new BO.BlDoesNotExistsException($"Worker with ID={task.Id} doe's NOT exists", ex);
+            throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+        }
+    }
+
+    public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate)
+    {
+        try
+        {
+            BO.Task? task = Read(taskId);
+            if (task != null)
+            {
+                if (task.Dependencies != null)
+                {
+                    foreach (BO.TaskInList taskInList in task.Dependencies)
+                    {
+                        BO.Task? dependentTask = Read(taskInList.Id);
+                        if (dependentTask != null && dependentTask.StartDate == null)
+                            throw new BlCantUpdateException("This task cannot be update");
+
+                        if (dependentTask != null && dependentTask.ForeCastDate < scheduledDate)
+                            throw new BlCantUpdateException("This task cannot be update");
+                    }
+                }
+                task.StartDate = scheduledDate;
+                Update(task);
+            }
+        }
+        catch (DO.DalDoesNotExistsException ex)
+        {
+            throw new BO.BlDoesNotExistsException($"Task with ID={taskId} doe's NOT exists", ex);
         }
     }
 
@@ -229,22 +269,6 @@ internal class TaskImplementation : BlApi.ITask
                                                     select dependency);
         return dependencies;
     }
-    //private bool GetDependency(int taskId, List<DO.Dependency>? list)//not correct!!!!
-    //{
-    //    if (list == null)
-    //        return true;
-    //    else
-    //    {
-    //        foreach (DO.Dependency dependency in list)
-    //        {
-    //            if (dependency.DependentTask == taskId)
-    //                return false;
-    //            else
-    //                return GetDependency(taskId, FindDependencies(dependency.Id));
-    //        }
-    //    }
-    //    return true;
-    //}
 
     private bool GetDependency(int taskId, IEnumerable<DO.Dependency>? dependencies)
     {
@@ -264,20 +288,3 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 }
-
-/*
-     string Alias,
-    string Description,
-    DateTime CreatedAtDate,
-    bool IsMilestone,
-    int Id,
-    DO.WorkerExperience? Complexity = null,
-    int? WorkerId = null,
-    TimeSpan? RequiredEffortTime = null,
-    DateTime? StartDate = null,
-    DateTime? ScheduledDate = null,
-    DateTime? Deadlinedate = null,
-    DateTime? CompleteDate = null,
-    string? Deliverables = null,
-    string? Remarks = null
- */

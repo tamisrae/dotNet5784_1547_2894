@@ -14,5 +14,6 @@ public interface ITask
     public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task, bool>? filter = null);
     public void Update(BO.Task task);
     public void Delete(int id);
+    public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate);
     public List<BO.TaskInList>? TasksForWorker(int workerId);
 }

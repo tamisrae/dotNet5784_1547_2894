@@ -24,3 +24,9 @@ public enum Status
     Done
 }
 
+public enum ProjectStatus
+{
+    Unscheduled,
+    Scheduled,
+    Execution
+}
