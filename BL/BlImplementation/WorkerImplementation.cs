@@ -15,6 +15,30 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
+        BO.ProjectStatus status= IBl.
+        
+
+        if (worker.CurrentTask != null)
+        {
+            try
+            {
+                DO.Task? task = dal.Task.Read(worker.CurrentTask.Id);
+                if (task != null)
+                {
+                    if (task.WorkerId != null)
+                        throw new BlTaskInWorkerException("Another worker is already doing this task");
+                    else
+                    {
+                        task = task with { WorkerId = task.WorkerId };
+                        dal.Task.Update(task);
+                    }
+                }
+            }
+            catch (DO.DalDoesNotExistsException ex)
+            {
+                throw new BO.BlDoesNotExistsException($"Worker with ID={worker.CurrentTask.Id} doe's NOT exists", ex);
+            }
+        }
 
         DO.Worker doWorker = new DO.Worker
            (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
@@ -33,10 +57,10 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         try
         {
-        //BO.Worker? worker = Read(id);
-        //    BO.Task? task = null;
-        //if (worker!=null && worker.CurrentTask != null)
-        //     task = BlApi.ITask.Read(worker.CurrentTask.Id);
+            //BO.Worker? worker = Read(id);
+            //    BO.Task? task = null;
+            //if (worker!=null && worker.CurrentTask != null)
+            //     task = BlApi.ITask.Read(worker.CurrentTask.Id);
             DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
 
             if (task != null)

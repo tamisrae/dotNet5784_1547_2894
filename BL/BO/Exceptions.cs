@@ -48,3 +48,9 @@ public class BlCantDeleteException : Exception
     public BlCantDeleteException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlTaskInWorkerException : Exception
+{
+    public BlTaskInWorkerException(string? message) : base(message) { }
+}
+

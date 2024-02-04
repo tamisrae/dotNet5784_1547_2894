@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +21,14 @@ public interface IBl
         BO.ProjectStatus projectStatus = BO.ProjectStatus.Execution;
         if (StartProjectDate == null)
             projectStatus = BO.ProjectStatus.Unscheduled;
-        //tasks????
+
+        IEnumerable<TaskInList> listOfTask = Task.ReadAll();
+        foreach (TaskInList taskInList in listOfTask)
+        {
+            BO.Task? task = Task.Read(taskInList.Id);
+            if (task != null && task.ScheduledDate != null && (task.StartDate == null || task.StartDate > DateTime.Now))
+                projectStatus = BO.ProjectStatus.Scheduled;
+        }
         return projectStatus;
     }
-}
+};
