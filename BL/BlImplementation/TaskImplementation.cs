@@ -214,6 +214,7 @@ internal class TaskImplementation : BlApi.ITask
                 throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
             }
         }
+
         else
         {
             if (task.Dependencies != null)
@@ -261,15 +262,21 @@ internal class TaskImplementation : BlApi.ITask
             {
                 if (task.Dependencies != null)
                 {
+                    IEnumerable<BO.Task> tasks = from BO.TaskInList taskInList in task.Dependencies
+                                                 select (Read(ReadAll().FirstOrDefault(t => t.Id == taskInList.Id)!.Id));
                     foreach (BO.TaskInList taskInList in task.Dependencies)
                     {
-                        BO.Task? dependentTask = Read(taskInList.Id);
-                        if (dependentTask != null && dependentTask.StartDate == null && dependentTask.ForeCastDate < scheduledDate)
-                            throw new BlCantUpdateException("This task cannot be update");
+                        DateTime? dateTime;
+                        if (tasks.FirstOrDefault(task => task.StartDate == null) != null)
+                            throw new BlScheduledDateException("You cannot enter scheduled date for this task");
+                        else
+                        {
+                            dateTime = tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate;
+                            if (task.ScheduledDate > dateTime)
+                                throw new BlScheduledDateException("This scheduled date does not fit the schedule");
+                        }
                     }
                 }
-                task.StartDate = scheduledDate;
-                Update(task);
             }
         }
         catch (DO.DalDoesNotExistsException ex)
@@ -321,21 +328,7 @@ internal class TaskImplementation : BlApi.ITask
                 throw new BlProjectStatusException("You cannot enter a scheduled start date for a task at this stage of the project");
             else
             {
-                if (task.Dependencies != null)
-                {
-                    IEnumerable<BO.Task> tasks = from BO.TaskInList taskInList in task.Dependencies
-                                                 select (Read(ReadAll().FirstOrDefault(t => t.Id == taskInList.Id)!.Id));
-
-                    DateTime? dateTime;
-                    if (tasks.FirstOrDefault(task => task.StartDate == null) != null)
-                        throw new BlScheduledDateException("You cannot enter scheduled date for this task");
-                    else
-                    {
-                        dateTime = tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate;
-                        if (task.ScheduledDate > dateTime)
-                            throw new BlScheduledDateException("This scheduled date does not fit the schedule");
-                    }
-                }
+                UpdateTheScheduledDate(task.Id, (DateTime)task.ScheduledDate);
             }
         }
 
