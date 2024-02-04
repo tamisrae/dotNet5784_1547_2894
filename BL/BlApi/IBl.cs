@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace BlApi;
 
 public interface IBl
@@ -22,8 +23,8 @@ public interface IBl
         if (StartProjectDate == null)
             projectStatus = BO.ProjectStatus.Unscheduled;
 
-        IEnumerable<TaskInList> listOfTask = Task.ReadAll();
-        foreach (TaskInList taskInList in listOfTask)
+        IEnumerable<TaskInList> listOfTasks = Task.ReadAll();
+        foreach (TaskInList taskInList in listOfTasks)
         {
             BO.Task? task = Task.Read(taskInList.Id);
             if (task != null && task.ScheduledDate != null && (task.StartDate == null || task.StartDate > DateTime.Now))

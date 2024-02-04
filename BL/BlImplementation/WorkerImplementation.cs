@@ -15,7 +15,7 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
-        BO.ProjectStatus status= IBl.
+        //BO.ProjectStatus status = IBl.GetProjectStatus();
         
 
         if (worker.CurrentTask != null)
