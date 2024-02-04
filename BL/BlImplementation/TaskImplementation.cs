@@ -14,13 +14,9 @@ internal class TaskImplementation : BlApi.ITask
 
     public int Create(BO.Task task)
     {
-        if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
-            throw new BlWorngValueException("The task has WORNG VALUE!");
-
-        int? temp = (int?)task.Complexity;
-        DO.WorkerExperience? complexity = null;
-        if (temp != null)
-            complexity = (DO.WorkerExperience)temp;
+        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        if (projectStatus == BO.ProjectStatus.Scheduled)
+            throw new BlProjectStatusException("Yoe cannot create new task in this stage at the project");
 
         if (task.Dependencies != null)
         {
@@ -31,9 +27,7 @@ internal class TaskImplementation : BlApi.ITask
             }
         }
 
-        DO.Task doTask = new DO.Task
-           (task.Alias, task.Description, task.CreatedAtDate, false, task.Id, complexity, task.WorkOnTask?.Id, task.RequiredEffortTime,
-           task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate, task.Deliverables, task.Remarks);
+        DO.Task doTask = DataChecking(task);
         try
         {
             int idTask = dal.Task.Create(doTask);
@@ -47,6 +41,10 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Delete(int id)
     {
+        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        if (projectStatus != BO.ProjectStatus.Unscheduled)
+            throw new BlProjectStatusException("Yoe cannot delete the task in this stage at the project");
+
         try
         {
             DO.Task? task = dal.Task.Read(id);
@@ -187,49 +185,70 @@ internal class TaskImplementation : BlApi.ITask
 
     public void Update(BO.Task task)
     {
-        if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
-            throw new BlWorngValueException("The task has WORNG VALUE!");
-
-        if (task.Dependencies != null)
+        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        if (projectStatus == BO.ProjectStatus.Scheduled || projectStatus == BO.ProjectStatus.Execution)
         {
-            IEnumerable<DO.Dependency>? dependencies = FindDependencies(task.Id);
-            if (GetDependency(task.Id, dependencies))
+            try
             {
-                foreach (BO.TaskInList item in task.Dependencies)
+                DO.Task? checkingTask = dal.Task.Read(task.Id);
+                if (checkingTask != null && (task.CreatedAtDate != checkingTask.CreatedAtDate || (int?)task.Complexity != (int?)checkingTask.Complexity ||
+                    task.RequiredEffortTime != checkingTask.RequiredEffortTime || task.StartDate != checkingTask.StartDate || task.ScheduledDate != checkingTask.StartDate ||
+                    task.DeadlineDate != checkingTask.Deadlinedate || task.CompleteDate != checkingTask.CompleteDate))
+                    throw new BlProjectStatusException("You cannot update the task in this stage at the project");
+                else
                 {
-                    foreach (DO.Dependency depenc in dal.Dependency.ReadAll())
+                    if (checkingTask != null)
                     {
-                        if (depenc.DependentTask != task.Id || depenc.DependsOnTask != item.Id)
-                        {
-                            DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
-                            dal.Dependency.Create(dependency);
-                        }
+                        int? workerId = null;
+                        if (task.WorkOnTask != null)
+                            workerId = task.WorkOnTask.Id;
+
+                        checkingTask = checkingTask with { Alias = task.Alias, Description = task.Description, Deliverables = task.Deliverables, Remarks = task.Remarks, WorkerId = workerId };
+                        dal.Task.Update(checkingTask);
+
                     }
                 }
             }
-            else
-                throw new BlCantUpdateException("This task cannot be update");
+            catch (DO.DalDoesNotExistsException ex)
+            {
+                throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+            }
         }
-
-        int? temp = (int?)task.Complexity;
-        DO.WorkerExperience? complexity = null;
-        if (temp != null)
-            complexity = (DO.WorkerExperience)temp;
-
-        int? workerId = null;
-        if (task.WorkOnTask != null)
-            workerId = task.WorkOnTask.Id;
-
-        DO.Task doTask = new DO.Task(task.Alias, task.Description, task.CreatedAtDate, false, task.Id, complexity, workerId, task.RequiredEffortTime,
-                                   task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate, task.Deliverables, task.Remarks);
-
-        try
+        else
         {
-            dal.Task.Update(doTask);
-        }
-        catch (DO.DalDoesNotExistsException ex)
-        {
-            throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+            if (task.Dependencies != null)
+            {
+                IEnumerable<DO.Dependency>? dependencies = FindDependencies(task.Id);
+                if (GetDependency(task.Id, dependencies))
+                {
+                    foreach (BO.TaskInList item in task.Dependencies)
+                    {
+                        foreach (DO.Dependency depenc in dal.Dependency.ReadAll())
+                        {
+                            if (depenc.DependentTask != task.Id || depenc.DependsOnTask != item.Id)
+                            {
+                                DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
+                                dal.Dependency.Create(dependency);
+                            }
+                        }
+                    }
+                }
+                else
+                    throw new BlCantUpdateException("This task cannot be update");
+            }
+
+            DO.Task doTask = DataChecking(task);
+
+            try
+            {
+
+                dal.Task.Update(doTask);
+
+            }
+            catch (DO.DalDoesNotExistsException ex)
+            {
+                throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+            }
         }
     }
 
@@ -245,10 +264,7 @@ internal class TaskImplementation : BlApi.ITask
                     foreach (BO.TaskInList taskInList in task.Dependencies)
                     {
                         BO.Task? dependentTask = Read(taskInList.Id);
-                        if (dependentTask != null && dependentTask.StartDate == null)
-                            throw new BlCantUpdateException("This task cannot be update");
-
-                        if (dependentTask != null && dependentTask.ForeCastDate < scheduledDate)
+                        if (dependentTask != null && dependentTask.StartDate == null && dependentTask.ForeCastDate < scheduledDate)
                             throw new BlCantUpdateException("This task cannot be update");
                     }
                 }
@@ -285,6 +301,92 @@ internal class TaskImplementation : BlApi.ITask
                     return false;
             }
             return true;
+        }
+    }
+
+    private DO.Task DataChecking(BO.Task task)
+    {
+        if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
+            throw new BlWorngValueException("The task has WORNG VALUE!");
+
+        int? temp = (int?)task.Complexity;
+        DO.WorkerExperience? complexity = null;
+        if (temp != null)
+            complexity = (DO.WorkerExperience)temp;
+
+        if (task.ScheduledDate != null)
+        {
+            BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+            if (projectStatus == BO.ProjectStatus.Unscheduled)
+                throw new BlProjectStatusException("You cannot enter a scheduled start date for a task at this stage of the project");
+            else
+            {
+                if (task.Dependencies != null)
+                {
+                    IEnumerable<BO.Task> tasks = from BO.TaskInList taskInList in task.Dependencies
+                                                 select (Read(ReadAll().FirstOrDefault(t => t.Id == taskInList.Id)!.Id));
+
+                    DateTime? dateTime;
+                    if (tasks.FirstOrDefault(task => task.StartDate == null) != null)
+                        throw new BlScheduledDateException("You cannot enter scheduled date for this task");
+                    else
+                    {
+                        dateTime = tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate;
+                        if (task.ScheduledDate > dateTime)
+                            throw new BlScheduledDateException("This scheduled date does not fit the schedule");
+                    }
+                }
+            }
+        }
+
+        int? workerId = null;
+        if (task.WorkOnTask != null)
+            workerId = task.WorkOnTask.Id;
+
+        DO.Task doTask = new DO.Task(task.Alias, task.Description, task.CreatedAtDate, false, task.Id, complexity, task.WorkOnTask?.Id, task.RequiredEffortTime,
+        task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate, task.Deliverables, task.Remarks);
+
+        return doTask;
+    }
+
+    public void ManualSchedule()
+    {
+        foreach(DO.Task task in dal.Task.ReadAll())
+        {
+            Console.WriteLine("enter the scheduled date:");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime scheduledDate))
+                throw new DalWorngValueException("WORNG DATE");
+            DO.Task tempTask = task with { ScheduledDate = scheduledDate };
+            try
+            {
+                dal.Task.Update(tempTask);
+            }
+            catch (DO.DalDoesNotExistsException ex)
+            {
+                throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+            }
+        }
+    }
+
+    public void AutomaticSchedule()
+    {
+        foreach(DO.Task task in dal.Task.ReadAll())
+        {
+            BO.Task? boTask = Read(task.Id);
+            DateTime dateTime;
+            if (boTask != null)
+            {
+                dateTime = IBl.ScheduleDateOffer(boTask);
+                DO.Task taskToUpdate = task with { ScheduledDate = dateTime };
+                try
+                {
+                    dal.Task.Update(taskToUpdate);
+                }
+                catch (DO.DalDoesNotExistsException ex)
+                {
+                    throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+                }
+            }
         }
     }
 }

@@ -54,3 +54,15 @@ public class BlTaskInWorkerException : Exception
     public BlTaskInWorkerException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlProjectStatusException : Exception
+{
+    public BlProjectStatusException(string? message) : base(message) { }
+}
+
+[Serializable]
+public class BlScheduledDateException : Exception
+{
+    public BlScheduledDateException(string? message) : base(message) { }
+}
+

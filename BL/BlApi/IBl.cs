@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using DalApi;
 
 
 namespace BlApi;
@@ -17,19 +18,52 @@ public interface IBl
     public static DateTime? StartProjectDate { get; set; } = null;
     public static DateTime? EndProjectDate { get; set; } = null;
 
-    public BO.ProjectStatus GetProjectStatus()
+    private static DalApi.IDal dal = DalApi.Factory.Get;
+
+    public static BO.ProjectStatus GetProjectStatus()
     {
         BO.ProjectStatus projectStatus = BO.ProjectStatus.Execution;
         if (StartProjectDate == null)
             projectStatus = BO.ProjectStatus.Unscheduled;
 
-        IEnumerable<TaskInList> listOfTasks = Task.ReadAll();
-        foreach (TaskInList taskInList in listOfTasks)
+        IEnumerable<DO.Task> listOfTasks = dal.Task.ReadAll();
+        foreach (DO.Task task in listOfTasks)
         {
-            BO.Task? task = Task.Read(taskInList.Id);
             if (task != null && task.ScheduledDate != null && (task.StartDate == null || task.StartDate > DateTime.Now))
                 projectStatus = BO.ProjectStatus.Scheduled;
         }
         return projectStatus;
     }
+
+    public static DateTime ScheduleDateOffer(BO.Task task)
+    {
+        DateTime? dateTime = null;
+        IEnumerable<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
+                                                    where dependency.DependentTask == task.Id
+                                                    select dependency);
+        if (dependencies == null && IBl.StartProjectDate != null)
+            return (DateTime)IBl.StartProjectDate;
+        else
+        {
+            List<DO.Task>? tasksList = null;
+            foreach (DO.Dependency dependency in dependencies!)
+            {
+                DO.Task? task1 = dal.Task.Read(dependency.DependsOnTask);
+                if (task1 != null)
+                    tasksList!.Add(task1);
+            }
+            if (tasksList != null)
+            {
+                if (tasksList.FirstOrDefault(task => task.StartDate == null) != null)
+                    throw new BlScheduledDateException("You cannot enter scheduled date for this task");
+                else
+                    dateTime = tasksList.MaxBy(task => task.GetForeCastDate())!.GetForeCastDate();
+            }
+        }
+        return (DateTime)dateTime!;
+    }
 };
+
+
+
+

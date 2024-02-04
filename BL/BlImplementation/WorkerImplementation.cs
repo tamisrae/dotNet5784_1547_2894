@@ -15,8 +15,6 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
-        //BO.ProjectStatus status = IBl.GetProjectStatus();
-        
 
         if (worker.CurrentTask != null)
         {
@@ -57,16 +55,28 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         try
         {
-            //BO.Worker? worker = Read(id);
-            //    BO.Task? task = null;
-            //if (worker!=null && worker.CurrentTask != null)
-            //     task = BlApi.ITask.Read(worker.CurrentTask.Id);
-            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
+            IEnumerable<DO.Task> tasks = from DO.Task task in dal.Task.ReadAll()
+                                         where task.WorkerId == id
+                                         select task;
+            foreach (DO.Task task in tasks)
+            {
+                if (task.StartDate < DateTime.Now && task.CompleteDate == null)
+                    throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
+                else
+                {
+                    DO.Task taskToUpdate = task with { WorkerId = null };
+                    try
+                    {
+                        dal.Task.Update(taskToUpdate);
+                    }
+                    catch (DO.DalDoesNotExistsException ex)
+                    {
+                        throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists", ex);
+                    }
+                }
 
-            if (task != null)
-                throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
-
-            dal.Worker.Delete(id);
+                dal.Worker.Delete(id);
+            }
         }
         catch (DO.DalDoesNotExistsException ex)
         {
@@ -137,6 +147,16 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
+
+        //IEnumerable<DO.Task> tasks = from DO.Task task in dal.Task.ReadAll()
+        //                             where task.WorkerId == worker.Id
+        //                             select task;
+        //foreach (DO.Task task in tasks)
+        //{
+        //    if (task.StartDate < DateTime.Now && task.CompleteDate == null)
+        //        if(worker.CurrentTask!=null&&task.Id!=worker.CurrentTask.Id)
+        //}
+
 
         DO.Worker doWorker = new DO.Worker
            (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
