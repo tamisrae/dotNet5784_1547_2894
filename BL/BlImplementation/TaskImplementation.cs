@@ -15,7 +15,7 @@ internal class TaskImplementation : BlApi.ITask
     public int Create(BO.Task task)
     {
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
-        if (projectStatus == BO.ProjectStatus.Scheduled)
+        if (projectStatus != BO.ProjectStatus.Unscheduled)
             throw new BlProjectStatusException("Yoe cannot create new task in this stage at the project");
 
         if (task.Dependencies != null)
@@ -255,26 +255,55 @@ internal class TaskImplementation : BlApi.ITask
 
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate)
     {
+        bool flag = true;
+        if (scheduledDate < IBl.StartProjectDate)
+            throw new BlScheduledDateException("You cannot enter this date for the task");
+
         try
         {
             BO.Task? task = Read(taskId);
             if (task != null)
             {
+                if (task.WorkOnTask != null)
+                {
+                    IEnumerable<DO.Task>? tasksList = from DO.Task doTask in dal.Task.ReadAll()
+                                                      where doTask.WorkerId == task.WorkOnTask.Id
+                                                      select doTask;
+
+                    foreach(DO.Task doTask in tasksList)
+                    {
+                        if ((scheduledDate > doTask.ScheduledDate || scheduledDate > doTask.StartDate) && scheduledDate < doTask.GetForeCastDate())
+                            throw new BlScheduledDateException("The worker work on another task at this time");
+                    }
+                }
+
                 if (task.Dependencies != null)
                 {
                     IEnumerable<BO.Task> tasks = from BO.TaskInList taskInList in task.Dependencies
-                                                 select (Read(ReadAll().FirstOrDefault(t => t.Id == taskInList.Id)!.Id));
+                                                 select (Read(taskInList.Id));
+
                     foreach (BO.TaskInList taskInList in task.Dependencies)
                     {
-                        DateTime? dateTime;
-                        if (tasks.FirstOrDefault(task => task.StartDate == null) != null)
-                            throw new BlScheduledDateException("You cannot enter scheduled date for this task");
-                        else
+                        if ((tasks.FirstOrDefault(task => task.StartDate == null || task.StartDate < DateTime.Now)) != null) 
                         {
-                            dateTime = tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate;
-                            if (task.ScheduledDate > dateTime)
-                                throw new BlScheduledDateException("This scheduled date does not fit the schedule");
+                            flag = false;
+                            throw new BlScheduledDateException("You cannot enter scheduled date for this task");
                         }
+                        else if(task.ScheduledDate > tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate)
+                        {
+                            flag = false;
+                            throw new BlScheduledDateException("This scheduled date does not fit the schedule");
+                        }
+                    }
+                }
+
+                if (flag == true)
+                {
+                    DO.Task? doTask = dal.Task.Read(taskId);
+                    if (doTask != null)
+                    {
+                        doTask = doTask with { ScheduledDate = scheduledDate };
+                        dal.Task.Update(doTask);
                     }
                 }
             }
@@ -327,9 +356,7 @@ internal class TaskImplementation : BlApi.ITask
             if (projectStatus == BO.ProjectStatus.Unscheduled)
                 throw new BlProjectStatusException("You cannot enter a scheduled start date for a task at this stage of the project");
             else
-            {
                 UpdateTheScheduledDate(task.Id, (DateTime)task.ScheduledDate);
-            }
         }
 
         int? workerId = null;
@@ -344,7 +371,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void ManualSchedule()
     {
-        foreach(DO.Task task in dal.Task.ReadAll())
+        foreach (DO.Task task in dal.Task.ReadAll())
         {
             Console.WriteLine("enter the scheduled date:");
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime scheduledDate))
@@ -359,11 +386,12 @@ internal class TaskImplementation : BlApi.ITask
                 throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
             }
         }
+
     }
 
     public void AutomaticSchedule()
     {
-        foreach(DO.Task task in dal.Task.ReadAll())
+        foreach (DO.Task task in dal.Task.ReadAll())
         {
             BO.Task? boTask = Read(task.Id);
             DateTime dateTime;

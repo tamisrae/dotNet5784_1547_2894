@@ -16,6 +16,5 @@ public class Worker
     public double Cost { get; set; }
     public required string Name { get; set; }
     public BO.TaskInWorker? CurrentTask { get; set; } = null;
-    //public List<BO.TaskInList>? tasks { get; set; } = null;
     public override string ToString() => this.ToStringProperty();
 }

@@ -10,6 +10,5 @@ internal class Bl : IBl
 {
     public IWorker Worker => new WorkerImplementation();
 
-
     public ITask Task => new TaskImplementation();
 }

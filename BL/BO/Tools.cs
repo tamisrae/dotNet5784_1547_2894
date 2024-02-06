@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DalApi;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
@@ -26,14 +27,6 @@ static class Tools
         }
         return str;
     }
-
-    //public static string ToStringPropertyIEnumerable<T>(this IEnumerable<T> obj)
-    //{
-    //    string str = "";
-    //    foreach (T element in obj)
-    //        str = element.ToStringProperty();
-    //    return str;
-    //}
 
     public static bool IsGreaterThanZero<T>(this T value) where T : IComparable<T>
     {
@@ -70,6 +63,26 @@ static class Tools
 
         DateTime? foreCastDate = startDate + task.RequiredEffortTime;
         return foreCastDate;
+    }
+
+
+    private static DalApi.IDal dal = DalApi.Factory.Get;
+    public static bool AllowedTask(int workerId, DO.Task task)
+    {
+        if (task.WorkerId != null && workerId != task.WorkerId)
+            return false;
+        DO.Worker? worker = dal.Worker.Read(workerId);
+        if (worker != null && worker.Level != task.Complexity) 
+            return false;
+
+        IEnumerable<DO.Task>? tasks = (from dependency in dal.Dependency.ReadAll()
+                                              where dependency.DependentTask == task.Id
+                                              select dal.Task.Read(dependency.DependsOnTask));
+
+        DO.Task? tempTask = tasks.FirstOrDefault(task => task.GetStatus() != BO.Status.Done);
+        if (tempTask != null)
+            return false;
+        return true;
     }
 }
 

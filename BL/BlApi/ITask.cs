@@ -1,4 +1,6 @@
 ﻿using BO;
+using DalApi;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,4 +18,6 @@ public interface ITask
     public void Delete(int id);
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate);
     public List<BO.TaskInList>? TasksForWorker(int workerId);
+    public void ManualSchedule();
+    public void AutomaticSchedule();
 }

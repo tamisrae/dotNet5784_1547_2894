@@ -22,16 +22,13 @@ public interface IBl
 
     public static BO.ProjectStatus GetProjectStatus()
     {
-        BO.ProjectStatus projectStatus = BO.ProjectStatus.Execution;
+        BO.ProjectStatus projectStatus = BO.ProjectStatus.Scheduled;
         if (StartProjectDate == null)
             projectStatus = BO.ProjectStatus.Unscheduled;
 
-        IEnumerable<DO.Task> listOfTasks = dal.Task.ReadAll();
-        foreach (DO.Task task in listOfTasks)
-        {
-            if (task != null && task.ScheduledDate != null && (task.StartDate == null || task.StartDate > DateTime.Now))
-                projectStatus = BO.ProjectStatus.Scheduled;
-        }
+        if (dal.Task.ReadAll().FirstOrDefault(task => task.ScheduledDate != null && task.StartDate != null && task.StartDate < DateTime.Now) != null)
+            projectStatus = BO.ProjectStatus.Execution;
+
         return projectStatus;
     }
 
