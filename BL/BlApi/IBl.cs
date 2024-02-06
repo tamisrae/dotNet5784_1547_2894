@@ -49,7 +49,7 @@ public interface IBl
                 if (task1 != null)
                     tasksList.Add(task1);
             }
-            if (tasksList != null)
+            if (tasksList.Count == 0)
             {
                 if (tasksList.FirstOrDefault(task => task.StartDate == null) != null)
                     throw new BlScheduledDateException("You cannot enter scheduled date for this task");

@@ -258,9 +258,8 @@ partial class Program
             if (!int.TryParse(Console.ReadLine(), out int taskId))
                 Console.WriteLine("Enter Alias of the current task:");
             string alias = Console.ReadLine()!;
-            currentTask = new BO.TaskInWorker { Id = taskId, Alias = answer };
+            currentTask = new BO.TaskInWorker { Id = taskId, Alias = alias };
         }
-        //update
     }
 
     static void DeleteW()
@@ -314,6 +313,8 @@ partial class Program
                 Console.WriteLine("If you want to add more dependency enter 'yes' otherwise enter 'no':");
             } while (answer == "yes");
         }
+        if (list.Count == 0)
+            list = null;
 
         BO.Task task = new BO.Task
         {
@@ -370,6 +371,7 @@ partial class Program
         DateTime? completeDate = task.CompleteDate;
         string? deliverables = task.Deliverables;
         string? remarks = task.Remarks;
+        BO.WorkerInTask? workOnTask = task.WorkOnTask;
 
 
         Console.WriteLine("If you want to change the alias of the task enter the new alias, else press no");
@@ -418,17 +420,38 @@ partial class Program
             requiredEffortTime = newRequiredEffortTime;
         }
 
-        Console.WriteLine("If you want to change the dead line date enter yes else enter no");
-        string deadlinedateChoise = Console.ReadLine()!;
-        if (deadlinedateChoise == "yes")
+        Console.WriteLine("If you want to change the worker who work on this task enter yes else enter no");
+        string answer = Console.ReadLine()!;
+        if (answer != "yes")
         {
-            Console.WriteLine("enter the new dead line date date:");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime newDeadlinedate))
-                throw new BlWorngValueException("WORNG DATE");
-            deadlinedate = newDeadlinedate;
+            Console.WriteLine("Enter the ID of the worker:");
+            if (!int.TryParse(Console.ReadLine(), out int workerId))
+                Console.WriteLine("Enter Name of the worker:");
+            string name = Console.ReadLine()!;
+            workOnTask = new BO.WorkerInTask { Id = workerId, Name = name };
         }
 
-        //update!!
+        BO.Task taskToUpdate = new BO.Task
+        {
+            Id = task.Id,
+            Alias = alias,
+            Description = description,
+            Status = task.Status,
+            WorkOnTask = workOnTask,
+            Dependencies = task.Dependencies,
+            CreatedAtDate = task.CreatedAtDate,
+            ScheduledDate = scheduledDate,
+            StartDate = task.StartDate,
+            CompleteDate = task.CompleteDate,
+            ForeCastDate = task.ForeCastDate,
+            DeadlineDate = null,
+            RequiredEffortTime = requiredEffortTime,
+            Deliverables = deliverables,
+            Remarks = remarks,
+            Complexity = complexity
+        };
+
+        s_bl.Task.Update(taskToUpdate);
     }
 
     static void DeleteT()

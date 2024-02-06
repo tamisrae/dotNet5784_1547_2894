@@ -16,26 +16,28 @@ internal class TaskImplementation : BlApi.ITask
     {
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
         if (projectStatus != BO.ProjectStatus.Unscheduled)
-            throw new BlProjectStatusException("Yoe cannot create new task in this stage at the project");
-
-        if (task.Dependencies != null)
+            throw new BlProjectStatusException("You cannot create new task in this stage at the project");
+        else
         {
-            foreach (BO.TaskInList item in task.Dependencies)
+            if (task.Dependencies != null)
             {
-                DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
-                dal.Dependency.Create(dependency);
+                foreach (BO.TaskInList item in task.Dependencies)
+                {
+                    DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
+                    dal.Dependency.Create(dependency);
+                }
             }
-        }
 
-        DO.Task doTask = DataChecking(task);
-        try
-        {
-            int idTask = dal.Task.Create(doTask);
-            return idTask;
-        }
-        catch (DO.DalAlreadyExistsException ex)
-        {
-            throw new BO.BlAlreadyExistsException($"Task with ID={task.Id} already exists", ex);
+            DO.Task doTask = DataChecking(task);
+            try
+            {
+                int idTask = dal.Task.Create(doTask);
+                return idTask;
+            }
+            catch (DO.DalAlreadyExistsException ex)
+            {
+                throw new BO.BlAlreadyExistsException($"Task with ID={task.Id} already exists", ex);
+            }
         }
     }
 
@@ -44,24 +46,26 @@ internal class TaskImplementation : BlApi.ITask
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
         if (projectStatus != BO.ProjectStatus.Unscheduled)
             throw new BlProjectStatusException("Yoe cannot delete the task in this stage at the project");
-
-        try
+        else
         {
-            DO.Task? task = dal.Task.Read(id);
-            if (task == null)
-                throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
+            try
+            {
+                DO.Task? task = dal.Task.Read(id);
+                if (task == null)
+                    throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
 
-            IEnumerable<DO.Dependency>? dependencies = from DO.Dependency item in dal.Dependency.ReadAll()
-                                                       where item.DependsOnTask == id
-                                                       select item;
-            if (dependencies != null)
-                throw new BlCantDeleteException("This Task Cannot be deleted");
+                IEnumerable<DO.Dependency>? dependencies = from DO.Dependency item in dal.Dependency.ReadAll()
+                                                           where item.DependsOnTask == id
+                                                           select item;
+                if (dependencies != null)
+                    throw new BlCantDeleteException("This Task Cannot be deleted");
 
-            dal.Task.Delete(id);
-        }
-        catch (DO.DalDoesNotExistsException ex)
-        {
-            throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists", ex);
+                dal.Task.Delete(id);
+            }
+            catch (DO.DalDoesNotExistsException ex)
+            {
+                throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists", ex);
+            }
         }
     }
 
@@ -242,9 +246,7 @@ internal class TaskImplementation : BlApi.ITask
 
             try
             {
-
                 dal.Task.Update(doTask);
-
             }
             catch (DO.DalDoesNotExistsException ex)
             {
@@ -387,7 +389,6 @@ internal class TaskImplementation : BlApi.ITask
                 throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
             }
         }
-
     }
 
     public void AutomaticSchedule()
