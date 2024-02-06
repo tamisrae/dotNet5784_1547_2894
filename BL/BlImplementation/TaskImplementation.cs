@@ -371,6 +371,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void ManualSchedule()
     {
+        IBl.StartProjectDate = DateTime.Now;
         foreach (DO.Task task in dal.Task.ReadAll())
         {
             Console.WriteLine("enter the scheduled date:");
@@ -391,6 +392,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void AutomaticSchedule()
     {
+        IBl.StartProjectDate = DateTime.Now;
         foreach (DO.Task task in dal.Task.ReadAll())
         {
             BO.Task? boTask = Read(task.Id);

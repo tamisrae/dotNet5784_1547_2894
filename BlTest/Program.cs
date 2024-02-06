@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using BO;
-using DalApi;
-using DalTest;
-using DO;
+﻿using BO;
 
 namespace BlTest;
 
@@ -183,7 +174,7 @@ partial class Program
                 break;
         }
     }
-    
+
 
 
     static void CreateW()
@@ -273,20 +264,64 @@ partial class Program
 
     static void CreateT()
     {
-        Console.WriteLine("Enter alias, description, complexity, deliverables, remarks");
+        Console.WriteLine("Enter alias, description, complexity, deliverables, remarks and required effort time");
 
         string alias = Console.ReadLine()!;
         string description = Console.ReadLine()!;
         DateTime createdAtDate = DateTime.Today;
-        bool isMilestone = false;
-        int id = 0;
         if (!int.TryParse(Console.ReadLine(), out int complexity))
             throw new BlWorngValueException("WORNG COMPLEXITY");
-        int workerId = 0;
         string deliverables = Console.ReadLine()!;
         string remarks = Console.ReadLine()!;
+        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan requiredEffortTime))
+            throw new BlWorngValueException("WORNG REQUIRED EFFORT TIME");
 
-        //create!!
+        List<BO.TaskInList>? list = new();
+        Console.WriteLine("If this task depends on other tasks enter 'yes' otherwise enter 'no':");
+        string answer = Console.ReadLine()!;
+        if (answer == "yes")
+        {
+            IEnumerable<BO.TaskInList> tasks = s_bl.Task.ReadAll();
+            do
+            {
+                Console.WriteLine($"Enter the ID of the task on which the task depends:");
+                try
+                {
+                    if (!int.TryParse(Console.ReadLine(), out int id))
+                        throw new BlWorngValueException("WORNG ID");
+                    BO.TaskInList? taskInList = tasks.FirstOrDefault(task => task.Id == id);
+                    if (taskInList != null)
+                        list.Add(taskInList);
+                    else
+                        throw new BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
+                }
+                catch (BlDoesNotExistsException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.WriteLine("If you want to add more dependency enter 'yes' otherwise enter 'no':");
+            } while (answer == "yes");
+        }
+
+        BO.Task task = new BO.Task
+        {
+            Id = 0,
+            Alias = alias,
+            Description = description,
+            Status = BO.Status.Unscheduled,
+            WorkOnTask = null,
+            Dependencies = list,
+            CreatedAtDate = DateTime.Now,
+            ScheduledDate = null,
+            StartDate = null,
+            CompleteDate = null,
+            ForeCastDate = null,
+            DeadlineDate = null,
+            RequiredEffortTime = requiredEffortTime,
+            Deliverables = deliverables,
+            Remarks = remarks,
+            Complexity = (BO.WorkerExperience)complexity
+        };
     }
 
     static void ReadT()
@@ -413,3 +448,22 @@ partial class Program
 
     }
 }
+
+/*
+     public int Id { get; init; }
+    public required string Alias { get; set; }
+    public required string Description { get; set; }
+    public Status Status { get; set; }
+    public BO.WorkerInTask? WorkOnTask { get; set; } = null;
+    public List<TaskInList>? Dependencies { get; set; } = null;
+    public DateTime CreatedAtDate {  get; set; }
+    public DateTime? ScheduledDate { get; set; } = null;
+    public DateTime? StartDate { get; set; } = null;
+    public DateTime? CompleteDate { get; set; } = null;
+    public DateTime? ForeCastDate { get; set; } = null;
+    public DateTime? DeadlineDate { get; set; } = null;
+    public TimeSpan? RequiredEffortTime { get; set; } = null;
+    public string? Deliverables { get; set; } = null;
+    public string? Remarks { get; set; } = null;
+    public BO.WorkerExperience? Complexity { get; set; } = null;
+ */

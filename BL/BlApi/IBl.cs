@@ -42,12 +42,12 @@ public interface IBl
             return (DateTime)IBl.StartProjectDate;
         else
         {
-            List<DO.Task>? tasksList = null;
+            List<DO.Task>? tasksList = new();
             foreach (DO.Dependency dependency in dependencies!)
             {
                 DO.Task? task1 = dal.Task.Read(dependency.DependsOnTask);
                 if (task1 != null)
-                    tasksList!.Add(task1);
+                    tasksList.Add(task1);
             }
             if (tasksList != null)
             {
