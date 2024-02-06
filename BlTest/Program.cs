@@ -256,10 +256,12 @@ partial class Program
         {
             Console.WriteLine("Enter the ID of the current task:");
             if (!int.TryParse(Console.ReadLine(), out int taskId))
-                Console.WriteLine("Enter Alias of the current task:");
+                throw new BlWorngValueException("WORNG ID");
+            Console.WriteLine("Enter Alias of the current task:");
             string alias = Console.ReadLine()!;
             currentTask = new BO.TaskInWorker { Id = taskId, Alias = alias };
         }
+        //update
     }
 
     static void DeleteW()
@@ -459,12 +461,21 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
-        s_bl!.Task.Delete(id);
+        s_bl.Task.Delete(id);
     }
 
     static void ListOfTasksForWorker()
     {
-
+        Console.WriteLine("Enter  worker Id:");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+            throw new BlWorngValueException("WORNG ID");
+        List<BO.TaskInList>? tasksForWorker;
+        tasksForWorker = s_bl.Task.TasksForWorker(id);
+        if (tasksForWorker != null)
+        {
+            foreach (TaskInList task in tasksForWorker)
+                Console.WriteLine(task);
+        }
     }
 }
 
