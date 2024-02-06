@@ -2,5 +2,5 @@
 <config>
   <NextTaskId>1</NextTaskId>
   <NextDependencyId>1</NextDependencyId>
-	<project-stage>1</project-stage>
+	<project-stage>0</project-stage>
 </config>

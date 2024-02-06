@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using BO;
-using DalApi;
-using DalTest;
-using DO;
+﻿using BO;
 
 namespace BlTest;
 
@@ -183,7 +174,7 @@ partial class Program
                 break;
         }
     }
-    
+
 
 
     static void CreateW()
@@ -206,6 +197,7 @@ partial class Program
 
     static void ReadW()
     {
+
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
@@ -234,6 +226,7 @@ partial class Program
         string email = worker.Email;
         double cost = worker.Cost;
         string name = worker.Name;
+        BO.TaskInWorker? currentTask = worker.CurrentTask;
 
         Console.WriteLine("If you want to change the level of the worker enter the new level, else press -1");
         if (!int.TryParse(Console.ReadLine(), out int newLevel))
@@ -241,7 +234,7 @@ partial class Program
         if (newLevel != -1)
             level = (BO.WorkerExperience)newLevel;
 
-        Console.WriteLine("If you want to change the email enter the new email, else press no");
+        Console.WriteLine("If you want to change the email enter the new email, else enter no");
         string newEmail = Console.ReadLine()!;
         if (newEmail != "no")
             email = newEmail;
@@ -252,11 +245,21 @@ partial class Program
         if (newCost != -1)
             cost = newCost;
 
-        Console.WriteLine("If you want to change the name enter the new name, else press no");
+        Console.WriteLine("If you want to change the name enter the new name, else enter no");
         string newName = Console.ReadLine()!;
         if (newName != "no")
             name = newName;
 
+        Console.WriteLine("If you want to change the current task enter yes, else enter no");
+        string answer = Console.ReadLine()!;
+        if (answer != "yes")
+        {
+            Console.WriteLine("Enter the ID of the current task:");
+            if (!int.TryParse(Console.ReadLine(), out int taskId))
+                Console.WriteLine("Enter Alias of the current task:");
+            string alias = Console.ReadLine()!;
+            currentTask = new BO.TaskInWorker { Id = taskId, Alias = answer };
+        }
         //update
     }
 
@@ -312,17 +315,14 @@ partial class Program
             throw new BlWorngValueException("WORNG ID");
         Console.WriteLine(s_bl!.Task.Read(taskId));
 
-        DO.Task task = s_dal!.Task.Read(taskId)!;
+        BO.Task task = s_bl!.Task.Read(taskId)!;
 
         string alias = task.Alias;
         string description = task.Description;
-        bool isMilestone = task.IsMilestone;
-        DO.WorkerExperience? complexity = task.Complexity;
-        int? workerId = task.WorkerId;
+        BO.WorkerExperience? complexity = task.Complexity;
         TimeSpan? requiredEffortTime = task.RequiredEffortTime;
         DateTime? startDate = task.StartDate;
         DateTime? scheduledDate = task.ScheduledDate;
-        DateTime? deadlinedate = task.Deadlinedate;
         DateTime? completeDate = task.CompleteDate;
         string? deliverables = task.Deliverables;
         string? remarks = task.Remarks;
@@ -338,24 +338,11 @@ partial class Program
         if (newDescription != "no")
             description = newDescription;
 
-        Console.WriteLine("If you want to change the isMilestone of the task enter the new isMilestone press 0, else press -1");
-        if (!int.TryParse(Console.ReadLine(), out int newisMilestone))
-            throw new BlWorngValueException("WORNG isMilestone");
-        if (newisMilestone == 0)
-            isMilestone = !isMilestone;
-
         Console.WriteLine("If you want to change the complexity of the task enter the new complexity, else press -1");
         if (!int.TryParse(Console.ReadLine(), out int newComplexity))
             throw new BlWorngValueException("WORNG LEVEL");
         if (newComplexity != -1)
-            complexity = (DO.WorkerExperience)newComplexity;
-
-
-        Console.WriteLine("If you want to change the worker ID of the task enter the new worker ID, else press -1");
-        if (!int.TryParse(Console.ReadLine(), out int newWorkerId))
-            throw new BlWorngValueException("WORNG WORKER ID");
-        if (newWorkerId != -1)
-            workerId = newWorkerId;
+            complexity = (BO.WorkerExperience)newComplexity;
 
         Console.WriteLine("If you want to change the deliverables of the task enter the new deliverables, else press no");
         string newDeliverables = Console.ReadLine()!;
