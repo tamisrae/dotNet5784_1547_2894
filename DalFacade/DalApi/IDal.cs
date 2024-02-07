@@ -11,5 +11,10 @@ namespace DalApi
         IWorker Worker { get; }
         ITask Task { get; }
         IDependency Dependency { get; }
+
+
+        public  DateTime? StartProjectDate { get; set; }
+        //public static DateTime? EndProjectDate { get; set; }
+
     }
 }

@@ -55,7 +55,8 @@ internal class TaskImplementation : BlApi.ITask
                     throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
 
                 IEnumerable<DO.Dependency>? dependencies = from DO.Dependency item in dal.Dependency.ReadAll()
-                                                           where item.DependsOnTask == id
+                                                           let taskId = item.DependsOnTask
+                                                           where taskId == id
                                                            select item;
                 if (dependencies != null)
                     throw new BlCantDeleteException("This Task Cannot be deleted");
@@ -77,43 +78,53 @@ internal class TaskImplementation : BlApi.ITask
 
             if (doTask == null)
                 throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
-
-            BO.WorkerInTask? workerInTask;
-            if (doTask.WorkerId != null)
-            {
-                DO.Worker worker = dal.Worker.Read((int)doTask.WorkerId)!;
-                workerInTask = new BO.WorkerInTask { Id = (int)doTask.WorkerId, Name = worker.Name };
-            }
             else
-                workerInTask = null;
-
-            int? temp = null;
-            BO.WorkerExperience? complexity = null;
-            if (doTask.Complexity != null)
             {
-                temp = (int)doTask.Complexity;
-                complexity = (BO.WorkerExperience)temp;
+                BO.WorkerInTask? workerInTask;
+                if (doTask.WorkerId != null)
+                {
+                    DO.Worker worker = dal.Worker.Read((int)doTask.WorkerId)!;
+                    workerInTask = new BO.WorkerInTask { Id = (int)doTask.WorkerId, Name = worker.Name };
+                }
+                else
+                    workerInTask = null;
+
+                int? temp = null;
+                BO.WorkerExperience? complexity = null;
+                if (doTask.Complexity != null)
+                {
+                    temp = (int)doTask.Complexity;
+                    complexity = (BO.WorkerExperience)temp;
+                }
+
+                IEnumerable<DO.Dependency>? dependencies = FindDependencies(id);
+                List<TaskInList>? taskInLists = null;
+                if (dependencies != null)
+                {
+                    taskInLists = (from DO.Dependency dependency in dependencies
+                                   select ReadAll().FirstOrDefault(task => task.Id == dependency.DependsOnTask)).ToList();
+                }
+
+                return new BO.Task
+                {
+                    Id = id,
+                    Alias = doTask.Alias,
+                    Description = doTask.Description,
+                    Status = doTask.GetStatus(),
+                    WorkOnTask = workerInTask,
+                    Dependencies = taskInLists,
+                    CreatedAtDate = doTask.CreatedAtDate,
+                    ScheduledDate = doTask.ScheduledDate,
+                    StartDate = doTask.StartDate,
+                    CompleteDate = doTask.CompleteDate,
+                    ForeCastDate = doTask.GetForeCastDate(),
+                    DeadlineDate = doTask.Deadlinedate,
+                    RequiredEffortTime = doTask.RequiredEffortTime,
+                    Deliverables = doTask.Deliverables,
+                    Remarks = doTask.Remarks,
+                    Complexity = complexity
+                };
             }
-
-            return new BO.Task
-            {
-                Id = id,
-                Alias = doTask.Alias,
-                Description = doTask.Description,
-                Status = doTask.GetStatus(),
-                WorkOnTask = workerInTask,
-                Dependencies = null,
-                CreatedAtDate = doTask.CreatedAtDate,
-                ScheduledDate = doTask.ScheduledDate,
-                StartDate = doTask.StartDate,
-                CompleteDate = doTask.CompleteDate,
-                ForeCastDate = doTask.GetForeCastDate(),
-                DeadlineDate = doTask.Deadlinedate,
-                RequiredEffortTime = doTask.RequiredEffortTime,
-                Deliverables = doTask.Deliverables,
-                Remarks = doTask.Remarks,
-                Complexity = complexity
-            };
         }
         catch (DO.DalDoesNotExistsException ex)
         {

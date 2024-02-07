@@ -17,9 +17,9 @@ static class Tools
         string str = "";
         foreach (PropertyInfo item in obj?.GetType().GetProperties()!)
         {
-            if (obj is IEnumerable<T> && !(obj is string))
+            if (item is IEnumerable<T> && !(item is string))
             {
-                foreach (T element in (IEnumerable<T>)obj)
+                foreach (T element in (IEnumerable<T>)item)
                     str += "\n" + item.Name + ": " + item.GetValue(obj, null);
             }
             else
@@ -30,7 +30,7 @@ static class Tools
 
     public static bool IsGreaterThanZero<T>(this T value) where T : IComparable<T>
     {
-        return value.CompareTo(default(T)) > 0;
+        return value.CompareTo(default(T)) < 0;
     }
 
     public static bool IsEmptyString(this string str)

@@ -1,9 +1,4 @@
-﻿
-using BlApi;
-using BO;
-using DalApi;
-using DO;
-using System.ComponentModel.Design;
+﻿using BO;
 
 namespace BlImplementation;
 
@@ -56,28 +51,13 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         try
         {
-            IEnumerable<DO.Task> tasks = from DO.Task task in dal.Task.ReadAll()
-                                         where task.WorkerId == id
-                                         select task;
-            foreach (DO.Task task in tasks)
-            {
-                if (task.StartDate < DateTime.Now && task.CompleteDate == null)
-                    throw new BO.BlWorkerInTaskException($"The worker is in the middle of executing a task");
-                else
-                {
-                    DO.Task taskToUpdate = task with { WorkerId = null };
-                    try
-                    {
-                        dal.Task.Update(taskToUpdate);
-                    }
-                    catch (DO.DalDoesNotExistsException ex)
-                    {
-                        throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists", ex);
-                    }
-                }
-
+            IEnumerable<DO.Task>? tasks = from DO.Task task in dal.Task.ReadAll()
+                                          where task.WorkerId == id
+                                          select task;
+            if (!tasks.Any())
                 dal.Worker.Delete(id);
-            }
+            else
+                throw new BO.BlWorkerInTaskException($"You cannot delete this worker");
         }
         catch (DO.DalDoesNotExistsException ex)
         {
@@ -94,12 +74,7 @@ internal class WorkerImplementation : BlApi.IWorker
                 throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists");
 
             int level = (int)doWorker.Level;
-
-            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(item => item.WorkerId == id);
-            BO.TaskInWorker? taskInWorker = null;
-
-            if (task != null)
-                taskInWorker = new BO.TaskInWorker { Id = id, Alias = task.Alias };
+            BO.TaskInWorker? currentTask = CurrentTask(id);
 
             return new BO.Worker
             {
@@ -108,7 +83,7 @@ internal class WorkerImplementation : BlApi.IWorker
                 Email = doWorker.Email,
                 Cost = doWorker.Cost,
                 Name = doWorker.Name,
-                CurrentTask = taskInWorker
+                CurrentTask = currentTask
             };
         }
         catch (DO.DalDoesNotExistsException ex)
@@ -121,26 +96,28 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (filter == null)
         {
-            return from item in dal.Worker.ReadAll()
-                   select new BO.WorkerInList
-                   {
-                       Name = item.Name,
-                       Id = item.Id,
-                       Level = (BO.WorkerExperience)((int)item.Level),
-                       CurrentTask = CurrentTask(item.Id)
-                   };
+            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()
+                                                select new BO.WorkerInList
+                                                {
+                                                    Name = item.Name,
+                                                    Id = item.Id,
+                                                    Level = (BO.WorkerExperience)((int)item.Level),
+                                                    CurrentTask = CurrentTask(item.Id)
+                                                };
+            return list.OrderBy(worker => worker.Level);
         }
         else
         {
-            return from item in dal.Worker.ReadAll()
-                   where filter!(Read(item.Id)!)
-                   select new BO.WorkerInList
-                   {
-                       Name = item.Name,
-                       Id = item.Id,
-                       Level = (BO.WorkerExperience)((int)item.Level),
-                       CurrentTask = CurrentTask(item.Id)
-                   };
+            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()
+                                                where filter!(Read(item.Id)!)
+                                                select new BO.WorkerInList
+                                                {
+                                                    Name = item.Name,
+                                                    Id = item.Id,
+                                                    Level = (BO.WorkerExperience)((int)item.Level),
+                                                    CurrentTask = CurrentTask(item.Id)
+                                                };
+            return list.OrderBy(worker => worker.Level);
         }
     }
 

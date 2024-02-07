@@ -157,9 +157,6 @@ public static class Initialization
                 complexity = (DO.WorkerExperience)5;
             else if (i == 21 || i == 22)
                 complexity = (DO.WorkerExperience)6;
-
-
-            int workerId = 0;
             
 
             Random rand = new Random(DateTime.Now.Millisecond);
@@ -181,7 +178,7 @@ public static class Initialization
 
             bool isMilestone = false;
 
-            Task newTask = new Task(task, description, createdAtDate, isMilestone, 0, complexity, workerId,
+            Task newTask = new Task(task, description, createdAtDate, isMilestone, 0, complexity, null,
                                    requiredEffortTime, startDate, scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
             s_dal!.Task.Create(newTask);

@@ -17,5 +17,8 @@ namespace Dal
         public ITask Task => new TaskImplementation();
 
         public IDependency Dependency => new DependencyImplementation();
+
+        public  DateTime? StartProjectDate { get { return DataSource.Config.StartProjectDate; } set { DataSource.Config.StartProjectDate = value; } }
+        //public  DateTime? EndProjectDate { get ; set  }
     }
 }

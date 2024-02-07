@@ -348,7 +348,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Task.Read(id));
+        Console.WriteLine(s_dal.Task.Read(id));
     }
 
     /// <summary>

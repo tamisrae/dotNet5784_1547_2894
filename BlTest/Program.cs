@@ -8,6 +8,11 @@ partial class Program
 
     static void Main(string[] args)
     {
+        Console.Write("Would you like to create Initial data? (Y/N)");
+        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+        if (ans == "Y")
+            DalTest.Initialization.Do();
+
         while (true)
         {
             Console.WriteLine("For Worker Entity press: 1");
@@ -197,7 +202,6 @@ partial class Program
 
     static void ReadW()
     {
-
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
@@ -250,18 +254,8 @@ partial class Program
         if (newName != "no")
             name = newName;
 
-        Console.WriteLine("If you want to change the current task enter yes, else enter no");
-        string answer = Console.ReadLine()!;
-        if (answer != "yes")
-        {
-            Console.WriteLine("Enter the ID of the current task:");
-            if (!int.TryParse(Console.ReadLine(), out int taskId))
-                throw new BlWorngValueException("WORNG ID");
-            Console.WriteLine("Enter Alias of the current task:");
-            string alias = Console.ReadLine()!;
-            currentTask = new BO.TaskInWorker { Id = taskId, Alias = alias };
-        }
-        //update
+        BO.Worker workerToUpdate = new BO.Worker { Id = id, Level = level, Email = email, Cost = cost, Name = name, CurrentTask = currentTask };
+        s_bl.Worker.Update(workerToUpdate);
     }
 
     static void DeleteW()
@@ -313,9 +307,11 @@ partial class Program
                     Console.WriteLine(ex.Message);
                 }
                 Console.WriteLine("If you want to add more dependency enter 'yes' otherwise enter 'no':");
-            } while (answer == "yes");
+                answer = Console.ReadLine()!;
+            }
+            while (answer == "yes");
         }
-        if (list.Count == 0)
+        if (!list.Any())
             list = null;
 
         BO.Task task = new BO.Task
@@ -337,6 +333,7 @@ partial class Program
             Remarks = remarks,
             Complexity = (BO.WorkerExperience)complexity
         };
+        Console.WriteLine(s_bl.Task.Create(task));
     }
 
     static void ReadT()
@@ -424,7 +421,7 @@ partial class Program
 
         Console.WriteLine("If you want to change the worker who work on this task enter yes else enter no");
         string answer = Console.ReadLine()!;
-        if (answer != "yes")
+        if (answer == "yes")
         {
             Console.WriteLine("Enter the ID of the worker:");
             if (!int.TryParse(Console.ReadLine(), out int workerId))
@@ -478,22 +475,3 @@ partial class Program
         }
     }
 }
-
-/*
-     public int Id { get; init; }
-    public required string Alias { get; set; }
-    public required string Description { get; set; }
-    public Status Status { get; set; }
-    public BO.WorkerInTask? WorkOnTask { get; set; } = null;
-    public List<TaskInList>? Dependencies { get; set; } = null;
-    public DateTime CreatedAtDate {  get; set; }
-    public DateTime? ScheduledDate { get; set; } = null;
-    public DateTime? StartDate { get; set; } = null;
-    public DateTime? CompleteDate { get; set; } = null;
-    public DateTime? ForeCastDate { get; set; } = null;
-    public DateTime? DeadlineDate { get; set; } = null;
-    public TimeSpan? RequiredEffortTime { get; set; } = null;
-    public string? Deliverables { get; set; } = null;
-    public string? Remarks { get; set; } = null;
-    public BO.WorkerExperience? Complexity { get; set; } = null;
- */

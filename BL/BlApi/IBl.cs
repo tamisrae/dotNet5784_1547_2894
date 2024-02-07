@@ -15,15 +15,15 @@ public interface IBl
     public IWorker Worker { get; }
     public ITask Task { get; }
 
-    public static DateTime? StartProjectDate { get; set; } = null;
-    public static DateTime? EndProjectDate { get; set; } = null;
+    //public static DateTime? StartProjectDate { get; set {dal. }
+    //public static DateTime? EndProjectDate { get; set; }
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
 
     public static BO.ProjectStatus GetProjectStatus()
     {
         BO.ProjectStatus projectStatus = BO.ProjectStatus.Scheduled;
-        if (StartProjectDate == null)
+        if (dal.StartProjectDate == null)
             projectStatus = BO.ProjectStatus.Unscheduled;
 
         if (dal.Task.ReadAll().FirstOrDefault(task => task.ScheduledDate != null && task.StartDate != null && task.StartDate < DateTime.Now) != null)
@@ -32,14 +32,14 @@ public interface IBl
         return projectStatus;
     }
 
-    public static DateTime ScheduleDateOffer(BO.Task task)
+public  DateTime? ScheduleDateOffer(BO.Task task)
     {
         DateTime? dateTime = null;
         IEnumerable<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
                                                     where dependency.DependentTask == task.Id
                                                     select dependency);
-        if (dependencies == null && IBl.StartProjectDate != null)
-            return (DateTime)IBl.StartProjectDate;
+        if (dependencies == null && dal.StartProjectDate != null)
+            return dal.StartProjectDate;
         else
         {
             List<DO.Task>? tasksList = new();
