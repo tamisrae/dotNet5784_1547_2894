@@ -165,11 +165,6 @@ public static class Initialization
             int rangeStart = (start - DateTime.Today).Days;
             DateTime ranDay = start.AddDays(rand.Next(rangeStart));
 
-            //Random random = new Random();
-            //int days = random.Next(1, 4);
-            //int hours = random.Next(1, 12);
-            //TimeSpan randRequiredEffortTime = TimeSpan.FromDays(days) + TimeSpan.FromHours(hours);
-
             DateTime createdAtDate = ranDay; 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
@@ -177,8 +172,9 @@ public static class Initialization
             DateTime? completeDate = null;
             TimeSpan? requiredEffortTime = null;
 
-
-            string deliverables = TaskDeliverables[i];
+            //rand = new Random(TimeSpan.FromDays(3));
+            
+            string deliverables = TaskDeliverables[i];    
             string description = TaskDescription[i];
             string remarks = TaskRemarks[i];
 
