@@ -1,11 +1,7 @@
 ﻿using BlApi;
 using BO;
-using DalApi;
 using DO;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading.Tasks;
+using System.Data;
 
 namespace BlImplementation;
 internal class TaskImplementation : BlApi.ITask
@@ -21,11 +17,9 @@ internal class TaskImplementation : BlApi.ITask
         {
             if (task.Dependencies != null)
             {
-                foreach (BO.TaskInList item in task.Dependencies)
-                {
-                    DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
-                    dal.Dependency.Create(dependency);
-                }
+                IEnumerable<int> dependencies = from BO.TaskInList item in task.Dependencies
+                                                let dependency = new DO.Dependency(0, task.Id, item.Id)
+                                                select dal.Dependency.Create(dependency);
             }
 
             DO.Task doTask = DataChecking(task);
@@ -159,35 +153,22 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
-    public List<TaskInList>? TasksForWorker(int workerId)
+    public IEnumerable<TaskInList>? TasksForWorker(int workerId)
     {
         try
         {
             DO.Worker? worker = dal.Worker.Read(workerId);
             if (worker != null)
             {
-                List<BO.TaskInList>? tasks = (from task in dal.Task.ReadAll()
-                                              where task.WorkerId == null && task.Complexity == worker.Level
-                                              select new BO.TaskInList
-                                              {
-                                                  Id = task.Id,
-                                                  Alias = task.Alias,
-                                                  Description = task.Description,
-                                                  Status = task.GetStatus()
-                                              }).ToList();
-
-                foreach (BO.TaskInList task in tasks)
-                {
-                    BO.Task? extendedTask = Read(task.Id);
-                    if (extendedTask != null && extendedTask.Dependencies != null)
-                    {
-                        foreach (BO.TaskInList dependOnTask in extendedTask.Dependencies)
-                        {
-                            if (dependOnTask.Status != Status.Unscheduled)
-                                tasks.Remove(dependOnTask);
-                        }
-                    }
-                }
+                IEnumerable<BO.TaskInList>? tasks = from task in dal.Task.ReadAll()
+                                                    where task.WorkerId == null && task.Complexity == worker.Level
+                                                    select new BO.TaskInList
+                                                    {
+                                                        Id = task.Id,
+                                                        Alias = task.Alias,
+                                                        Description = task.Description,
+                                                        Status = task.GetStatus()
+                                                    };
                 return tasks;
             }
         }
@@ -237,17 +218,10 @@ internal class TaskImplementation : BlApi.ITask
                 IEnumerable<DO.Dependency>? dependencies = FindDependencies(task.Id);
                 if (GetDependency(task.Id, dependencies))
                 {
-                    foreach (BO.TaskInList item in task.Dependencies)
-                    {
-                        foreach (DO.Dependency depenc in dal.Dependency.ReadAll())
-                        {
-                            if (depenc.DependentTask != task.Id || depenc.DependsOnTask != item.Id)
-                            {
-                                DO.Dependency dependency = new DO.Dependency(0, task.Id, item.Id);
-                                dal.Dependency.Create(dependency);
-                            }
-                        }
-                    }
+                    IEnumerable<int> createDependencies = from BO.TaskInList task1 in task.Dependencies
+                                                          let dependency = dal.Dependency.ReadAll().FirstOrDefault(dependency => dependency.DependentTask != task.Id || dependency.DependsOnTask != task1.Id)
+                                                          where dependency == null
+                                                          select dal.Dependency.Create(dependency);
                 }
                 else
                     throw new BlCantUpdateException("This task cannot be update");
@@ -268,7 +242,6 @@ internal class TaskImplementation : BlApi.ITask
 
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate)
     {
-        bool flag = true;
         if (scheduledDate < dal.StartProjectDate)
             throw new BlScheduledDateException("You cannot enter this date for the task");
 
@@ -283,10 +256,9 @@ internal class TaskImplementation : BlApi.ITask
                                                       where doTask.WorkerId == task.WorkOnTask.Id
                                                       select doTask;
 
-                    foreach(DO.Task doTask in tasksList)
+                    if (tasksList.Any(doTask => (scheduledDate > doTask.ScheduledDate || scheduledDate > doTask.StartDate) && scheduledDate < doTask.GetForeCastDate()))
                     {
-                        if ((scheduledDate > doTask.ScheduledDate || scheduledDate > doTask.StartDate) && scheduledDate < doTask.GetForeCastDate())
-                            throw new BlScheduledDateException("The worker work on another task at this time");
+                        throw new BlScheduledDateException("The worker is working on another task at this time");
                     }
                 }
 
@@ -295,30 +267,21 @@ internal class TaskImplementation : BlApi.ITask
                     IEnumerable<BO.Task> tasks = from BO.TaskInList taskInList in task.Dependencies
                                                  select (Read(taskInList.Id));
 
-                    foreach (BO.TaskInList taskInList in task.Dependencies)
+                    if (task.Dependencies.Any(dependency => tasks.Any(t => t.StartDate == null || t.StartDate < DateTime.Now) ||
+                       Read(dependency.Id)!.ScheduledDate > tasks.Max(t => t.ForeCastDate)))
                     {
-                        if ((tasks.FirstOrDefault(task => task.StartDate == null || task.StartDate < DateTime.Now)) != null) 
-                        {
-                            flag = false;
-                            throw new BlScheduledDateException("You cannot enter scheduled date for this task");
-                        }
-                        else if(task.ScheduledDate > tasks.MaxBy(task => task.ForeCastDate)!.ForeCastDate)
-                        {
-                            flag = false;
-                            throw new BlScheduledDateException("This scheduled date does not fit the schedule");
-                        }
+                        throw new BlScheduledDateException("You cannot enter a scheduled date for this task");
                     }
+
                 }
 
-                if (flag == true)
+                DO.Task? taskToRead = dal.Task.Read(taskId);
+                if (taskToRead != null)
                 {
-                    DO.Task? doTask = dal.Task.Read(taskId);
-                    if (doTask != null)
-                    {
-                        doTask = doTask with { ScheduledDate = scheduledDate };
-                        dal.Task.Update(doTask);
-                    }
+                    taskToRead = taskToRead with { ScheduledDate = scheduledDate };
+                    dal.Task.Update(taskToRead);
                 }
+
             }
         }
         catch (DO.DalDoesNotExistsException ex)
@@ -341,13 +304,10 @@ internal class TaskImplementation : BlApi.ITask
             return true;
         else
         {
-            foreach (DO.Dependency dependency in dependencies)
+
+            if (dependencies.Any(dependency => dependency.DependentTask == taskId ||GetDependency(taskId, FindDependencies(dependency.Id)) == false))
             {
-                if (dependency.DependentTask == taskId)
-                    return false;
-                else
-                    if (GetDependency(taskId, FindDependencies(dependency.Id)) == false)
-                    return false;
+                return false;
             }
             return true;
         }
@@ -391,6 +351,7 @@ internal class TaskImplementation : BlApi.ITask
             if (!DateTime.TryParse(Console.ReadLine(), out DateTime scheduledDate))
                 throw new DalWorngValueException("WORNG DATE");
             DO.Task tempTask = task with { ScheduledDate = scheduledDate };
+            UpdateTheScheduledDate(task.Id, scheduledDate);
             try
             {
                 dal.Task.Update(tempTask);

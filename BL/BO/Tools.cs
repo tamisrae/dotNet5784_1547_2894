@@ -15,18 +15,30 @@ static class Tools
     public static string ToStringProperty<T>(this T obj)
     {
         string str = "";
-        foreach (PropertyInfo item in obj?.GetType().GetProperties()!)
+        foreach (PropertyInfo item in typeof(T).GetProperties()!)
         {
-            if (item is IEnumerable<T> && !(item is string))
+            if (item.PropertyType.IsGenericType && item.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
             {
-                foreach (T element in (IEnumerable<T>)item)
-                    str += "\n" + item.Name + ": " + item.GetValue(obj, null);
+                if (item.GetValue(obj, null) != null)
+                {
+                    var value = item.GetValue(obj) as IEnumerable<object>;
+                    if (value != null)
+                    {
+                        str += $"{item.Name}:\n";
+                        foreach (var i in value)
+                            str += $"{i}";
+                        if (str.EndsWith(" "))
+                            str.Remove(str.Length - 1);
+                        str += '\n';
+                    }
+                }
             }
-            else
-                str += "\n" + item.Name + ": " + item.GetValue(obj, null);
+            else if (item.GetValue(obj, null) != null)
+                str += $"{item.Name}: {item.GetValue(obj)}\n";
         }
         return str;
     }
+
 
     public static bool IsGreaterThanZero<T>(this T value) where T : IComparable<T>
     {

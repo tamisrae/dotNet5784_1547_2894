@@ -466,7 +466,7 @@ partial class Program
         Console.WriteLine("Enter  worker Id:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
-        List<BO.TaskInList>? tasksForWorker;
+        IEnumerable<BO.TaskInList>? tasksForWorker;
         tasksForWorker = s_bl.Task.TasksForWorker(id);
         if (tasksForWorker != null)
         {

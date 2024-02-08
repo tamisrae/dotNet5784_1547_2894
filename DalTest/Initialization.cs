@@ -135,6 +135,7 @@ public static class Initialization
 
         };
 
+        
 
         foreach (string task in TaskAlias)
         {
@@ -162,15 +163,16 @@ public static class Initialization
             Random rand = new Random(DateTime.Now.Millisecond);
             DateTime start = new DateTime(2024, 2, 8, 0, 0, 0);
             int rangeStart = (start - DateTime.Today).Days;
-            DateTime RanDay = start.AddDays(rand.Next(rangeStart));
+            DateTime ranDay = start.AddDays(rand.Next(rangeStart));
 
-            DateTime createdAtDate = RanDay; 
+            DateTime createdAtDate = ranDay; 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;
             DateTime? completeDate = null;
             TimeSpan? requiredEffortTime = null;
 
+            //rand = new Random(TimeSpan.FromDays(3));
             
             string deliverables = TaskDeliverables[i];
             string description = TaskDescription[i];
