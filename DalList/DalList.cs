@@ -19,6 +19,6 @@ namespace Dal
         public IDependency Dependency => new DependencyImplementation();
 
         public  DateTime? StartProjectDate { get { return DataSource.Config.StartProjectDate; } set { DataSource.Config.StartProjectDate = value; } }
-        //public  DateTime? EndProjectDate { get ; set  }
+        public  DateTime? EndProjectDate { get { return DataSource.Config.StartProjectDate; } set { DataSource.Config.StartProjectDate = value; } }
     }
 }

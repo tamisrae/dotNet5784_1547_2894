@@ -34,6 +34,15 @@ static class XMLTools
         XMLTools.SaveListToXMLElement(root, data_config_xml);
         return nextId;
     }
+
+    //public static DateTime? GetDateTime(string data_config_xml, string elemName)
+    //{
+    //    XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+    //    DateTime? projectDate = root.ToDateTimeNullable(elemName) ?? throw new FormatException($"can't convert dateTime.  {data_config_xml}, {elemName}");
+    //    root.Element(elemName)?.SetValue((projectDate).ToString());
+    //    XMLTools.SaveListToXMLElement(root, data_config_xml);
+    //    return projectDate;
+    //}//tachles lo kaze evanti ma kore po...
     #endregion
 
     #region SaveLoadWithXElement

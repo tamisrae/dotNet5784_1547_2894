@@ -183,7 +183,7 @@ internal class TaskImplementation : BlApi.ITask
                     {
                         foreach (BO.TaskInList dependOnTask in extendedTask.Dependencies)
                         {
-                            if (dependOnTask.Status != Status.Done)
+                            if (dependOnTask.Status != Status.Unscheduled)
                                 tasks.Remove(dependOnTask);
                         }
                     }
@@ -269,7 +269,7 @@ internal class TaskImplementation : BlApi.ITask
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate)
     {
         bool flag = true;
-        if (scheduledDate < IBl.StartProjectDate)
+        if (scheduledDate < dal.StartProjectDate)
             throw new BlScheduledDateException("You cannot enter this date for the task");
 
         try
@@ -384,7 +384,7 @@ internal class TaskImplementation : BlApi.ITask
 
     public void ManualSchedule()
     {
-        IBl.StartProjectDate = DateTime.Now;
+        dal.StartProjectDate = DateTime.Now;
         foreach (DO.Task task in dal.Task.ReadAll())
         {
             Console.WriteLine("enter the scheduled date:");
@@ -404,11 +404,11 @@ internal class TaskImplementation : BlApi.ITask
 
     public void AutomaticSchedule()
     {
-        IBl.StartProjectDate = DateTime.Now;
+        dal.StartProjectDate = DateTime.Now;
         foreach (DO.Task task in dal.Task.ReadAll())
         {
             BO.Task? boTask = Read(task.Id);
-            DateTime dateTime;
+            DateTime? dateTime;
             if (boTask != null)
             {
                 dateTime = IBl.ScheduleDateOffer(boTask);

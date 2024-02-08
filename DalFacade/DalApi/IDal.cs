@@ -14,7 +14,7 @@ namespace DalApi
 
 
         public  DateTime? StartProjectDate { get; set; }
-        //public static DateTime? EndProjectDate { get; set; }
+        public DateTime? EndProjectDate { get; set; }
 
     }
 }

@@ -1,11 +1,4 @@
 ﻿using BO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using DalApi;
 
 
 namespace BlApi;
@@ -32,7 +25,7 @@ public interface IBl
         return projectStatus;
     }
 
-public  DateTime? ScheduleDateOffer(BO.Task task)
+    public static DateTime? ScheduleDateOffer(BO.Task task)
     {
         DateTime? dateTime = null;
         IEnumerable<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
