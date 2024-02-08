@@ -174,7 +174,7 @@ public static class Initialization
 
             //rand = new Random(TimeSpan.FromDays(3));
             
-            string deliverables = TaskDeliverables[i];
+            string deliverables = TaskDeliverables[i];    
             string description = TaskDescription[i];
             string remarks = TaskRemarks[i];
 
