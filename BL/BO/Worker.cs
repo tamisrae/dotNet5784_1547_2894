@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace BO;
 
+/// <summary>
+/// Worker logical entity
+/// </summary>
 public class Worker
 {
     public int Id {  get; init; }

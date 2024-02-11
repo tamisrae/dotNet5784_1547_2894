@@ -17,10 +17,11 @@ public interface ITask
     public void Update(BO.Task task);
     public void Delete(int id);
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate);
-    public IEnumerable<BO.TaskInList>? TasksForWorker(int workerId);
+    public IEnumerable<TaskInList>? TasksForWorker(int workerId);
     public void ManualSchedule();
     public void AutomaticSchedule();
     public void StartTask(BO.Task task, int workerId);
     public void EndTask(int taskId, int workerId);
     public void SignUpForTask(int taskId, int workerId);
+    public IEnumerable<IGrouping<int?, BO.TaskInList>> GroupTasksByComplexity();
 }

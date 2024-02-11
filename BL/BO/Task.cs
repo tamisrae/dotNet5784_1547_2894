@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BO;
 
+/// <summary>
+/// Task logical entity
+/// </summary>
 public class Task
 {
     public int Id { get; init; }

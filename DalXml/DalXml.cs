@@ -18,6 +18,6 @@ sealed internal class DalXml : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    public DateTime? StartProjectDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public DateTime? EndProjectDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public DateTime? StartProjectDate { get { return Config.GetProjectDate("Start project date"); } set { Config.SetProjectDate("Start project date", value); } }
+    public DateTime? EndProjectDate { get { return Config.GetProjectDate("End project date"); } set { Config.SetProjectDate("End project date", value); } }
 }

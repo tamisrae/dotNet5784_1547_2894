@@ -8,6 +8,13 @@ internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
+    /// <summary>
+    /// This function create a new logic task
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    /// <exception cref="BlProjectStatusException"></exception>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Task task)
     {
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
@@ -35,6 +42,13 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function delete a logic task
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BlProjectStatusException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BlCantDeleteException"></exception>
     public void Delete(int id)
     {
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
@@ -64,6 +78,12 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function read logic task
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public BO.Task? Read(int id)
     {
         try
@@ -126,9 +146,14 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function returns all the tasks from the data source
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
-        if (filter == null)
+        if (filter == null)//without filter
         {
             return from item in dal.Task.ReadAll()
                    select new BO.TaskInList
@@ -139,7 +164,7 @@ internal class TaskImplementation : BlApi.ITask
                        Status = item.GetStatus()
                    };
         }
-        else
+        else//with filter
         {
             return from item in dal.Task.ReadAll()
                    where filter!(Read(item.Id)!)
@@ -153,6 +178,12 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function returns list of tasks that worker can take 
+    /// </summary>
+    /// <param name="workerId"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public IEnumerable<TaskInList>? TasksForWorker(int workerId)
     {
         try
@@ -179,6 +210,13 @@ internal class TaskImplementation : BlApi.ITask
         return null;
     }
 
+    /// <summary>
+    /// This function update logic task
+    /// </summary>
+    /// <param name="task"></param>
+    /// <exception cref="BlProjectStatusException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BlCantUpdateException"></exception>
     public void Update(BO.Task task)
     {
         BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
@@ -186,6 +224,7 @@ internal class TaskImplementation : BlApi.ITask
         {
             try
             {
+                //If the user has changed fields that should not be changed at this stage of the project
                 DO.Task? checkingTask = dal.Task.Read(task.Id);
                 if (checkingTask != null && (task.CreatedAtDate != checkingTask.CreatedAtDate || (int?)task.Complexity != (int?)checkingTask.Complexity ||
                     task.RequiredEffortTime != checkingTask.RequiredEffortTime || task.StartDate != checkingTask.StartDate || task.ScheduledDate != checkingTask.StartDate ||
@@ -248,6 +287,13 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function update the scheduled date of a task
+    /// </summary>
+    /// <param name="taskId"></param>
+    /// <param name="scheduledDate"></param>
+    /// <exception cref="BlScheduledDateException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate)
     {
         if (scheduledDate < dal.StartProjectDate)
@@ -259,6 +305,7 @@ internal class TaskImplementation : BlApi.ITask
                 BO.Task? task = Read(taskId);
                 if (task != null)
                 {
+                    //Check that the worker is not working on another task at this time
                     if (task.WorkOnTask != null)
                     {
                         IEnumerable<DO.Task>? tasksList = from DO.Task doTask in dal.Task.ReadAll()
@@ -300,6 +347,11 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function returns all the dependencies of a task
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     private List<DO.Dependency>? FindDependencies(int id)
     {
         List<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
@@ -308,6 +360,12 @@ internal class TaskImplementation : BlApi.ITask
         return dependencies;
     }
 
+    /// <summary>
+    /// This function checks if there is a circular dependency
+    /// </summary>
+    /// <param name="taskId"></param>
+    /// <param name="dependencies"></param>
+    /// <returns></returns>
     private bool GetDependency(int taskId, IEnumerable<DO.Dependency>? dependencies)
     {
         if (dependencies == null)
@@ -315,13 +373,18 @@ internal class TaskImplementation : BlApi.ITask
         else
         {
             if (dependencies.Any(dependency => dependency.DependentTask == taskId || GetDependency(taskId, FindDependencies(dependency.Id)) == false))
-            {
                 return false;
-            }
             return true;
         }
     }
 
+    /// <summary>
+    /// This function does input integrity check
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    /// <exception cref="BlWorngValueException"></exception>
+    /// <exception cref="BlProjectStatusException"></exception>
     private DO.Task DataChecking(BO.Task task)
     {
         if (task.Id.IsGreaterThanZero() || task.Alias.IsEmptyString())
@@ -351,6 +414,10 @@ internal class TaskImplementation : BlApi.ITask
         return doTask;
     }
 
+    /// <summary>
+    /// This function makes a schedule manually
+    /// </summary>
+    /// <exception cref="DalWorngValueException"></exception>
     public void ManualSchedule()
     {
         dal.StartProjectDate = DateTime.Now;
@@ -363,12 +430,16 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// This function makes a schedule automatically
+    /// </summary>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void AutomaticSchedule()
     {
         dal.StartProjectDate = DateTime.Now;
         List<BO.Task> tasks = (from DO.Task task in dal.Task.ReadAll()
                                where FindDependencies(task.Id)!.Count == 0
-                               select Read(task.Id)).ToList();
+                               select Read(task.Id)).ToList();//All the tasks that didn't have dependencies
         foreach (BO.Task task in tasks)
         {
             try
@@ -387,6 +458,11 @@ internal class TaskImplementation : BlApi.ITask
         Rec(taskList);
     }
 
+    /// <summary>
+    /// Recursive helper function to create an automatic schedule
+    /// </summary>
+    /// <param name="tasks"></param>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     private void Rec(List<BO.Task> tasks)
     {
         if (!tasks.Any())
@@ -402,7 +478,7 @@ internal class TaskImplementation : BlApi.ITask
                     depentsOnTasks = (from BO.TaskInList taskInList in task.Dependencies
                                       select Read(taskInList.Id)).ToList();
 
-                    if ((depentsOnTasks.FirstOrDefault(t => t.ScheduledDate == null)) == null)
+                    if ((depentsOnTasks.FirstOrDefault(t => t.ScheduledDate == null)) == null)//Check that all tasks that my task depends on have a scheduled date
                     {
                         DateTime? scheduledDate = IBl.ScheduleDateOffer(task);
                         if (scheduledDate != null)
@@ -429,9 +505,17 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// A worker declares the start of a task
+    /// </summary>
+    /// <param name="boTask"></param>
+    /// <param name="workerId"></param>
+    /// <exception cref="BlWorkerInTaskException"></exception>
+    /// <exception cref="BlTaskInWorkerException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void StartTask(BO.Task boTask, int workerId)
     {
-        if (boTask.Dependencies != null)
+        if (boTask.Dependencies != null)//Check that all the tasks that my task depends on have completed
         {
             List<BO.Task> tasks = (from BO.TaskInList taskInList in boTask.Dependencies
                                    select Read(taskInList.Id)).ToList();
@@ -442,6 +526,7 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             DO.Task? doTask = dal.Task.Read(boTask.Id);
+            //Check that the worker is registered for this task and it is in progress
             DO.Task? task = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
 
             if (task != null && task.Id != boTask.Id)
@@ -460,11 +545,19 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// A worker declares the completion of a task
+    /// </summary>
+    /// <param name="taskId"></param>
+    /// <param name="workerId"></param>
+    /// <exception cref="BlTaskInWorkerException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void EndTask(int taskId, int workerId)
     {
         try
         {
             DO.Task? task = dal.Task.Read(taskId);
+            //Check that the worker really worked on this task
             DO.Task? doTask = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
 
             if (task != null && doTask != null && doTask.Id == taskId)
@@ -481,6 +574,13 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
 
+    /// <summary>
+    /// A worker is registered for a task
+    /// </summary>
+    /// <param name="taskId"></param>
+    /// <param name="workerId"></param>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BlTaskInWorkerException"></exception>
     public void SignUpForTask(int taskId, int workerId)
     {
         if (TasksForWorker(workerId) != null && TasksForWorker(workerId)!.FirstOrDefault(t => t.Id == taskId) != null)
@@ -501,5 +601,22 @@ internal class TaskImplementation : BlApi.ITask
         }
         else
             throw new BlTaskInWorkerException($"Worker with ID={workerId} cannot sign up for task with ID={taskId}");
+    }
+
+    /// <summary>
+    /// Group tasks by complexity
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<IGrouping<int?, BO.TaskInList>> GroupTasksByComplexity()
+    {
+        var tasks = from task in dal.Task.ReadAll()
+                    group new BO.TaskInList
+                    {
+                        Id = task.Id,
+                        Alias = task.Alias,
+                        Description = task.Description,
+                        Status = task.GetStatus()
+                    } by (int?)task.Complexity;
+        return tasks;
     }
 }

@@ -12,6 +12,12 @@ namespace BO;
 
 static class Tools
 {
+    /// <summary>
+    /// A function that examines the entity at runtime and prints
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public static string ToStringProperty<T>(this T obj)
     {
         string str = "";
@@ -33,26 +39,38 @@ static class Tools
                     }
                 }
             }
-            //else if (item.GetType() != typeof(int) && item.GetType() != typeof(double) && item.GetType() != typeof(string) && item.GetType() != typeof(Enum)
-            //         && item.GetType() != typeof(bool)) 
-            //    ToStringProperty(item);
             else if (item.GetValue(obj, null) != null)
                 str += $"{item.Name}: {item.GetValue(obj)}\n";
         }
         return str;
     }
 
-
+    /// <summary>
+    /// A function that checks if T is less than zero
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="value"></param>
+    /// <returns></returns>
     public static bool IsGreaterThanZero<T>(this T value) where T : IComparable<T>
     {
         return value.CompareTo(default(T)) < 0;
     }
 
+    /// <summary>
+    /// A function that checks if string is empty
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
     public static bool IsEmptyString(this string str)
     {
         return string.IsNullOrWhiteSpace(str);
     }
 
+    /// <summary>
+    /// A function that returns the status of task
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public static Status GetStatus(this DO.Task task)
     {
         Status status;
@@ -68,6 +86,11 @@ static class Tools
         return status;
     }
 
+    /// <summary>
+    /// A function that calculate and returns the fore cast date
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public static DateTime? GetForeCastDate(this DO.Task task)
     {
         DateTime? startDate;
@@ -82,19 +105,25 @@ static class Tools
 
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
+    /// <summary>
+    /// A function that checks if worker can take a task
+    /// </summary>
+    /// <param name="workerId"></param>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public static bool AllowedTask(int workerId, DO.Task task)
     {
-        if (task.WorkerId != null && workerId != task.WorkerId)
+        if (task.WorkerId != null && workerId != task.WorkerId)//if another worker work on this task
             return false;
         DO.Worker? worker = dal.Worker.Read(workerId);
-        if (worker != null && worker.Level != task.Complexity) 
+        if (worker != null && worker.Level != task.Complexity)//if the level of the worker does not fit to the complexity of the task
             return false;
 
         IEnumerable<DO.Task>? tasks = (from dependency in dal.Dependency.ReadAll()
                                               where dependency.DependentTask == task.Id
                                               select dal.Task.Read(dependency.DependsOnTask));
 
-        DO.Task? tempTask = tasks.FirstOrDefault(t => t.GetStatus() != BO.Status.Done);
+        DO.Task? tempTask = tasks.FirstOrDefault(t => t.GetStatus() != BO.Status.Done);//If one of the tasks that the task depends on has not finished
         if (tempTask != null)
             return false;
         return true;

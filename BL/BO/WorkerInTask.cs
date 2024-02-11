@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO;
 
+/// <summary>
+/// Logical auxiliary entity
+/// </summary>
 public class WorkerInTask
 {
     public int Id { get; init; }

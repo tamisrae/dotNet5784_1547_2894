@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO;
 
+/// <summary>
+/// An abbreviated logical helper entity of worker
+/// </summary>
 public class WorkerInList
 {
     public int Id { get; init; }

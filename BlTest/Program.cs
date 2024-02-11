@@ -1,5 +1,4 @@
 ﻿using BO;
-using System.Collections.Generic;
 
 namespace BlTest;
 
@@ -101,6 +100,10 @@ partial class Program
     }
 
 
+    /// <summary>
+    ///  Submenu function for the worker 
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void SubMenuWorker()
     {
         Console.WriteLine("For exit press: 0");
@@ -151,6 +154,10 @@ partial class Program
         }
     }
 
+    /// <summary>
+    ///  Submenu function for the task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void SubMenuTask()
     {
         Console.WriteLine("For exit press: 0");
@@ -160,6 +167,9 @@ partial class Program
         Console.WriteLine("To update task press: 4");
         Console.WriteLine("To delete task from the list press: 5");
         Console.WriteLine("To display the list of the task the worker can chose press: 6");
+        Console.WriteLine("To display the list of the task the worker can chose press: 6");
+        Console.WriteLine("To bbb press: 7");
+
 
         if (!int.TryParse(Console.ReadLine(), out int choice))
             throw new BlWorngValueException("WORNG VALUE");
@@ -184,6 +194,9 @@ partial class Program
             case 6:
                 ListOfTasksForWorker();
                 break;
+            case 7:
+                GroupedTasksByComplexity();
+                break;
             case 0:
                 Environment.Exit(0);
                 break;
@@ -194,7 +207,10 @@ partial class Program
     }
 
 
-
+    /// <summary>
+    /// Create a new worker
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void CreateW()
     {
         Console.WriteLine("Enter ID, the worker's level, cost per hour, email and name:");
@@ -213,6 +229,10 @@ partial class Program
         return;
     }
 
+    /// <summary>
+    /// Read worker from the data source to the logical layer
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void ReadW()
     {
         Console.WriteLine("Enter ID:");
@@ -222,6 +242,9 @@ partial class Program
         return;
     }
 
+    /// <summary>
+    /// Read all workers from the data source to the logical layer
+    /// </summary>
     static void ReadAllW()
     {
         List<BO.WorkerInList> list;
@@ -230,6 +253,10 @@ partial class Program
             Console.WriteLine(worker);
     }
 
+    /// <summary>
+    /// Update worker
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void UpdateW()
     {
         Console.WriteLine("Enter ID:");
@@ -271,6 +298,10 @@ partial class Program
         s_bl.Worker.Update(workerToUpdate);
     }
 
+    /// <summary>
+    /// Delete worker from the data source
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void DeleteW()
     {
         Console.WriteLine("Enter ID:");
@@ -279,6 +310,10 @@ partial class Program
         s_bl.Worker.Delete(id);
     }
 
+    /// <summary>
+    /// A worker declares the start of a task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void StartTask()
     {
         Console.WriteLine("Enter the ID of the worker:");
@@ -292,6 +327,10 @@ partial class Program
             s_bl.Task.StartTask(task, workerId);
     }
 
+    /// <summary>
+    /// A worker declares the completion of a task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void EndTask()
     {
         Console.WriteLine("Enter the ID of the worker:");
@@ -303,6 +342,10 @@ partial class Program
         s_bl.Task.EndTask(taskId, workerId);
     }
 
+    /// <summary>
+    /// A worker is registered for a task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void SignUpForTask()
     {
         Console.WriteLine("Enter the ID of the worker:");
@@ -316,7 +359,10 @@ partial class Program
 
 
 
-
+    /// <summary>
+    /// Create a new task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void CreateT()
     {
         Console.WriteLine("Enter alias, description, complexity, deliverables");
@@ -382,6 +428,10 @@ partial class Program
         Console.WriteLine(s_bl.Task.Create(task));
     }
 
+    /// <summary>
+    /// Read task from the data source to the logical layer
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void ReadT()
     {
         Console.WriteLine("Enter ID:");
@@ -390,6 +440,9 @@ partial class Program
         Console.WriteLine(s_bl.Task.Read(id));
     }
 
+    /// <summary>
+    /// Read all tasks from the data source to the logical layer
+    /// </summary>
     static void ReadAllT()
     {
         List<BO.TaskInList> list;
@@ -398,6 +451,10 @@ partial class Program
             Console.WriteLine(task);
     }
 
+    /// <summary>
+    /// Update a task
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void UpdateT()
     {
         Console.WriteLine("Enter ID:");
@@ -528,6 +585,10 @@ partial class Program
         s_bl.Task.Update(taskToUpdate);
     }
 
+    /// <summary>
+    /// Delete a task from the data source
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void DeleteT()
     {
         Console.WriteLine("Enter ID:");
@@ -536,6 +597,10 @@ partial class Program
         s_bl.Task.Delete(id);
     }
 
+    /// <summary>
+    /// Returns all the tasks that worker can take
+    /// </summary>
+    /// <exception cref="BlWorngValueException"></exception>
     static void ListOfTasksForWorker()
     {
         Console.WriteLine("Enter  worker Id:");
@@ -549,4 +614,27 @@ partial class Program
                 Console.WriteLine(task);
         }
     }
+
+    /// <summary>
+    /// Group tasks by complexity
+    /// </summary>
+    static void GroupedTasksByComplexity()
+    {
+        var groupedTasks = s_bl.Task.GroupTasksByComplexity();
+
+        foreach (var group in groupedTasks)
+        {
+            Console.WriteLine($"Complexity Group: {group.Key ?? -1}");
+
+            foreach (var task in group)
+            {
+                Console.WriteLine($"  Task ID: {task.Id}");
+                Console.WriteLine($"  Alias: {task.Alias}");
+                Console.WriteLine($"  Description: {task.Description}");
+                Console.WriteLine($"  Status: {task.Status}");
+                Console.WriteLine();
+            }
+        }
+    }
+
 }

@@ -11,6 +11,10 @@ public interface IBl
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
 
+    /// <summary>
+    /// This function returns the status of the project
+    /// </summary>
+    /// <returns></returns>
     public static BO.ProjectStatus GetProjectStatus()
     {
         BO.ProjectStatus projectStatus = BO.ProjectStatus.Scheduled;
@@ -23,6 +27,13 @@ public interface IBl
         return projectStatus;
     }
 
+    /// <summary>
+    /// The function returns a suggestion for a task scheduled date
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BlScheduledDateException"></exception>
     public static DateTime? ScheduleDateOffer(BO.Task task)
     {
         DateTime? dateTime = null;

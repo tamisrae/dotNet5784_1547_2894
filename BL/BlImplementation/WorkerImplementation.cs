@@ -6,33 +6,19 @@ internal class WorkerImplementation : BlApi.IWorker
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
+    /// <summary>
+    /// This function create a new logic worker
+    /// </summary>
+    /// <param name="worker"></param>
+    /// <returns></returns>
+    /// <exception cref="BlWorngValueException"></exception>
+    /// <exception cref="BlTaskInWorkerException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Worker worker)
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
-
-        if (worker.CurrentTask != null)
-        {
-            try
-            {
-                DO.Task? task = dal.Task.Read(worker.CurrentTask.Id);
-                if (task != null)
-                {
-                    if (!(Tools.AllowedTask(worker.Id, task)))
-                        throw new BlTaskInWorkerException("You cannot take this task");
-                    else
-                    {
-                        task = task with { WorkerId = worker.Id };
-                        dal.Task.Update(task);
-                    }
-                }
-
-            }
-            catch (DO.DalDoesNotExistsException ex)
-            {
-                throw new BO.BlDoesNotExistsException($"Task with ID={worker.CurrentTask.Id} doe's NOT exists", ex);
-            }
-        }
 
         DO.Worker doWorker = new DO.Worker
            (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
@@ -47,6 +33,12 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
+    /// <summary>
+    /// This function delete a logic worker
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BO.BlWorkerInTaskException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void Delete(int id)
     {
         try
@@ -54,10 +46,10 @@ internal class WorkerImplementation : BlApi.IWorker
             IEnumerable<DO.Task>? tasks = from DO.Task task in dal.Task.ReadAll()
                                           where task.WorkerId == id
                                           select task;
-            if (!tasks.Any())
+            if (!tasks.Any())//Check if the worker is registered for tasks
                 dal.Worker.Delete(id);
             else
-                throw new BO.BlWorkerInTaskException($"You cannot delete this worker");
+                throw new BO.BlWorkerInTaskException($"You cannot delete worker with ID={id}");
         }
         catch (DO.DalDoesNotExistsException ex)
         {
@@ -65,6 +57,12 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
+    /// <summary>
+    /// This function read logic worker
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public BO.Worker? Read(int id)
     {
         try
@@ -91,11 +89,16 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
+    /// <summary>
+    /// This function returns all the workers from the data source
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<WorkerInList> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
         if (filter == null)
         {
-            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()
+            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()//without filter
                                                 select new BO.WorkerInList
                                                 {
                                                     Name = item.Name,
@@ -107,7 +110,7 @@ internal class WorkerImplementation : BlApi.IWorker
         }
         else
         {
-            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()
+            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()//with filter
                                                 where filter!(Read(item.Id)!)
                                                 select new BO.WorkerInList
                                                 {
@@ -120,6 +123,13 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
+    /// <summary>
+    /// This function update logic worker
+    /// </summary>
+    /// <param name="worker"></param>
+    /// <exception cref="BlWorngValueException"></exception>
+    /// <exception cref="BlTaskInWorkerException"></exception>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void Update(BO.Worker worker)
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
@@ -132,10 +142,10 @@ internal class WorkerImplementation : BlApi.IWorker
                 DO.Task? task = dal.Task.Read(worker.CurrentTask.Id);
                 if (task != null)
                 {
-                    if (!(Tools.AllowedTask(worker.Id, task)))
+                    if (!(Tools.AllowedTask(worker.Id, task)))//check if the worker can take the task
                         throw new BlTaskInWorkerException("You cannot take this task");
 
-                    BO.TaskInWorker? taskInWorker = CurrentTask(worker.Id);
+                    BO.TaskInWorker? taskInWorker = CurrentTask(worker.Id);//check if the worker in the middle of another task
                     if (taskInWorker != null && taskInWorker.Id != worker.CurrentTask.Id)
                         throw new BlTaskInWorkerException("The worker is in the middle of another task");
 
@@ -163,6 +173,11 @@ internal class WorkerImplementation : BlApi.IWorker
         }
     }
 
+    /// <summary>
+    /// This function returns the current task of a worker
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     private BO.TaskInWorker? CurrentTask(int id)
     {
         IEnumerable<DO.Task>? tasks = dal.Task.ReadAll().Where(item => item.WorkerId == id);
