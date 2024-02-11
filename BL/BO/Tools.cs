@@ -33,6 +33,9 @@ static class Tools
                     }
                 }
             }
+            //else if (item.GetType() != typeof(int) && item.GetType() != typeof(double) && item.GetType() != typeof(string) && item.GetType() != typeof(Enum)
+            //         && item.GetType() != typeof(bool)) 
+            //    ToStringProperty(item);
             else if (item.GetValue(obj, null) != null)
                 str += $"{item.Name}: {item.GetValue(obj)}\n";
         }
@@ -68,7 +71,7 @@ static class Tools
     public static DateTime? GetForeCastDate(this DO.Task task)
     {
         DateTime? startDate;
-        if (task.StartDate > task.ScheduledDate)
+        if (task.StartDate != null && task.StartDate > task.ScheduledDate)
             startDate = task.StartDate;
         else
             startDate = task.ScheduledDate;
@@ -91,7 +94,7 @@ static class Tools
                                               where dependency.DependentTask == task.Id
                                               select dal.Task.Read(dependency.DependsOnTask));
 
-        DO.Task? tempTask = tasks.FirstOrDefault(task => task.GetStatus() != BO.Status.Done);
+        DO.Task? tempTask = tasks.FirstOrDefault(t => t.GetStatus() != BO.Status.Done);
         if (tempTask != null)
             return false;
         return true;

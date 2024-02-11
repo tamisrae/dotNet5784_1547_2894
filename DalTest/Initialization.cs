@@ -161,18 +161,22 @@ public static class Initialization
 
 
             Random rand = new Random(DateTime.Now.Millisecond);
-            DateTime start = new DateTime(2024, 2, 8, 0, 0, 0);
+            DateTime start = new DateTime(2024, 5, 28, 0, 0, 0);
             int rangeStart = (start - DateTime.Today).Days;
             DateTime ranDay = start.AddDays(rand.Next(rangeStart));
+
+            Random random = new Random();
+            int days = random.Next(1, 4);
+            int hours = random.Next(1, 12);
+            TimeSpan randRequiredEffortTime = TimeSpan.FromDays(days) + TimeSpan.FromHours(hours);
 
             DateTime createdAtDate = ranDay; 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;
             DateTime? completeDate = null;
-            TimeSpan? requiredEffortTime = null;
+            TimeSpan? requiredEffortTime = randRequiredEffortTime;
 
-            //rand = new Random(TimeSpan.FromDays(3));
             
             string deliverables = TaskDeliverables[i];    
             string description = TaskDescription[i];
@@ -195,7 +199,7 @@ public static class Initialization
         s_dal!.Dependency.Create(new Dependency(0, 1, 19));
         s_dal!.Dependency.Create(new Dependency(0, 1, 23));
         s_dal!.Dependency.Create(new Dependency(0, 2, 19));
-        s_dal!.Dependency.Create(new Dependency(0,2 , 23));
+        s_dal!.Dependency.Create(new Dependency(0, 2, 23));
         s_dal!.Dependency.Create(new Dependency(0, 3, 23));
         s_dal!.Dependency.Create(new Dependency(0, 3, 19));
         s_dal!.Dependency.Create(new Dependency(0, 4, 23));

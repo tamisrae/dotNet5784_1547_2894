@@ -1,4 +1,5 @@
 ﻿using BO;
+using System.Collections.Generic;
 
 namespace BlTest;
 
@@ -108,6 +109,10 @@ partial class Program
         Console.WriteLine("To display a list of the worker press: 3");
         Console.WriteLine("To update worker press: 4");
         Console.WriteLine("To delete worker from the list press: 5");
+        Console.WriteLine("To start task press: 6");
+        Console.WriteLine("To end task press: 7");
+        Console.WriteLine("To sign up for a task press: 8");
+
 
         if (!int.TryParse(Console.ReadLine(), out int choice))
             throw new BlWorngValueException("WORNG VALUE");
@@ -129,6 +134,15 @@ partial class Program
             case 5:
                 DeleteW();
                 break;
+            case 6:
+                StartTask();
+                break;
+            case 7:
+                EndTask();
+                break;
+            case 8:
+                SignUpForTask();
+                break;
             case 0:
                 return;
             default:
@@ -146,7 +160,6 @@ partial class Program
         Console.WriteLine("To update task press: 4");
         Console.WriteLine("To delete task from the list press: 5");
         Console.WriteLine("To display the list of the task the worker can chose press: 6");
-
 
         if (!int.TryParse(Console.ReadLine(), out int choice))
             throw new BlWorngValueException("WORNG VALUE");
@@ -205,14 +218,14 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
-        Console.WriteLine(s_bl!.Worker.Read(id));
+        Console.WriteLine(s_bl.Worker.Read(id));
         return;
     }
 
     static void ReadAllW()
     {
         List<BO.WorkerInList> list;
-        list = s_bl!.Worker.ReadAll().ToList();
+        list = s_bl.Worker.ReadAll().ToList();
         foreach (BO.WorkerInList? worker in list)
             Console.WriteLine(worker);
     }
@@ -222,9 +235,9 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int workeId))
             throw new BlWorngValueException("WORNG ID");
-        Console.WriteLine(s_bl!.Worker.Read(workeId));
+        Console.WriteLine(s_bl.Worker.Read(workeId));
 
-        BO.Worker worker = s_bl!.Worker.Read(workeId)!;
+        BO.Worker worker = s_bl.Worker.Read(workeId)!;
         int id = worker.Id;
         BO.WorkerExperience level = worker.Level;
         string email = worker.Email;
@@ -263,7 +276,42 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
-        s_bl!.Worker.Delete(id);
+        s_bl.Worker.Delete(id);
+    }
+
+    static void StartTask()
+    {
+        Console.WriteLine("Enter the ID of the worker:");
+        if (!int.TryParse(Console.ReadLine(), out int workerId))
+            throw new BlWorngValueException("WORNG ID");
+        Console.WriteLine("Enter the ID of the task you want to start:");
+        if (!int.TryParse(Console.ReadLine(), out int taskId))
+            throw new BlWorngValueException("WORNG ID");
+        BO.Task? task = s_bl.Task.Read(taskId);
+        if (task != null)
+            s_bl.Task.StartTask(task, workerId);
+    }
+
+    static void EndTask()
+    {
+        Console.WriteLine("Enter the ID of the worker:");
+        if (!int.TryParse(Console.ReadLine(), out int workerId))
+            throw new BlWorngValueException("WORNG ID");
+        Console.WriteLine("Enter the ID of the task you want to finish:");
+        if (!int.TryParse(Console.ReadLine(), out int taskId))
+            throw new BlWorngValueException("WORNG ID");
+        s_bl.Task.EndTask(taskId, workerId);
+    }
+
+    static void SignUpForTask()
+    {
+        Console.WriteLine("Enter the ID of the worker:");
+        if (!int.TryParse(Console.ReadLine(), out int workerId))
+            throw new BlWorngValueException("WORNG ID");
+        Console.WriteLine("Enter the ID of the task you want to sign up to:");
+        if (!int.TryParse(Console.ReadLine(), out int taskId))
+            throw new BlWorngValueException("WORNG ID");
+        s_bl.Task.SignUpForTask(taskId, workerId);
     }
 
 
@@ -271,7 +319,7 @@ partial class Program
 
     static void CreateT()
     {
-        Console.WriteLine("Enter alias, description, complexity, deliverables, remarks and required effort time");
+        Console.WriteLine("Enter alias, description, complexity, deliverables");
 
         string alias = Console.ReadLine()!;
         string description = Console.ReadLine()!;
@@ -280,8 +328,6 @@ partial class Program
             throw new BlWorngValueException("WORNG COMPLEXITY");
         string deliverables = Console.ReadLine()!;
         string remarks = Console.ReadLine()!;
-        if (!TimeSpan.TryParse(Console.ReadLine(), out TimeSpan requiredEffortTime))
-            throw new BlWorngValueException("WORNG REQUIRED EFFORT TIME");
 
         List<BO.TaskInList>? list = new();
         Console.WriteLine("If this task depends on other tasks enter 'yes' otherwise enter 'no':");
@@ -328,7 +374,7 @@ partial class Program
             CompleteDate = null,
             ForeCastDate = null,
             DeadlineDate = null,
-            RequiredEffortTime = requiredEffortTime,
+            RequiredEffortTime = null,
             Deliverables = deliverables,
             Remarks = remarks,
             Complexity = (BO.WorkerExperience)complexity
@@ -341,13 +387,13 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new BlWorngValueException("WORNG ID");
-        Console.WriteLine(s_bl!.Task.Read(id));
+        Console.WriteLine(s_bl.Task.Read(id));
     }
 
     static void ReadAllT()
     {
         List<BO.TaskInList> list;
-        list = s_bl!.Task.ReadAll().ToList();
+        list = s_bl.Task.ReadAll().ToList();
         foreach (TaskInList task in list)
             Console.WriteLine(task);
     }
@@ -357,9 +403,9 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int taskId))
             throw new BlWorngValueException("WORNG ID");
-        Console.WriteLine(s_bl!.Task.Read(taskId));
+        Console.WriteLine(s_bl.Task.Read(taskId));
 
-        BO.Task task = s_bl!.Task.Read(taskId)!;
+        BO.Task task = s_bl.Task.Read(taskId)!;
 
         string alias = task.Alias;
         string description = task.Description;
@@ -430,6 +476,35 @@ partial class Program
             workOnTask = new BO.WorkerInTask { Id = workerId, Name = name };
         }
 
+        List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
+        Console.WriteLine("If you want to change the dependencies of this task enter yes else enter no");
+        answer = Console.ReadLine()!;
+        if (answer == "yes")
+        {
+            IEnumerable<BO.TaskInList> tasks = s_bl.Task.ReadAll();
+            do
+            {
+                Console.WriteLine($"Enter the ID of the task on which the task depends:");
+                try
+                {
+                    if (!int.TryParse(Console.ReadLine(), out int id))
+                        throw new BlWorngValueException("WORNG ID");
+                    BO.TaskInList? taskInList = tasks.FirstOrDefault(task => task.Id == id);
+                    if (taskInList != null)
+                        dependencies.Add(taskInList);
+                    else
+                        throw new BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
+                }
+                catch (BlDoesNotExistsException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Console.WriteLine("If you want to add more dependency enter 'yes' otherwise enter 'no':");
+                answer = Console.ReadLine()!;
+            }
+            while (answer == "yes");
+        }
+
         BO.Task taskToUpdate = new BO.Task
         {
             Id = task.Id,
@@ -437,7 +512,7 @@ partial class Program
             Description = description,
             Status = task.Status,
             WorkOnTask = workOnTask,
-            Dependencies = task.Dependencies,
+            Dependencies = dependencies,
             CreatedAtDate = task.CreatedAtDate,
             ScheduledDate = scheduledDate,
             StartDate = task.StartDate,

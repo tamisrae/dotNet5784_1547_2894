@@ -74,7 +74,6 @@ internal class WorkerImplementation : BlApi.IWorker
                 throw new BO.BlDoesNotExistsException($"Worker with ID={id} doe's NOT exists");
 
             int level = (int)doWorker.Level;
-            BO.TaskInWorker? currentTask = CurrentTask(id);
 
             return new BO.Worker
             {
@@ -83,7 +82,7 @@ internal class WorkerImplementation : BlApi.IWorker
                 Email = doWorker.Email,
                 Cost = doWorker.Cost,
                 Name = doWorker.Name,
-                CurrentTask = currentTask
+                CurrentTask = CurrentTask(id)
             };
         }
         catch (DO.DalDoesNotExistsException ex)
@@ -167,7 +166,7 @@ internal class WorkerImplementation : BlApi.IWorker
     private BO.TaskInWorker? CurrentTask(int id)
     {
         IEnumerable<DO.Task>? tasks = dal.Task.ReadAll().Where(item => item.WorkerId == id);
-        DO.Task? task = tasks.FirstOrDefault(task => task.GetStatus() == BO.Status.OnTrack);
+        DO.Task? task = tasks.FirstOrDefault(t => t.GetStatus() == BO.Status.OnTrack);
 
         BO.TaskInWorker? taskInWorker = null;
         if (task != null)

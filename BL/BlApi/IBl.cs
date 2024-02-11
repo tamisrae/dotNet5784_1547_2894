@@ -8,8 +8,6 @@ public interface IBl
     public IWorker Worker { get; }
     public ITask Task { get; }
 
-    //public static DateTime? StartProjectDate { get; set {dal. }
-    //public static DateTime? EndProjectDate { get; set; }
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
 
@@ -38,16 +36,23 @@ public interface IBl
             List<DO.Task>? tasksList = new();
             foreach (DO.Dependency dependency in dependencies!)
             {
-                DO.Task? task1 = dal.Task.Read(dependency.DependsOnTask);
-                if (task1 != null)
-                    tasksList.Add(task1);
+                try
+                {
+                    DO.Task? doTask = dal.Task.Read(dependency.DependsOnTask);
+                    if (doTask != null)
+                        tasksList.Add(doTask);
+                }
+                catch (DO.DalDoesNotExistsException ex)
+                {
+                    throw new BO.BlDoesNotExistsException($"Task with ID={dependency.DependsOnTask} doe's NOT exists", ex);
+                }
             }
-            if (tasksList.Count == 0)
+            if (tasksList.Count != 0)
             {
-                if (tasksList.FirstOrDefault(task => task.StartDate == null) != null)
-                    throw new BlScheduledDateException("You cannot enter scheduled date for this task");
+                if (tasksList.FirstOrDefault(t => t.ScheduledDate == null) != null)
+                    throw new BlScheduledDateException($"You cannot enter scheduled date for This with ID={task.Id} task");
                 else
-                    dateTime = tasksList.MaxBy(task => task.GetForeCastDate())!.GetForeCastDate();
+                    dateTime = tasksList.MaxBy(t => t.GetForeCastDate())!.GetForeCastDate();
             }
         }
         return (DateTime)dateTime!;

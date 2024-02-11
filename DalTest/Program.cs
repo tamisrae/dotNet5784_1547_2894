@@ -230,7 +230,7 @@ partial class Program
         string name = Console.ReadLine()!;
 
         Worker worker = new Worker(id, (WorkerExperience)level, email, cost, name);
-        Console.WriteLine(s_dal!.Worker.Create(worker));
+        Console.WriteLine(s_dal.Worker.Create(worker));
         return;
     }
 
@@ -243,7 +243,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Worker.Read(id));
+        Console.WriteLine(s_dal.Worker.Read(id));
         return;
     }
 
@@ -253,7 +253,7 @@ partial class Program
     static void ReadAllW()
     {
         List<Worker> list;
-        list = s_dal!.Worker.ReadAll().ToList();
+        list = s_dal.Worker.ReadAll().ToList();
         foreach (Worker? worker in list)
             Console.WriteLine(worker);
     }
@@ -267,9 +267,9 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int workeId))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Worker.Read(workeId));
+        Console.WriteLine(s_dal.Worker.Read(workeId));
 
-        Worker worker = s_dal!.Worker.Read(workeId)!;
+        Worker worker = s_dal.Worker.Read(workeId)!;
         int id = worker.Id;
         DO.WorkerExperience level = worker.Level;
         string email = worker.Email;
@@ -299,7 +299,7 @@ partial class Program
             name = newName;
 
         Worker worker1 = new Worker(id, level, email, cost, name);
-        s_dal!.Worker.Update(worker1);
+        s_dal.Worker.Update(worker1);
     }
 
     /// <summary>
@@ -311,7 +311,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        s_dal!.Worker.Delete(id);
+        s_dal.Worker.Delete(id);
     }
 
 
@@ -336,7 +336,7 @@ partial class Program
         string remarks = Console.ReadLine()!;
 
         DO.Task task = new DO.Task(alias, description, createdAtDate, isMilestone, id, (DO.WorkerExperience)complexity, workerId, null, null, null, null, null, deliverables, remarks);
-        Console.WriteLine(s_dal!.Task.Create(task));
+        Console.WriteLine(s_dal.Task.Create(task));
     }
 
     /// <summary>
@@ -357,7 +357,7 @@ partial class Program
     static void ReadAllT()
     {
         List<Task> list;
-        list = s_dal!.Task.ReadAll().ToList();
+        list = s_dal.Task.ReadAll().ToList();
         foreach (Task? task in list)
             Console.WriteLine(task);
     }
@@ -371,9 +371,9 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int taskId))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Task.Read(taskId));
+        Console.WriteLine(s_dal.Task.Read(taskId));
 
-        DO.Task task = s_dal!.Task.Read(taskId)!;
+        DO.Task task = s_dal.Task.Read(taskId)!;
 
         string alias = task.Alias;
         string description = task.Description;
@@ -461,7 +461,7 @@ partial class Program
         Task task1 = new Task(alias, description, task.CreatedAtDate, isMilestone, task.Id, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
                                    scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
-        s_dal!.Task.Update(task1);
+        s_dal.Task.Update(task1);
     }
 
     /// <summary>
@@ -473,7 +473,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        s_dal!.Task.Delete(id);
+        s_dal.Task.Delete(id);
     }
 
 
@@ -492,7 +492,7 @@ partial class Program
             throw new DalWorngValueException("WORNG ID");
 
         Dependency dependency = new Dependency(0, dependentTask, dependsOnTask);
-        Console.WriteLine(s_dal!.Dependency.Create(dependency));
+        Console.WriteLine(s_dal.Dependency.Create(dependency));
     }
 
     /// <summary>
@@ -504,7 +504,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Dependency.Read(id));
+        Console.WriteLine(s_dal.Dependency.Read(id));
     }
 
     /// <summary>
@@ -513,7 +513,7 @@ partial class Program
     static void ReadAllD()
     {
         List<Dependency> list;
-        list = s_dal!.Dependency.ReadAll().ToList();
+        list = s_dal.Dependency.ReadAll().ToList();
         foreach (Dependency? dependency in list)
             Console.WriteLine(dependency);
     }
@@ -527,9 +527,9 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int dependencyId))
             throw new DalWorngValueException("WORNG ID");
-        Console.WriteLine(s_dal!.Dependency.Read(dependencyId));
+        Console.WriteLine(s_dal.Dependency.Read(dependencyId));
 
-        Dependency dependency= s_dal!.Dependency.Read(dependencyId)!;
+        Dependency dependency= s_dal.Dependency.Read(dependencyId)!;
         int dependentTask = dependency.DependentTask;
         int dependsOnTask = dependency.DependsOnTask;
 
@@ -546,7 +546,7 @@ partial class Program
             dependsOnTask = newDependsOnTask;
 
         Dependency dependency1 = new Dependency (dependency.Id, dependentTask, dependsOnTask);
-        s_dal!.Dependency.Update(dependency1);
+        s_dal.Dependency.Update(dependency1);
     }
 
     /// <summary>
@@ -558,7 +558,7 @@ partial class Program
         Console.WriteLine("Enter ID:");
         if (!int.TryParse(Console.ReadLine(), out int id))
             throw new DalWorngValueException("WORNG ID");
-        s_dal!.Dependency.Delete(id);
+        s_dal.Dependency.Delete(id);
     }
 }
 

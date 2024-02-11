@@ -20,4 +20,7 @@ public interface ITask
     public IEnumerable<BO.TaskInList>? TasksForWorker(int workerId);
     public void ManualSchedule();
     public void AutomaticSchedule();
+    public void StartTask(BO.Task task, int workerId);
+    public void EndTask(int taskId, int workerId);
+    public void SignUpForTask(int taskId, int workerId);
 }
