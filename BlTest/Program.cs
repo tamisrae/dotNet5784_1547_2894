@@ -164,7 +164,7 @@ partial class Program
         Console.WriteLine("For exit press: 0");
         Console.WriteLine("To add a new task press: 1");
         Console.WriteLine("To display task by ID press: 2");
-        Console.WriteLine("To display a list of the task press: 3");
+        Console.WriteLine("To display a list of the task press: 3");   
         Console.WriteLine("To update task press: 4");
         Console.WriteLine("To delete task from the list press: 5");
         Console.WriteLine("To display the list of the task the worker can chose press: 6");
