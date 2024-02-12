@@ -247,9 +247,9 @@ partial class Program
     /// </summary>
     static void ReadAllW()
     {
-        List<BO.WorkerInList> list;
+        List<BO.Worker> list;
         list = s_bl.Worker.ReadAll().ToList();
-        foreach (BO.WorkerInList? worker in list)
+        foreach (BO.Worker? worker in list)
             Console.WriteLine(worker);
     }
 

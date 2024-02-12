@@ -94,29 +94,33 @@ internal class WorkerImplementation : BlApi.IWorker
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<WorkerInList> ReadAll(Func<BO.Worker, bool>? filter = null)
+    public IEnumerable<Worker> ReadAll(Func<BO.Worker, bool>? filter = null)
     {
         if (filter == null)
         {
-            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()//without filter
-                                                select new BO.WorkerInList
+            IEnumerable<BO.Worker> list = from item in dal.Worker.ReadAll()//without filter
+                                                select new BO.Worker
                                                 {
-                                                    Name = item.Name,
                                                     Id = item.Id,
                                                     Level = (BO.WorkerExperience)((int)item.Level),
+                                                    Email = item.Email,
+                                                    Cost= item.Cost,
+                                                    Name = item.Name,
                                                     CurrentTask = CurrentTask(item.Id)
                                                 };
             return list.OrderBy(worker => worker.Level);
         }
         else
         {
-            IEnumerable<BO.WorkerInList> list = from item in dal.Worker.ReadAll()//with filter
+            IEnumerable<BO.Worker> list = from item in dal.Worker.ReadAll()//with filter
                                                 where filter!(Read(item.Id)!)
-                                                select new BO.WorkerInList
+                                                select new BO.Worker
                                                 {
-                                                    Name = item.Name,
                                                     Id = item.Id,
                                                     Level = (BO.WorkerExperience)((int)item.Level),
+                                                    Email = item.Email,
+                                                    Cost = item.Cost,
+                                                    Name = item.Name,
                                                     CurrentTask = CurrentTask(item.Id)
                                                 };
             return list.OrderBy(worker => worker.Level);

@@ -10,7 +10,7 @@ public interface IWorker
 {
     public int Create(BO.Worker worker);
     public BO.Worker? Read(int id);
-    public IEnumerable<BO.WorkerInList> ReadAll(Func<BO.Worker, bool>? filter = null);
+    public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null);
     public void Update(BO.Worker worker);
     public void Delete(int id);
 }
