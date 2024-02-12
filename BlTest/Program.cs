@@ -18,6 +18,7 @@ partial class Program
             Console.WriteLine("For Worker Entity press: 1");
             Console.WriteLine("For Task Entity press: 2");
             Console.WriteLine("To create a schedule press: 3");
+            Console.WriteLine("To initialize data press 4");
             Console.WriteLine("For exit press: 0");
 
             try
@@ -167,9 +168,7 @@ partial class Program
         Console.WriteLine("To update task press: 4");
         Console.WriteLine("To delete task from the list press: 5");
         Console.WriteLine("To display the list of the task the worker can chose press: 6");
-        Console.WriteLine("To display the list of the task the worker can chose press: 6");
-        Console.WriteLine("To bbb press: 7");
-
+        Console.WriteLine("To display the list of the tasks by complexity press: 7");
 
         if (!int.TryParse(Console.ReadLine(), out int choice))
             throw new BlWorngValueException("WORNG VALUE");
