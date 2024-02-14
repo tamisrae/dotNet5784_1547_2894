@@ -1,262 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>200301230</Id>
+    <Id>204518049</Id>
     <Level>Chef</Level>
     <Email>eyalShani@gmail.com</Email>
     <Cost>200</Cost>
     <Name>Eyal Shani</Name>
   </Worker>
   <Worker>
-    <Id>267256225</Id>
+    <Id>354072612</Id>
     <Level>SousChef</Level>
     <Email>nathanWeiss@gmail.com</Email>
     <Cost>140</Cost>
     <Name>Nathan Weiss</Name>
   </Worker>
   <Worker>
-    <Id>372678239</Id>
+    <Id>263987385</Id>
     <Level>Waiter</Level>
     <Email>yossiChaimson@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yossi Chaimson</Name>
   </Worker>
   <Worker>
-    <Id>232467784</Id>
+    <Id>330017785</Id>
     <Level>Waiter</Level>
     <Email>yanoBikel@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yanon Bikel</Name>
   </Worker>
   <Worker>
-    <Id>215965081</Id>
+    <Id>334407630</Id>
     <Level>Waiter</Level>
     <Email>bennyChoen@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Benny Choen</Name>
   </Worker>
   <Worker>
-    <Id>278035532</Id>
+    <Id>258253846</Id>
     <Level>Cleaner</Level>
     <Email>ilanaShalom@gmail.com</Email>
     <Cost>35</Cost>
     <Name>Ilana Shalom</Name>
   </Worker>
   <Worker>
-    <Id>242068491</Id>
+    <Id>287698025</Id>
     <Level>Driver</Level>
     <Email>dannyAmar@gmail.com</Email>
     <Cost>50</Cost>
     <Name>Danny Amar</Name>
   </Worker>
   <Worker>
-    <Id>235672116</Id>
+    <Id>266921399</Id>
     <Level>Secretary</Level>
     <Email>shimritNechama@gmail.com</Email>
     <Cost>45</Cost>
     <Name>Shimrit Nechama</Name>
   </Worker>
   <Worker>
-    <Id>299228755</Id>
+    <Id>379812085</Id>
     <Level>Manager</Level>
     <Email>shlomoMendel@gmail.com</Email>
     <Cost>175</Cost>
     <Name>Shlomo Mendel</Name>
-  </Worker>
-  <Worker>
-    <Id>246473176</Id>
-    <Level>Chef</Level>
-    <Email>eyalShani@gmail.com</Email>
-    <Cost>200</Cost>
-    <Name>Eyal Shani</Name>
-  </Worker>
-  <Worker>
-    <Id>257914762</Id>
-    <Level>SousChef</Level>
-    <Email>nathanWeiss@gmail.com</Email>
-    <Cost>140</Cost>
-    <Name>Nathan Weiss</Name>
-  </Worker>
-  <Worker>
-    <Id>303789008</Id>
-    <Level>Waiter</Level>
-    <Email>yossiChaimson@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yossi Chaimson</Name>
-  </Worker>
-  <Worker>
-    <Id>341723633</Id>
-    <Level>Waiter</Level>
-    <Email>yanoBikel@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yanon Bikel</Name>
-  </Worker>
-  <Worker>
-    <Id>206204220</Id>
-    <Level>Waiter</Level>
-    <Email>bennyChoen@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Benny Choen</Name>
-  </Worker>
-  <Worker>
-    <Id>283593251</Id>
-    <Level>Cleaner</Level>
-    <Email>ilanaShalom@gmail.com</Email>
-    <Cost>35</Cost>
-    <Name>Ilana Shalom</Name>
-  </Worker>
-  <Worker>
-    <Id>200692829</Id>
-    <Level>Driver</Level>
-    <Email>dannyAmar@gmail.com</Email>
-    <Cost>50</Cost>
-    <Name>Danny Amar</Name>
-  </Worker>
-  <Worker>
-    <Id>261524964</Id>
-    <Level>Secretary</Level>
-    <Email>shimritNechama@gmail.com</Email>
-    <Cost>45</Cost>
-    <Name>Shimrit Nechama</Name>
-  </Worker>
-  <Worker>
-    <Id>395201205</Id>
-    <Level>Manager</Level>
-    <Email>shlomoMendel@gmail.com</Email>
-    <Cost>175</Cost>
-    <Name>Shlomo Mendel</Name>
-  </Worker>
-  <Worker>
-    <Id>345476700</Id>
-    <Level>Chef</Level>
-    <Email>eyalShani@gmail.com</Email>
-    <Cost>200</Cost>
-    <Name>Eyal Shani</Name>
-  </Worker>
-  <Worker>
-    <Id>353934443</Id>
-    <Level>SousChef</Level>
-    <Email>nathanWeiss@gmail.com</Email>
-    <Cost>140</Cost>
-    <Name>Nathan Weiss</Name>
-  </Worker>
-  <Worker>
-    <Id>316618705</Id>
-    <Level>Waiter</Level>
-    <Email>yossiChaimson@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yossi Chaimson</Name>
-  </Worker>
-  <Worker>
-    <Id>368252334</Id>
-    <Level>Waiter</Level>
-    <Email>yanoBikel@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yanon Bikel</Name>
-  </Worker>
-  <Worker>
-    <Id>277135212</Id>
-    <Level>Waiter</Level>
-    <Email>bennyChoen@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Benny Choen</Name>
-  </Worker>
-  <Worker>
-    <Id>317757780</Id>
-    <Level>Cleaner</Level>
-    <Email>ilanaShalom@gmail.com</Email>
-    <Cost>35</Cost>
-    <Name>Ilana Shalom</Name>
-  </Worker>
-  <Worker>
-    <Id>201676315</Id>
-    <Level>Driver</Level>
-    <Email>dannyAmar@gmail.com</Email>
-    <Cost>50</Cost>
-    <Name>Danny Amar</Name>
-  </Worker>
-  <Worker>
-    <Id>201806760</Id>
-    <Level>Secretary</Level>
-    <Email>shimritNechama@gmail.com</Email>
-    <Cost>45</Cost>
-    <Name>Shimrit Nechama</Name>
-  </Worker>
-  <Worker>
-    <Id>309953718</Id>
-    <Level>Manager</Level>
-    <Email>shlomoMendel@gmail.com</Email>
-    <Cost>175</Cost>
-    <Name>Shlomo Mendel</Name>
-  </Worker>
-  <Worker>
-    <Id>288869551</Id>
-    <Level>Chef</Level>
-    <Email>eyalShani@gmail.com</Email>
-    <Cost>200</Cost>
-    <Name>Eyal Shani</Name>
-  </Worker>
-  <Worker>
-    <Id>319173858</Id>
-    <Level>SousChef</Level>
-    <Email>nathanWeiss@gmail.com</Email>
-    <Cost>140</Cost>
-    <Name>Nathan Weiss</Name>
-  </Worker>
-  <Worker>
-    <Id>384878219</Id>
-    <Level>Waiter</Level>
-    <Email>yossiChaimson@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yossi Chaimson</Name>
-  </Worker>
-  <Worker>
-    <Id>337510827</Id>
-    <Level>Waiter</Level>
-    <Email>yanoBikel@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yanon Bikel</Name>
-  </Worker>
-  <Worker>
-    <Id>204274001</Id>
-    <Level>Waiter</Level>
-    <Email>bennyChoen@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Benny Choen</Name>
-  </Worker>
-  <Worker>
-    <Id>210168943</Id>
-    <Level>Cleaner</Level>
-    <Email>ilanaShalom@gmail.com</Email>
-    <Cost>35</Cost>
-    <Name>Ilana Shalom</Name>
-  </Worker>
-  <Worker>
-    <Id>230040920</Id>
-    <Level>Driver</Level>
-    <Email>dannyAmar@gmail.com</Email>
-    <Cost>50</Cost>
-    <Name>Danny Amar</Name>
-  </Worker>
-  <Worker>
-    <Id>226896258</Id>
-    <Level>Secretary</Level>
-    <Email>shimritNechama@gmail.com</Email>
-    <Cost>45</Cost>
-    <Name>Shimrit Nechama</Name>
-  </Worker>
-  <Worker>
-    <Id>282816827</Id>
-    <Level>Manager</Level>
-    <Email>shlomoMendel@gmail.com</Email>
-    <Cost>175</Cost>
-    <Name>Shlomo Mendel</Name>
-  </Worker>
-  <Worker>
-    <Id>123</Id>
-    <Level>Secretary</Level>
-    <Email>mm</Email>
-    <Cost>99</Cost>
-    <Name>ll</Name>
   </Worker>
 </ArrayOfWorker>

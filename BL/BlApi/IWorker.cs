@@ -13,4 +13,5 @@ public interface IWorker
     public IEnumerable<BO.Worker> ReadAll(Func<BO.Worker, bool>? filter = null);
     public void Update(BO.Worker worker);
     public void Delete(int id);
+    public void Clear();
 }

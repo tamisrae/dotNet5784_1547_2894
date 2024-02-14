@@ -619,4 +619,9 @@ internal class TaskImplementation : BlApi.ITask
                     } by (int?)task.Complexity;
         return tasks;
     }
+
+    public void Clear()
+    {
+        dal.Task.Clear();
+    }
 }

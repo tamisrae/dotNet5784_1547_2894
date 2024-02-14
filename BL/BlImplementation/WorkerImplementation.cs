@@ -6,6 +6,11 @@ internal class WorkerImplementation : BlApi.IWorker
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
+    public void Clear()
+    {
+        dal.Worker.Clear();
+    }
+
     /// <summary>
     /// This function create a new logic worker
     /// </summary>

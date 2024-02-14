@@ -1,4 +1,6 @@
 ﻿using BO;
+using DalApi;
+using DalTest;
 
 namespace BlTest;
 
@@ -42,6 +44,17 @@ partial class Program
                             s_bl.Task.AutomaticSchedule();
                         else if (scheduleChoice == 2)
                             s_bl.Task.ManualSchedule();
+                        break;
+                    case 4:
+                        Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+                        string? answer = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                        if (answer == "Y") //stage 3
+                        {
+                            s_bl.Worker.Clear();
+                            s_bl.Task.Clear();
+                            //Initialization.Do(s_dal); //stage 2
+                            Initialization.Do(); //stage 4
+                        }
                         break;
                     case 0:
                         Environment.Exit(0);
