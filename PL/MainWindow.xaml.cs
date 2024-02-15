@@ -23,7 +23,7 @@ namespace PL
 
         private void WorkersListShow(object sender, RoutedEventArgs e)
         {
-            new WorkerListWindow().Show();
+            new WorkerListWindow().Show();   
 
         }
 
