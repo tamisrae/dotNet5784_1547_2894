@@ -32,6 +32,8 @@ internal class DependencyImplementation : IDependency
         XElement? dpncRoot = XMLTools.LoadListFromXMLElement(s_dependencies_xml);
         dpncRoot.RemoveAll();
         XMLTools.SaveListToXMLElement(dpncRoot, s_dependencies_xml);
+
+        Config.NextDependencyId = 1;
     }
 
     /// <summary>

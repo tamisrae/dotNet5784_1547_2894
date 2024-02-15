@@ -18,6 +18,8 @@ public static class Initialization
     /// </summary>
     private static void createWorker()
     {
+        s_dal!.Worker.Clear();
+
         string[] WorkerNames =
         {
             "Eyal Shani", "Nathan Weiss", "Yossi Chaimson", "Yanon Bikel", "Benny Choen",
@@ -84,6 +86,8 @@ public static class Initialization
     /// </summary>
     private static void createTask()
     {
+        s_dal!.Task.Clear();
+
         string[] TaskAlias =
         {
             "Prepare the first course", "Prepare the second course", "Make the desserts", "Make the salads",//Chef's tasks 
@@ -196,6 +200,8 @@ public static class Initialization
     /// </summary>
     private static void createDependency()
     {
+        s_dal!.Dependency.Clear();
+
         s_dal!.Dependency.Create(new Dependency(0, 1, 19));
         s_dal!.Dependency.Create(new Dependency(0, 1, 23));
         s_dal!.Dependency.Create(new Dependency(0, 2, 19));

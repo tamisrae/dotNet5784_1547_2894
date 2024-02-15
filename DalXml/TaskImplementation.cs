@@ -20,6 +20,8 @@ internal class TaskImplementation : ITask
         List<DO.Task> tasks = XMLTools.LoadListFromXMLSerializer<DO.Task>(s_tasks_xml);
         tasks.Clear();
         XMLTools.SaveListToXMLSerializer<DO.Task>(tasks, s_tasks_xml);
+
+        Config.NextTaskId = 1;
     }
 
     /// <summary>

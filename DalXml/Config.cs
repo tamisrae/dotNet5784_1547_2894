@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace Dal;
 
 internal static class Config
 {
     static string s_data_config_xml = "data-config";
-    internal static int NextTaskId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId"); }
-    internal static int NextDependencyId { get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId"); }
+    internal static int NextTaskId
+    {
+        get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextTaskId");
+        set => XMLTools.SetNextId(s_data_config_xml, "NextTaskId", value);
+    }
+
+    internal static int NextDependencyId
+    {
+        get => XMLTools.GetAndIncreaseNextId(s_data_config_xml, "NextDependencyId");
+        set => XMLTools.SetNextId(s_data_config_xml, "NextDependencyId", value);
+    }
 
     internal static DateTime? GetProjectDate(string name)
     {
-        XElement root = XMLTools.LoadListFromXMLElement(@"..\xml\ + s_data_config_xml");
+        XElement root = XMLTools.LoadListFromXMLElement(s_data_config_xml);
         return DateTime.TryParse(root.Element(name)?.Value, out DateTime dateTime) ? dateTime : (DateTime?)null;
     }
 

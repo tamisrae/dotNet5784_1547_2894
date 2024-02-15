@@ -50,8 +50,6 @@ partial class Program
                         string? answer = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                         if (answer == "Y") //stage 3
                         {
-                            s_bl.Worker.Clear();
-                            s_bl.Task.Clear();
                             //Initialization.Do(s_dal); //stage 2
                             Initialization.Do(); //stage 4
                         }

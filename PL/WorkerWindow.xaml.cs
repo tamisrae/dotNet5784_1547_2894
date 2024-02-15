@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Worker
+namespace PL
 {
     /// <summary>
-    /// Interaction logic for WorkerListWindow.xaml
+    /// Interaction logic for WorkerWindow.xaml
     /// </summary>
-    public partial class WorkerListWindow : Window
+    public partial class WorkerWindow : Window
     {
-        public WorkerListWindow()
+        public WorkerWindow()
         {
             InitializeComponent();
         }

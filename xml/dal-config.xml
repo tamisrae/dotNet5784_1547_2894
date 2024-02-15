@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<dal>xml</dal>
+	<dal>list</dal>
 	<dal-packages>
 		<list>DalList</list>
 		<xml>DalXml</xml>

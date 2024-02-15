@@ -47,9 +47,6 @@ partial class Program
                         string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
                         if (ans == "Y") //stage 3
                         {
-                            s_dal.Worker.Clear();
-                            s_dal.Task.Clear();
-                            s_dal.Dependency.Clear();
                             //Initialization.Do(s_dal); //stage 2
                             Initialization.Do(); //stage 4
                         }

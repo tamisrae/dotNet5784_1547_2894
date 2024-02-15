@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <NextTaskId>574</NextTaskId>
-  <NextDependencyId>985</NextDependencyId>
+  <NextTaskId>24</NextTaskId>
+  <NextDependencyId>42</NextDependencyId>
   <project-stage>0</project-stage>
-  <StartProjectDate>12/02/2024 18:43:10</StartProjectDate>
+  <StartProjectDate>14/02/2024 20:55:20</StartProjectDate>
   <EndProjectDate xsi:nil="true" />
 </config>
