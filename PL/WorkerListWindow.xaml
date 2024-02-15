@@ -18,8 +18,18 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Grid.Column="0"/>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="270,0,0,0" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Label" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
+            <!--screening workers-->
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </Grid>
+        <ListView Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Width="100" Margin="0,356,0,-4" Grid.RowSpan="2"/>
     </Grid>
+
 </Window>

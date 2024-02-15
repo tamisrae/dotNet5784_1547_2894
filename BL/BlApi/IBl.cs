@@ -68,6 +68,9 @@ public interface IBl
         }
         return (DateTime)dateTime!;
     }
+
+    public void InitializeDB() => DalTest.Initialization.Do();
+    public void ResetDB() => DalTest.Initialization.Reset();
 };
 
 

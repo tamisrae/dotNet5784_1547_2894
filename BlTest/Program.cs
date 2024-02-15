@@ -1,5 +1,4 @@
 ﻿using BO;
-using DalApi;
 using DalTest;
 
 namespace BlTest;
@@ -21,6 +20,7 @@ partial class Program
             Console.WriteLine("For Task Entity press: 2");
             Console.WriteLine("To create a schedule press: 3");
             Console.WriteLine("To initialize data press 4");
+            Console.WriteLine("To reset data press 5");
             Console.WriteLine("For exit press: 0");
 
             try
@@ -52,6 +52,15 @@ partial class Program
                         {
                             //Initialization.Do(s_dal); //stage 2
                             Initialization.Do(); //stage 4
+                        }
+                        break;
+                    case 5:
+                        Console.Write("Would you like to reset Initial data? (Y/N)"); //stage 3
+                        answer = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+                        if (answer == "Y") //stage 3
+                        {
+                            //Initialization.Do(s_dal); //stage 2
+                            Initialization.Reset(); //stage 4
                         }
                         break;
                     case 0:
@@ -175,7 +184,7 @@ partial class Program
         Console.WriteLine("For exit press: 0");
         Console.WriteLine("To add a new task press: 1");
         Console.WriteLine("To display task by ID press: 2");
-        Console.WriteLine("To display a list of the task press: 3");   
+        Console.WriteLine("To display a list of the task press: 3");
         Console.WriteLine("To update task press: 4");
         Console.WriteLine("To delete task from the list press: 5");
         Console.WriteLine("To display the list of the task the worker can chose press: 6");

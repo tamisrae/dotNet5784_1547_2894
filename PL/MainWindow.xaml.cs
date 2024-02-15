@@ -20,5 +20,19 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void WorkersListShow(object sender, RoutedEventArgs e)
+        {
+            new WorkerListWindow().Show();
+
+        }
+
+        private void Initialization(object sender, RoutedEventArgs e)
+        {
+           DialogResult result=  MessageBox.Show("To initialize the data, click OK");
+            if(result==)
+
+
+        }
     }
 }
