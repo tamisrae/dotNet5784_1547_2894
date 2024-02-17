@@ -620,6 +620,9 @@ internal class TaskImplementation : BlApi.ITask
         return tasks;
     }
 
+    /// <summary>
+    /// This function clear all the data from the data layer
+    /// </summary>
     public void Clear()
     {
         dal.Task.Clear();

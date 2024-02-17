@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="WorkerListWindow" Height="450" Width="800">
+        Title="WorkerListWindow" Height="450" Width="800"
+           	 DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,9 +21,9 @@
             </Grid.ColumnDefinitions>
             <Label Content="Label" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Grid.Column="0"/>
             <!--screening workers-->
-            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}"/>
         </Grid>
-        <ListView Grid.Row="1">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

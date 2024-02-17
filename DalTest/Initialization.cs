@@ -260,6 +260,7 @@ public static class Initialization
     public static void Reset()
     {
         s_dal = DalApi.Factory.Get;
+        s_dal.StartProjectDate = null;
         s_dal!.Worker.Clear();
         s_dal!.Task.Clear();
         s_dal!.Dependency.Clear();
