@@ -1,13 +1,7 @@
-﻿namespace DalTest;
-
-using Dal;
-using DalApi;
+﻿using DalApi;
 using DO;
-using DalList;
-using DalXml;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Diagnostics;
 
+namespace DalTest;
 partial class Program
 {
     static readonly IDal s_dal = Factory.Get; //stage 4
@@ -353,9 +347,9 @@ partial class Program
     /// </summary>
     static void ReadAllT()
     {
-        List<Task> list;
+        List<DO.Task> list;
         list = s_dal.Task.ReadAll().ToList();
-        foreach (Task? task in list)
+        foreach (DO.Task? task in list)
             Console.WriteLine(task);
     }
 
@@ -455,7 +449,7 @@ partial class Program
             deadlinedate = newDeadlinedate;
         }
 
-        Task task1 = new Task(alias, description, task.CreatedAtDate, isMilestone, task.Id, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
+        DO.Task task1 = new DO.Task(alias, description, task.CreatedAtDate, isMilestone, task.Id, (DO.WorkerExperience)complexity!, workerId, requiredEffortTime, startDate,
                                    scheduledDate, deadlinedate, completeDate, deliverables, remarks);
 
         s_dal.Task.Update(task1);

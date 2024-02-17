@@ -1,13 +1,5 @@
-﻿using System.Text;
+﻿using BlApi;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -23,16 +15,38 @@ namespace PL
 
         private void WorkersListShow(object sender, RoutedEventArgs e)
         {
-            new WorkerListWindow().Show();   
+            new WorkerListWindow().Show();
 
         }
 
         private void Initialization(object sender, RoutedEventArgs e)
         {
-           //DialogResult result=  MessageBox.Show("To initialize the data, click OK");
-            
+            MessageBoxResult result = MessageBox.Show("Do yoy want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Factory.Get().InitializeDB();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
+        }
 
-
+        private void ResetData(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do yoy want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Factory.Get().ResetDB();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

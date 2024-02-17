@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-       <!--The list of the workers-->
-        <Button Content="List view" HorizontalAlignment="Left" Margin="204,232,0,0" VerticalAlignment="Top" Height="49" Width="156" Click="WorkersListShow"/>
-        <Button Content="Database initialization" HorizontalAlignment="Left" Margin="159,162,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="Initialization"/>
+        <!--The list of the workers-->
+        <Button Content="List workers view" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="49" Width="156" Click="WorkersListShow"/>
+        <Button Content="Database initialization" HorizontalAlignment="Center" Margin="0,132,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="Initialization"/>
+        <Button Content="Reset Data" HorizontalAlignment="Center" Margin="0,317,0,0" VerticalAlignment="Top" Height="66" Width="144" Click="ResetData"/>
 
     </Grid>
 </Window>
