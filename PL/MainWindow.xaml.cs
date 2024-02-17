@@ -29,8 +29,8 @@ namespace PL
 
         private void Initialization(object sender, RoutedEventArgs e)
         {
-           DialogResult result=  MessageBox.Show("To initialize the data, click OK");
-            if(result==)
+           //DialogResult result=  MessageBox.Show("To initialize the data, click OK");
+            
 
 
         }
