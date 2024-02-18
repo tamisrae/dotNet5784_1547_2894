@@ -23,31 +23,9 @@ namespace PL
     {
         static readonly BlApi.IBl bl = BlApi.Factory.Get();
         int ID;
-        public WorkerWindow(int Id = 0)
-        {
-            InitializeComponent();
-            ID = Id;
-            BO.Worker? worker;
-            if (Id == 0)
-                worker = new BO.Worker { Id = 0, Level = (BO.WorkerExperience)7, Email = "", Cost = 0, Name = "", CurrentTask = null };
-            else
-            {
-                try
-                {
-                    worker = bl.Worker.Read(Id);
-                }
-                catch(BlDoesNotExistsException)
-                {
-                    MessageBox.Show($"Worker with ID={Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
-        public BO.Worker? Worker { get; set; }
 
 
-
-        public BO.Worker CurrentWorker
+        public BO.Worker? CurrentWorker
         {
             get { return (BO.Worker)GetValue(WorkerProperty); }
             set { SetValue(WorkerProperty, value); }
@@ -55,33 +33,59 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for Worker.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WorkerProperty =
-            DependencyProperty.Register("Worker", typeof(BO.Worker), typeof(MainWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
+
+
+        public WorkerWindow(int Id = 0)
+        {
+            InitializeComponent();
+            ID = Id;
+            if (Id == 0)
+                CurrentWorker = new BO.Worker { Id = 0, Level = (BO.WorkerExperience)7, Email = "", Cost = 0, Name = "", CurrentTask = null };
+            else
+            {
+                try
+                {
+                    CurrentWorker = bl.Worker.Read(Id)!;
+                }
+                catch(BlDoesNotExistsException)
+                {
+                    CurrentWorker = null!;
+                    MessageBox.Show($"Worker with ID={Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                }
+            }
+        }
+
 
         private void AddUpdateClick(object sender, RoutedEventArgs e)
         {
-            BO.Worker? worker = sender as BO.Worker;
-            if (worker != null)
+            this.Close();
+            CurrentWorker = sender as BO.Worker;
+            if (CurrentWorker != null)
             {
                 try
                 {
                     if (ID != 0) 
                     {
-                        bl.Worker.Update(worker);
+                        bl.Worker.Update(CurrentWorker);
                         MessageBox.Show("The worker was successfully updated", "UPDATE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                     else
                     {
-                        bl.Worker.Create(worker);
+                        bl.Worker.Create(CurrentWorker);
                         MessageBox.Show("The worker was successfully added", "ADD", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     }
                 }
                 catch (BlDoesNotExistsException)
                 {
-                    MessageBox.Show($"Worker with ID={worker.Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Worker with ID={CurrentWorker.Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
                 }
                 catch (BlAlreadyExistsException)
                 {
-                    MessageBox.Show($"Worker with ID={worker.Id} already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Worker with ID={CurrentWorker.Id} already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
                 }
             }
         }

@@ -5,25 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="WorkerWindow" Height="684" Width="806"
+        Title="WorkerWindow" Height="493" Width="473"
         DataContext="{Binding CurrentWorker, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
-    <Grid Margin="10,10,23,-6" RenderTransformOrigin="0.449,0.429">
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerName, Mode=TwoWay, NotifyOnValidationError=true,  
-        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+    <Grid Margin="10,10,10,-6" RenderTransformOrigin="0.449,0.429">
 
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerEmail, Mode=TwoWay, NotifyOnValidationError=true, 
-        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+         Height="NaN" Margin="266,0,0,0"  VerticalAlignment="Center" Width="120"/>
 
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerId, Mode=TwoWay, NotifyOnValidationError=true,  
-        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+         Height="NaN" Margin="266,176,0,0"  VerticalAlignment="Top" Width="120"/>
 
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerCost, Mode=TwoWay, NotifyOnValidationError=true,  
-        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  HorizontalAlignment="Left" 
+        Height="NaN" Margin="266,78,0,0"  VerticalAlignment="Top" Width="120"/>
 
-        <ComboBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
-        SelectedValue="{Binding Experience, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+        Height="NaN" Margin="266,40,0,0"  VerticalAlignment="Top" Width="120" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToBoolKey}}"/>
 
-        <Button Grid.Column="0" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
-        HorizontalAlignment="Left" Margin="3,0,0,552" Padding="5" Click="AddUpdateClick" IsEnabled="True" Width="150"/>
+        <ComboBox HorizontalAlignment="Left" Height="NaN" Margin="266,119,0,0" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
+        SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120"/>
+
+        <TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,267,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+
+        <Button HorizontalAlignment="Left" Margin="347,321,0,88" Padding="5" Click="AddUpdateClick" Width="80" 
+        Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
+        
+        <Label Content="ID" HorizontalAlignment="Left" Margin="22,32,0,0" VerticalAlignment="Top" Height="33" Width="70"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="15,70,0,0" VerticalAlignment="Top"/>
+        <Label Content="Level" HorizontalAlignment="Left" Margin="15,115,0,0" VerticalAlignment="Top"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="14,168,0,0" VerticalAlignment="Top"/>
+        <Label Content="Cost" HorizontalAlignment="Left" Margin="16,219,0,0" VerticalAlignment="Top"/>
+        <Label Content="Current task" HorizontalAlignment="Left" Margin="14,259,0,0" VerticalAlignment="Top"/>
+        <Label Content="Id" HorizontalAlignment="Left" Margin="197,263,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.055,-1.339"/>
+        <Label Content="Alias" HorizontalAlignment="Left" Margin="190,294,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>

@@ -15,7 +15,7 @@ namespace PL
 
         private void WorkersListShow(object sender, RoutedEventArgs e)
         {
-            new WorkerListWindow().Show();
+            new WorkerListWindow().ShowDialog();
         }
 
         private void Initialization(object sender, RoutedEventArgs e)

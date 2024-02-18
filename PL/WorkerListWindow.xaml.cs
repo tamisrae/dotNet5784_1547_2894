@@ -47,8 +47,6 @@ public partial class WorkerListWindow : Window
         if (worker != null)
         {
             new WorkerWindow(worker.Id).ShowDialog();
-            WorkersList = (Experience == BO.WorkerExperience.All) ?
-            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
         }
     }
 }
