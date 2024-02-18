@@ -16,12 +16,11 @@ namespace PL
         private void WorkersListShow(object sender, RoutedEventArgs e)
         {
             new WorkerListWindow().Show();
-
         }
 
         private void Initialization(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Do yoy want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Do you want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.Yes:
@@ -36,7 +35,7 @@ namespace PL
 
         private void ResetData(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Do yoy want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("Do you want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.Yes:

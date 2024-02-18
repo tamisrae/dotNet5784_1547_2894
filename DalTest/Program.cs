@@ -1,7 +1,8 @@
-﻿using DalApi;
+﻿namespace DalTest;
+
+using DalApi;
 using DO;
 
-namespace DalTest;
 partial class Program
 {
     static readonly IDal s_dal = Factory.Get; //stage 4
@@ -326,7 +327,7 @@ partial class Program
         string deliverables = Console.ReadLine()!;
         string remarks = Console.ReadLine()!;
 
-        DO.Task task = new DO.Task(alias, description, createdAtDate, isMilestone, id, (DO.WorkerExperience)complexity, workerId, null, null, null, null, null, deliverables, remarks);
+        Task task = new Task(alias, description, createdAtDate, isMilestone, id, (DO.WorkerExperience)complexity, workerId, null, null, null, null, null, deliverables, remarks);
         Console.WriteLine(s_dal.Task.Create(task));
     }
 

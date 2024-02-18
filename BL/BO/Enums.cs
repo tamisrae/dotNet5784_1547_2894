@@ -13,7 +13,8 @@ public enum WorkerExperience
     Cleaner,
     Driver,
     Secretary,
-    Manager
+    Manager,
+    All
 }
 
 public enum Status

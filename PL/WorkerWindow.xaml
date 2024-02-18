@@ -5,8 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="WorkerWindow" Height="640" Width="800">
-    <Grid>
+        Title="WorkerWindow" Height="684" Width="806"
+        DataContext="{Binding CurrentWorker, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <Grid Margin="10,10,23,-6" RenderTransformOrigin="0.449,0.429">
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerName, Mode=TwoWay, NotifyOnValidationError=true,  
+        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
 
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerEmail, Mode=TwoWay, NotifyOnValidationError=true, 
+        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerId, Mode=TwoWay, NotifyOnValidationError=true,  
+        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding WorkerCost, Mode=TwoWay, NotifyOnValidationError=true,  
+        ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Height="NaN" Margin="3"  VerticalAlignment="Center" Width="120"/>
+
+        <ComboBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
+        SelectedValue="{Binding Experience, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+
+        <Button Grid.Column="0" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+        HorizontalAlignment="Left" Margin="3,0,0,552" Padding="5" Click="AddUpdateClick" IsEnabled="True" Width="150"/>
     </Grid>
 </Window>
