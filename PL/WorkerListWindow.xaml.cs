@@ -35,6 +35,22 @@ public partial class WorkerListWindow : Window
         WorkersList = (Experience == BO.WorkerExperience.All) ?
         s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
     }
+
+    private void AddWorker(object sender, RoutedEventArgs e)
+    {
+        new WorkerWindow().ShowDialog();
+    }
+    
+    private void DoubleClick (object sender, RoutedEventArgs e) 
+    {
+        BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
+        if (worker != null)
+        {
+            new WorkerWindow(worker.Id).ShowDialog();
+            WorkersList = (Experience == BO.WorkerExperience.All) ?
+            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
+        }
+    }
 }
 
 
