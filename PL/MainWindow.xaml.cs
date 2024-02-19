@@ -20,13 +20,14 @@ namespace PL
 
         private void Initialization(object sender, RoutedEventArgs e)
         {
+            //ask the user if they want to initialize the data
             MessageBoxResult result = MessageBox.Show("Do you want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
-                case MessageBoxResult.Yes:
+                case MessageBoxResult.Yes://if they want
                     Factory.Get().InitializeDB();
                     break;
-                case MessageBoxResult.No:
+                case MessageBoxResult.No://if they dont want
                     break;
                 default:
                     break;
@@ -35,13 +36,14 @@ namespace PL
 
         private void ResetData(object sender, RoutedEventArgs e)
         {
+            //ask the user if they want to reset the data
             MessageBoxResult result = MessageBox.Show("Do you want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
             switch (result)
             {
-                case MessageBoxResult.Yes:
+                case MessageBoxResult.Yes://if they want
                     Factory.Get().ResetDB();
                     break;
-                case MessageBoxResult.No:
+                case MessageBoxResult.No://if they dont want
                     break;
                 default:
                     break;

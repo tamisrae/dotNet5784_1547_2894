@@ -23,14 +23,14 @@
             <!--screening workers-->
             <ComboBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" SelectionChanged="ListFliterByExperince" SelectedValue="{Binding Path=Experience, Mode=TwoWay}"/>
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="DoubleClick" >
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="WorkerDoubleClick" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Width="100" Margin="0,356,0,-4" Grid.RowSpan="2" Click="AddWorker"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" Width="100" Margin="0,342,0,10" Click="AddWorker"/>
     </Grid>
 
 </Window>

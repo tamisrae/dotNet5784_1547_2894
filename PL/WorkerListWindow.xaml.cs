@@ -10,12 +10,11 @@ public partial class WorkerListWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    public WorkerListWindow()
+    public WorkerListWindow()//ctor
     {
         InitializeComponent();
         WorkersList = s_bl?.Worker.ReadAll()!;
     }
-
 
 
     public IEnumerable<BO.Worker> WorkersList
@@ -30,23 +29,29 @@ public partial class WorkerListWindow : Window
 
     public BO.WorkerExperience Experience { get; set; } = BO.WorkerExperience.All;
 
-    private void ListFliterByExperince(object sender, SelectionChangedEventArgs e)
+    private void ListFliterByExperince(object sender, SelectionChangedEventArgs e)//filter the list by the experience
     {
         WorkersList = (Experience == BO.WorkerExperience.All) ?
         s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
     }
 
-    private void AddWorker(object sender, RoutedEventArgs e)
+    private void AddWorker(object sender, RoutedEventArgs e)//when the user want to add a worker
     {
         new WorkerWindow().ShowDialog();
+        //update the list of the workers after the changes
+        WorkersList = (Experience == BO.WorkerExperience.All) ?
+        s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
     }
     
-    private void DoubleClick (object sender, RoutedEventArgs e) 
+    private void WorkerDoubleClick (object sender, RoutedEventArgs e) //when the user click on a worker
     {
         BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
         if (worker != null)
         {
             new WorkerWindow(worker.Id).ShowDialog();
+            //update the list of the workers after the changes
+            WorkersList = (Experience == BO.WorkerExperience.All) ?
+            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
         }
     }
 }

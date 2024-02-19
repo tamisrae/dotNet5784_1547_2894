@@ -24,34 +24,31 @@ namespace PL
         static readonly BlApi.IBl bl = BlApi.Factory.Get();
         int ID;
 
-
         public BO.Worker? CurrentWorker
         {
             get { return (BO.Worker)GetValue(WorkerProperty); }
             set { SetValue(WorkerProperty, value); }
         }
-
         // Using a DependencyProperty as the backing store for Worker.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WorkerProperty =
             DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
 
-
-        public WorkerWindow(int Id = 0)
+        public WorkerWindow(int Id = 0)//ctor
         {
             InitializeComponent();
             ID = Id;
-            if (Id == 0)
+            if (Id == 0)//create new worker window with default values
                 CurrentWorker = new BO.Worker { Id = 0, Level = (BO.WorkerExperience)7, Email = "", Cost = 0, Name = "", CurrentTask = null };
-            else
+            else//create new worker window with the worker's data
             {
                 try
                 {
                     CurrentWorker = bl.Worker.Read(Id)!;
                 }
-                catch(BlDoesNotExistsException)
+                catch(BlDoesNotExistsException mess)
                 {
                     CurrentWorker = null!;
-                    MessageBox.Show($"Worker with ID={Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();
                 }
             }
@@ -61,30 +58,34 @@ namespace PL
         private void AddUpdateClick(object sender, RoutedEventArgs e)
         {
             this.Close();
-            CurrentWorker = sender as BO.Worker;
             if (CurrentWorker != null)
             {
                 try
                 {
-                    if (ID != 0) 
+                    if (ID != 0)//if the id is not 0 it means that we need to update the data
                     {
                         bl.Worker.Update(CurrentWorker);
-                        MessageBox.Show("The worker was successfully updated", "UPDATE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show("The worker was successfully updated", "UPDATE", MessageBoxButton.OK);
                     }
-                    else
+                    else//if the id is 0 it means that we need to creat new worker
                     {
                         bl.Worker.Create(CurrentWorker);
-                        MessageBox.Show("The worker was successfully added", "ADD", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                        MessageBox.Show("The worker was successfully added", "ADD", MessageBoxButton.OK);
                     }
                 }
-                catch (BlDoesNotExistsException)
+                catch (BlDoesNotExistsException mess)
                 {
-                    MessageBox.Show($"Worker with ID={CurrentWorker.Id} does not exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();
                 }
-                catch (BlAlreadyExistsException)
+                catch (BlAlreadyExistsException mess)
                 {
-                    MessageBox.Show($"Worker with ID={CurrentWorker.Id} already exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                }
+                catch(Exception mess)
+                {
+                    MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();
                 }
             }

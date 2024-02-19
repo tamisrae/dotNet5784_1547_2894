@@ -23,7 +23,7 @@ internal class WorkerImplementation : BlApi.IWorker
     public int Create(BO.Worker worker)
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
-            throw new BlWorngValueException($"The worker has WORNG VALUE!");
+            throw new BlWorngValueException("The worker has WORNG VALUE!");
 
         DO.Worker doWorker = new DO.Worker
            (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);

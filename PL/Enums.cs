@@ -2,11 +2,6 @@
 
 namespace PL
 {
-
-    internal class Enums
-    {
-
-    }
     internal class WorkerExperienceCollection : IEnumerable
     {
         static readonly IEnumerable<BO.WorkerExperience> s_enums =

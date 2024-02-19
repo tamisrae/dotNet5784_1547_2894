@@ -7,10 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <!--The list of the workers-->
-        <Button Content="List workers view" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="49" Width="156" Click="WorkersListShow"/>
-        <Button Content="Database initialization" HorizontalAlignment="Center" Margin="0,132,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="Initialization"/>
-        <Button Content="Reset Data" HorizontalAlignment="Center" Margin="0,317,0,0" VerticalAlignment="Top" Height="66" Width="144" Click="ResetData"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FFE2C6CB" Offset="1"/>
+                <GradientStop Color="#FF760A1E" Offset="0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Button Content="List workers view" HorizontalAlignment="Center" Margin="0,227,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="WorkersListShow" Background="White" FontWeight="Medium"/>
+        <Button Content="Data initialization" HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="Initialization" Background="White" FontWeight="Medium"/>
+        <Button Content="Reset Data" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="ResetData" Background="White" FontWeight="Medium"/>
+        <Label Content="EYAL'S-CATERING" Margin="130,19,88,0" VerticalAlignment="Top" Height="103" FontWeight="Heavy" FontStyle="Italic" FontSize="60"/>
 
     </Grid>
 </Window>
