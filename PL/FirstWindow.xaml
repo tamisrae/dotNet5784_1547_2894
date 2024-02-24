@@ -1,0 +1,16 @@
+﻿<Window x:Class="PL.FirstWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="FirstWindow" Height="450" Width="800"
+         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid>
+        <Label Content="Enter ID:" HorizontalAlignment="Left" Margin="338,126,0,0" VerticalAlignment="Top" Height="48" Width="239"/>
+        <TextBox HorizontalAlignment="Left" Margin="321,174,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="{Binding ID, Mode=OneWayToSource}"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="530,254,0,0" VerticalAlignment="Top" Height="34" Width="63" Click="NextButton"/>
+
+    </Grid>
+</Window>

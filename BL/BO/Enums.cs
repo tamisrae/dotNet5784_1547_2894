@@ -14,7 +14,6 @@ public enum WorkerExperience
     Driver,
     Secretary,
     Manager,
-    All
 }
 
 public enum Status
@@ -30,4 +29,16 @@ public enum ProjectStatus
     Unscheduled,
     Scheduled,
     Execution
+}
+
+public enum PLWorkerExperience
+{
+    Chef,
+    SousChef,
+    Waiter,
+    Cleaner,
+    Driver,
+    Secretary,
+    Manager,
+    All
 }

@@ -16,4 +16,9 @@ internal class Bl : IBl
 
     public void InitializeDB() => DalTest.Initialization.Do();
     public void ResetDB() => DalTest.Initialization.Reset();
+
+    public BO.ProjectStatus ProjectStatusPL()
+    {
+        return IBl.GetProjectStatus();
+    }
 }

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.Task;
 using System.Windows;
 
 namespace PL
@@ -48,6 +49,11 @@ namespace PL
                 default:
                     break;
             }
+        }
+
+        private void TasksListShow(object sender, RoutedEventArgs e)
+        {
+            new TaskListWindow().ShowDialog();
         }
     }
 }

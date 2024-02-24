@@ -8,10 +8,6 @@ using System.Windows.Data;
 
 namespace PL;
 
-class Converters
-{
-}
-
 class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,6 +26,21 @@ class ConvertIdToBool : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return (int)value == 0 ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertDateToBool : IValueConverter
+{
+    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return  bl.ProjectStatusPL() == BO.ProjectStatus.Execution ? false : true;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

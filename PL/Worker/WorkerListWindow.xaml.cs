@@ -10,7 +10,7 @@ public partial class WorkerListWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-    public WorkerListWindow()//ctor
+    public WorkerListWindow()//ctor  
     {
         InitializeComponent();
         WorkersList = s_bl?.Worker.ReadAll()!;
@@ -27,20 +27,20 @@ public partial class WorkerListWindow : Window
     public static readonly DependencyProperty WorkersListProperty =
         DependencyProperty.Register("WorkersList", typeof(IEnumerable<BO.Worker>), typeof(WorkerListWindow), new PropertyMetadata(null));
 
-    public BO.WorkerExperience Experience { get; set; } = BO.WorkerExperience.All;
+    public BO.PLWorkerExperience Experience { get; set; } = BO.PLWorkerExperience.All;
 
     private void ListFliterByExperince(object sender, SelectionChangedEventArgs e)//filter the list by the experience
     {
-        WorkersList = (Experience == BO.WorkerExperience.All) ?
-        s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
+        WorkersList = (Experience == BO.PLWorkerExperience.All) ?
+        s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => (int)item.Level == (int)Experience)!;
     }
 
     private void AddWorker(object sender, RoutedEventArgs e)//when the user want to add a worker
     {
         new WorkerWindow().ShowDialog();
         //update the list of the workers after the changes
-        WorkersList = (Experience == BO.WorkerExperience.All) ?
-        s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
+        WorkersList = (Experience == BO.PLWorkerExperience.All) ?
+        s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => (int)item.Level == (int)Experience)!;
     }
     
     private void WorkerDoubleClick (object sender, RoutedEventArgs e) //when the user click on a worker
@@ -50,8 +50,8 @@ public partial class WorkerListWindow : Window
         {
             new WorkerWindow(worker.Id).ShowDialog();
             //update the list of the workers after the changes
-            WorkersList = (Experience == BO.WorkerExperience.All) ?
-            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => item.Level == Experience)!;
+            WorkersList = (Experience == BO.PLWorkerExperience.All) ?
+            s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => (int)item.Level == (int)Experience)!;
         }
     }
 }

@@ -38,7 +38,7 @@
         <Label Content="Current task" HorizontalAlignment="Left" Margin="14,259,0,0" VerticalAlignment="Top"/>
         <Label Content="Id" HorizontalAlignment="Left" Margin="197,263,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.055,-1.339"/>
         <Label Content="Alias" HorizontalAlignment="Left" Margin="190,294,0,0" VerticalAlignment="Top"/>
-        <Button HorizontalAlignment="Left" Margin="340,340,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
+        <Button HorizontalAlignment="Left" Margin="340,340,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True"/>
 
     </Grid>
 </Window>
