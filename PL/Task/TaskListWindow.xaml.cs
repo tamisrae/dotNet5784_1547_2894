@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BO;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Task;
 
@@ -24,48 +14,56 @@ public partial class TaskListWindow : Window
     public TaskListWindow()
     {
         InitializeComponent();
-
-        TasksList = bl.Task.ReadAll();
+        TaskList = bl?.Task.ReadAll()!;
     }
 
-    public IEnumerable<BO.TaskInList> TasksList
+    public IEnumerable<BO.TaskInList> TaskList
     {
-        get { return (IEnumerable<BO.TaskInList>)GetValue(TasksListProperty); }
-        set { SetValue(TasksListProperty, value); }
+        get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
+        set { SetValue(TaskListProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for TaskInList.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TasksListProperty =
-        DependencyProperty.Register("TasksList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
-
+    // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TaskListProperty =
+        DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
     public BO.PLWorkerExperience Complexity { get; set; } = BO.PLWorkerExperience.All;
 
     private void FilterListByComplexity(object sender, SelectionChangedEventArgs e)
     {
-        TasksList = (Complexity == BO.PLWorkerExperience.All) ?
-       bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+        TaskList = (Complexity == BO.PLWorkerExperience.All) ?
+        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
     }
 
     private void AddTask(object sender, RoutedEventArgs e)
     {
         new TaskWindow().ShowDialog();
         //update the list of the tasks after the changes
-        TasksList= (Complexity == BO.PLWorkerExperience.All) ?
+        TaskList = (Complexity == BO.PLWorkerExperience.All) ?
         bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
     }
 
     private void UpdateTask(object sender, RoutedEventArgs e)
     {
-        BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
-        if (task != null)
+        BO.TaskInList? taskInList = (sender as ListView)?.SelectedItem as BO.TaskInList;
+        BO.Task? task = null;
+        try
         {
-            new WorkerWindow(task.Id).ShowDialog();
-            //update the list of the workers after the changes
-            TasksList = (Complexity == BO.PLWorkerExperience.All) ?
-            bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+            if (taskInList != null)
+                task = bl.Task.Read(taskInList.Id);
+            if (task != null)
+            {
+                new TaskWindow(task.Id).ShowDialog();
+                //update the list of the workers after the changes
+                TaskList = (Complexity == BO.PLWorkerExperience.All) ?
+                bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+            }
+        }
+        catch (BlDoesNotExistsException mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
         }
     }
 
-   
 }

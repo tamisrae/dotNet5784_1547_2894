@@ -7,20 +7,18 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid Margin="131,0,0,108">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="111*"/>
-            <RowDefinition Height="52*"/>
-        </Grid.RowDefinitions>
-        <ListView Margin="5,5,5,5" Grid.Row="1" MouseDoubleClick="UpdateTask" SelectionChanged="ListView_SelectionChanged" Grid.RowSpan="2">
+    <Grid>
+        <ComboBox HorizontalAlignment="Left" Margin="454,0,0,0" VerticalAlignment="Top" Width="346" Height="34" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
+        <Label Content="Filter options" HorizontalAlignment="Left" Margin="363,0,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
+
+        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,34,0,0" ItemsSource="{Binding TaskList}" MouseDoubleClick="UpdateTask">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Click="AddTask" Margin="252,342,0,10" Grid.Row="1"/>
-        <ComboBox Grid.Column="1"   ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" RenderTransformOrigin="0.476,0.473" Margin="190,0,0,0" SelectedValue="{Binding Path=Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
 
+        <Button Content="Add" HorizontalAlignment="Left" Width="100" Margin="356,321,0,75" Click="AddTask"/>
     </Grid>
 </Window>
