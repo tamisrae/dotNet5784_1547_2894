@@ -45,8 +45,6 @@ public partial class TaskWindow : Window
     }
 
 
-
-
     public BO.Task CurrentTask
     {
         get { return (BO.Task)GetValue(CurrentTaskProperty); }

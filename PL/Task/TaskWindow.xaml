@@ -79,7 +79,7 @@
 
 
         <Label Content="Dependencies" HorizontalAlignment="Left" Margin="52,479,0,0" VerticalAlignment="Top" Width="109"/>
-        <ListView d:ItemsSource="{Binding Dependencies}" Margin="214,479,273,174" IsEnabled="{Binding Dependencies, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.ColumnSpan="2">
+        <ListView ItemsSource="{Binding Dependencies}" Margin="214,479,273,174" IsEnabled="{Binding Dependencies, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
