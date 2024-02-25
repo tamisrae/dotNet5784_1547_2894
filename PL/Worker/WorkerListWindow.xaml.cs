@@ -43,7 +43,7 @@ public partial class WorkerListWindow : Window
         s_bl?.Worker.ReadAll()! : s_bl?.Worker.ReadAll(item => (int)item.Level == (int)Experience)!;
     }
     
-    private void WorkerDoubleClick (object sender, RoutedEventArgs e) //when the user click on a worker
+    private void UpdateWorker (object sender, RoutedEventArgs e) //when the user click on a worker
     {
         BO.Worker? worker = (sender as ListView)?.SelectedItem as BO.Worker;
         if (worker != null)

@@ -27,7 +27,7 @@
             <!--screening workers-->
             <ComboBox Grid.Column="1"  ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectionChanged="ListFliterByExperince" SelectedValue="{Binding Path=Experience, Mode=TwoWay}" Margin="190,0,0,0"/>
         </Grid>
-        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="WorkerDoubleClick" Grid.ColumnSpan="2" >
+        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="UpdateWorker" Grid.ColumnSpan="2" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

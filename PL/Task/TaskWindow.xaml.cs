@@ -57,5 +57,39 @@ public partial class TaskWindow : Window
     public static readonly DependencyProperty CurrentTaskProperty =
         DependencyProperty.Register("CurrentTask", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
 
-
+    private void AddUpdateTask(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+        if (CurrentTask != null)
+        {
+            try
+            {
+                if (ID != 0)//if the id is not 0 it means that we need to update the data
+                {
+                    bl.Task.Update(CurrentTask);
+                    MessageBox.Show("The task was successfully updated", "UPDATE", MessageBoxButton.OK);
+                }
+                else//if the id is 0 it means that we need to creat new worker
+                {
+                    bl.Task.Create(CurrentTask);
+                    MessageBox.Show("The task was successfully added", "ADD", MessageBoxButton.OK);
+                }
+            }
+            catch (BlDoesNotExistsException mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
+            catch (BlAlreadyExistsException mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
+        }
+    }
 }

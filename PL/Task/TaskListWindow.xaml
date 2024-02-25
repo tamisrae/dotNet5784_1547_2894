@@ -7,15 +7,20 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding TasksList}">
+    <Grid Margin="131,0,0,108">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="111*"/>
+            <RowDefinition Height="52*"/>
+        </Grid.RowDefinitions>
+        <ListView Margin="5,5,5,5" Grid.Row="1" MouseDoubleClick="UpdateTask" SelectionChanged="ListView_SelectionChanged" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <ComboBox ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" RenderTransformOrigin="0.476,0.473" Margin="288,0,0,386" SelectedValue="{Binding Path=Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
+        <Button Content="Add" Click="AddTask" Margin="252,342,0,10" Grid.Row="1"/>
+        <ComboBox Grid.Column="1"   ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" RenderTransformOrigin="0.476,0.473" Margin="190,0,0,0" SelectedValue="{Binding Path=Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
 
     </Grid>
 </Window>

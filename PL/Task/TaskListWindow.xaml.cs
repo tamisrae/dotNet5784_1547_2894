@@ -46,4 +46,26 @@ public partial class TaskListWindow : Window
         TasksList = (Complexity == BO.PLWorkerExperience.All) ?
        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
     }
+
+    private void AddTask(object sender, RoutedEventArgs e)
+    {
+        new TaskWindow().ShowDialog();
+        //update the list of the tasks after the changes
+        TasksList= (Complexity == BO.PLWorkerExperience.All) ?
+        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+    }
+
+    private void UpdateTask(object sender, RoutedEventArgs e)
+    {
+        BO.Task? task = (sender as ListView)?.SelectedItem as BO.Task;
+        if (task != null)
+        {
+            new WorkerWindow(task.Id).ShowDialog();
+            //update the list of the workers after the changes
+            TasksList = (Complexity == BO.PLWorkerExperience.All) ?
+            bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+        }
+    }
+
+   
 }
