@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
         Title="TaskWindow" Height="652" Width="912"
-           	DataContext="{Binding CurrentTask, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+        DataContext="{Binding CurrentTask, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid Margin="0,0,49,-168">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="262*"/>

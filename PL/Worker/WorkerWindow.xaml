@@ -5,40 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="WorkerWindow" Height="456" Width="473"
-        DataContext="{Binding CurrentWorker, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
-    <Grid Margin="10,10,10,-52" RenderTransformOrigin="0.449,0.429">
+        Title="WorkerWindow" Height="456" Width="489"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid Margin="10,-10,0,-52" RenderTransformOrigin="0.449,0.429">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="9*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
-         Height="NaN" Margin="266,232,0,0"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Text="{Binding CurrentWorker.Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+         Height="NaN" Margin="266,298,0,0"  VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
-         Height="NaN" Margin="266,176,0,0"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Text="{Binding CurrentWorker.Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+         Height="NaN" Margin="266,251,0,0"  VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <TextBox Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  HorizontalAlignment="Left" 
-        Height="NaN" Margin="266,78,0,0"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Text="{Binding CurrentWorker.Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  HorizontalAlignment="Left" 
+        Height="NaN" Margin="266,152,0,0"  VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
-        Height="NaN" Margin="266,40,0,0"  VerticalAlignment="Top" Width="120" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConvertIdToBoolKey}}"/>
+        <TextBox Text="{Binding CurrentWorker.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" 
+        Height="NaN" Margin="266,110,0,0"  VerticalAlignment="Top" Width="120" IsEnabled="{Binding CurrentWorker.Id, Converter={StaticResource ConvertIdToBoolKey}}" Grid.ColumnSpan="2"/>
 
-        <ComboBox HorizontalAlignment="Left" Height="NaN" Margin="266,119,0,0" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
-        SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120"/>
+        <ComboBox HorizontalAlignment="Left" Height="NaN" Margin="266,203,0,0" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
+        SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,263,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <!--<TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>-->
+        <TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" HorizontalAlignment="Left" Margin="266,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
 
 
+        <Label Content="ID" HorizontalAlignment="Left" Margin="22,101,0,0" VerticalAlignment="Top" Height="33" Width="70"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="15,148,0,0" VerticalAlignment="Top"/>
+        <Label Content="Level" HorizontalAlignment="Left" Margin="15,201,0,0" VerticalAlignment="Top"/>
+        <Label Content="Email" HorizontalAlignment="Left" Margin="22,247,0,0" VerticalAlignment="Top"/>
+        <Label Content="Cost" HorizontalAlignment="Left" Margin="22,290,0,0" VerticalAlignment="Top"/>
+        <Label Content="Current task" HorizontalAlignment="Left" Margin="14,345,0,0" VerticalAlignment="Top"/>
+        <Label Content="Id" HorizontalAlignment="Left" Margin="198,345,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.055,-1.339"/>
+        <Label Content="Alias" HorizontalAlignment="Left" Margin="191,387,0,0" VerticalAlignment="Top"/>
 
-        <Label Content="ID" HorizontalAlignment="Left" Margin="22,32,0,0" VerticalAlignment="Top" Height="33" Width="70"/>
-        <Label Content="Name" HorizontalAlignment="Left" Margin="15,70,0,0" VerticalAlignment="Top"/>
-        <Label Content="Level" HorizontalAlignment="Left" Margin="15,115,0,0" VerticalAlignment="Top"/>
-        <Label Content="Email" HorizontalAlignment="Left" Margin="14,168,0,0" VerticalAlignment="Top"/>
-        <Label Content="Cost" HorizontalAlignment="Left" Margin="16,219,0,0" VerticalAlignment="Top"/>
-        <Label Content="Current task" HorizontalAlignment="Left" Margin="14,259,0,0" VerticalAlignment="Top"/>
-        <Label Content="Id" HorizontalAlignment="Left" Margin="197,263,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.055,-1.339"/>
-        <Label Content="Alias" HorizontalAlignment="Left" Margin="190,294,0,0" VerticalAlignment="Top"/>
-        <Button HorizontalAlignment="Left" Margin="340,340,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True"/>
-
+        <!--<Button HorizontalAlignment="Left" Margin="12,405,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Column="1"/>-->
+        <Menu Margin="0,10,330,443">
+            <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5" Click="AddUpdateClick">
+                <MenuItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="0"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0"/>
+                    </TransformGroup>
+                </MenuItem.RenderTransform>
+                <MenuItem Header="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}"/>
+                <MenuItem Header="Delete" Click="DeleteClick"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

@@ -19,7 +19,6 @@ public interface ITask
     public void Clear();
     public void UpdateTheScheduledDate(int taskId, DateTime scheduledDate);
     public IEnumerable<TaskInList>? TasksForWorker(int workerId);
-    public void ManualSchedule();
     public void AutomaticSchedule();
     public void StartTask(BO.Task task, int workerId);
     public void EndTask(int taskId, int workerId);

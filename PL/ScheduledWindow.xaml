@@ -1,0 +1,16 @@
+﻿<Window x:Class="PL.ScheduledWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ScheduledWindow" Height="450" Width="800"
+        DataContext="{Binding StartProjectDate, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+
+    <Grid Margin="0,0,248,209">
+        <Label Content="Enter the start project date:" HorizontalAlignment="Center" Margin="0,61,0,0" VerticalAlignment="Top" Height="52" Width="212"/>
+        <DatePicker HorizontalAlignment="Center" Margin="0,127,0,0" VerticalAlignment="Top" Height="57" Width="140" SelectedDate="{Binding StartProjectDate}"/>
+        <Button Content="OK" HorizontalAlignment="Left" Margin="428,174,0,0" VerticalAlignment="Top" Height="30" Width="67" Click="SetStartProjectDate"/>
+    </Grid>
+</Window>

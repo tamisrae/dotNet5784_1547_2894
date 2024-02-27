@@ -19,6 +19,7 @@
         <Button Content="Reset Data" HorizontalAlignment="Center" Margin="0,327,0,0" VerticalAlignment="Top" Height="55" Width="170" Click="ResetData" Background="White" FontWeight="Medium"/>
         <Label Content="EYAL'S-CATERING" Margin="130,19,88,0" VerticalAlignment="Top" Height="103" FontWeight="Heavy" FontStyle="Italic" FontSize="60" HorizontalAlignment="Center"/>
         <Button Content="List tasks view" HorizontalAlignment="Left" Margin="588,217,0,0" VerticalAlignment="Top" Height="65" Width="157" Click="TasksListShow"/>
+        <Button Content="Create a scheduled date" HorizontalAlignment="Left" Margin="111,127,0,0" VerticalAlignment="Top" Height="55" Width="134" Click="ScheduledDate"/>
 
     </Grid>
 </Window>

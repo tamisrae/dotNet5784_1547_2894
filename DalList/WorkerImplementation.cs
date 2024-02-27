@@ -21,6 +21,8 @@ internal class WorkerImplementation : IWorker
             if (worker.Id == item.Id)
                 throw new DalAlreadyExistsException($"Worker with ID={item.Id} already exists");
         }
+        if (item.Level == DO.WorkerExperience.Manager && Workers.FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null)
+            throw new DalManagerException("There is already a manager for the project");
         DataSource.Workers.Add(item);
         return item.Id;
     }
@@ -75,6 +77,9 @@ internal class WorkerImplementation : IWorker
     {
         if (Read(item.Id) == null)
             throw new DalDoesNotExistsException($"Worker with ID={item.Id} doe's NOT exists");
+        if (item.Level == DO.WorkerExperience.Manager && Workers.FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null)
+            throw new DalManagerException("There is already a manager for the project");
+
         Delete(item.Id);
         Create(item);
     }

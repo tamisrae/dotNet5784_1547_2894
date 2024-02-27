@@ -58,7 +58,7 @@ public interface IBl
                     throw new BO.BlDoesNotExistsException($"Task with ID={dependency.DependsOnTask} doe's NOT exists", ex);
                 }
             }
-            if (tasksList.Count != 0)
+            if (tasksList.Any())
             {
                 if (tasksList.FirstOrDefault(t => t.ScheduledDate == null) != null)
                     throw new BlScheduledDateException($"You cannot enter scheduled date for This with ID={task.Id} task");
@@ -73,6 +73,7 @@ public interface IBl
     public void ResetDB();
 
     public BO.ProjectStatus ProjectStatusPL();
+
 
 };
 

@@ -415,47 +415,38 @@ internal class TaskImplementation : BlApi.ITask
     }
 
     /// <summary>
-    /// This function makes a schedule manually
-    /// </summary>
-    /// <exception cref="DalWorngValueException"></exception>
-    public void ManualSchedule()
-    {
-        dal.StartProjectDate = DateTime.Now;
-        foreach (DO.Task task in dal.Task.ReadAll())
-        {
-            Console.WriteLine("enter the scheduled date:");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime scheduledDate))
-                throw new DalWorngValueException("WORNG DATE");
-            UpdateTheScheduledDate(task.Id, scheduledDate);
-        }
-    }
-
-    /// <summary>
     /// This function makes a schedule automatically
     /// </summary>
     /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void AutomaticSchedule()
     {
-        dal.StartProjectDate = DateTime.Now;
-        List<BO.Task> tasks = (from DO.Task task in dal.Task.ReadAll()
-                               where FindDependencies(task.Id)!.Count == 0
-                               select Read(task.Id)).ToList();//All the tasks that didn't have dependencies
-        foreach (BO.Task task in tasks)
+        //Console.WriteLine("Enter the start project date:");
+        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime startProjectDate))
+        //    throw new BlWorngValueException("WORNG DATE");
+        if (dal.StartProjectDate == null)
+            throw new BlScheduledDateException("There is not start project date yet");
+        else
         {
-            try
+            List<BO.Task> tasks = (from DO.Task task in dal.Task.ReadAll()
+                                   where FindDependencies(task.Id)!.Count == 0
+                                   select Read(task.Id)).ToList();//All the tasks that didn't have dependencies
+            foreach (BO.Task task in tasks)
             {
-                UpdateTheScheduledDate(task.Id, (DateTime)dal.StartProjectDate);
+                try
+                {
+                    UpdateTheScheduledDate(task.Id, (DateTime)dal.StartProjectDate);
+                }
+                catch (DO.DalDoesNotExistsException ex)
+                {
+                    throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
+                }
             }
-            catch (DO.DalDoesNotExistsException ex)
-            {
-                throw new BO.BlDoesNotExistsException($"Task with ID={task.Id} doe's NOT exists", ex);
-            }
-        }
 
-        List<BO.Task> taskList = (from DO.Task task in dal.Task.ReadAll()
-                                  where task.ScheduledDate == null
-                                  select Read(task.Id)).ToList();
-        Rec(taskList);
+            List<BO.Task> taskList = (from DO.Task task in dal.Task.ReadAll()
+                                      where task.ScheduledDate == null
+                                      select Read(task.Id)).ToList();
+            Rec(taskList);
+        }
     }
 
     /// <summary>
@@ -529,12 +520,30 @@ internal class TaskImplementation : BlApi.ITask
             //Check that the worker is registered for this task and it is in progress
             DO.Task? task = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
 
-            if (task != null && task.Id != boTask.Id)
-                throw new BlTaskInWorkerException($"Worker with ID={workerId} in the middle of another task");
+            if (task != null/* && task.Id != boTask.Id*/)
+                throw new BlTaskInWorkerException($"Worker with ID={workerId} in the middle of a task");
             else if (doTask != null && doTask.WorkerId != null && doTask.WorkerId == workerId)
             {
                 doTask = doTask with { StartDate = DateTime.Now };
                 dal.Task.Update(doTask);
+
+                if (boTask.ScheduledDate < DateTime.Now)//if the worker started the task later then the scheduled date
+                {
+                    foreach (BO.TaskInList taskInList in ReadAll())
+                    {
+                        if (taskInList.Status != Status.Done || taskInList.Status != Status.OnTrack)
+                        {
+                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
+                            if (task1 != null)
+                                dal.Task.Update(task1);
+                        }
+                    }
+
+                    List<BO.Task> tasks = (from BO.TaskInList t in ReadAll()
+                                           where Read(t.Id)!.ScheduledDate == null
+                                           select Read(t.Id)).ToList();
+                    Rec(tasks);
+                }
             }
             else
                 throw new BlWorkerInTaskException($"Worker with ID={workerId} cannot work on task with ID={boTask.Id}");
@@ -557,6 +566,7 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             DO.Task? task = dal.Task.Read(taskId);
+            BO.Task? boTask = Read(taskId);
             //Check that the worker really worked on this task
             DO.Task? doTask = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
 
@@ -564,6 +574,25 @@ internal class TaskImplementation : BlApi.ITask
             {
                 task = task with { CompleteDate = DateTime.Now };
                 dal.Task.Update(task);
+
+                if (boTask != null && boTask.ForeCastDate < DateTime.Now) //if the worker ended the task later then the fore cast date
+                {
+                    foreach (BO.TaskInList taskInList in ReadAll())
+                    {
+                        if (taskInList.Status != Status.Done || taskInList.Status != Status.OnTrack)
+                        {
+                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
+                            if (task1 != null)
+                                dal.Task.Update(task1);
+                        }
+                    }
+
+                    List<BO.Task> tasks = (from BO.TaskInList t in ReadAll()
+                                           where Read(t.Id)!.ScheduledDate == null
+                                           select Read(t.Id)).ToList();
+                    Rec(tasks);
+                }
+
             }
             else
                 throw new BlTaskInWorkerException($"Worker with ID={workerId} did not worked on task with ID={taskId}");

@@ -9,6 +9,8 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -54,6 +56,11 @@ namespace PL
         private void TasksListShow(object sender, RoutedEventArgs e)
         {
             new TaskListWindow().ShowDialog();
+        }
+
+        private void ScheduledDate(object sender, RoutedEventArgs e)
+        {
+           new ScheduledWindow().ShowDialog();
         }
     }
 }

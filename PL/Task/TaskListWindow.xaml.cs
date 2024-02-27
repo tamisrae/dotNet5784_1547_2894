@@ -35,6 +35,15 @@ public partial class TaskListWindow : Window
         bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
     }
 
+
+    public BO.PLStatus Status { get; set; } = BO.PLStatus.All;
+
+    private void FilterListByStatus(object sender, SelectionChangedEventArgs e)
+    {
+        TaskList = (Status == BO.PLStatus.All) ?
+        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Status == (int)Status)!;
+    }
+
     private void AddTask(object sender, RoutedEventArgs e)
     {
         new TaskWindow().ShowDialog();
