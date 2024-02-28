@@ -36,14 +36,7 @@ partial class Program
                         SubMenuTask();
                         break;
                     case 3:
-                        Console.WriteLine("To create an automatic schedule press: 1");
-                        Console.WriteLine("To create a manual schedule press: 2");
-                        if (!int.TryParse(Console.ReadLine(), out int scheduleChoice))
-                            throw new BlWorngValueException("WORNG VALUE");
-                        if (scheduleChoice == 1)
-                            s_bl.Task.AutomaticSchedule();
-                        else if (scheduleChoice == 2)
-                            s_bl.Task.ManualSchedule();
+                        s_bl.Task.AutomaticSchedule();
                         break;
                     case 4:
                         Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3

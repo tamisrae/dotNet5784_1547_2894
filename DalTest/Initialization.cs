@@ -23,14 +23,17 @@ public static class Initialization
         string[] WorkerNames =
         {
             "Eyal Shani", "Nathan Weiss", "Yossi Chaimson", "Yanon Bikel", "Benny Choen",
-            "Ilana Shalom", "Danny Amar", "Shimrit Nechama", "Shlomo Mendel"
+            "Ilana Shalom", "Danny Amar", "Shimrit Nechama"/*, "Shlomo Mendel"*/
         };
         string[] WorkerEmails =
         {
             "eyalShani@gmail.com", "nathanWeiss@gmail.com", "yossiChaimson@gmail.com",
             "yanoBikel@gmail.com", "bennyChoen@gmail.com", "ilanaShalom@gmail.com",
-             "dannyAmar@gmail.com", "shimritNechama@gmail.com", "shlomoMendel@gmail.com"
+             "dannyAmar@gmail.com", "shimritNechama@gmail.com"/*, "shlomoMendel@gmail.com"*/
         };
+
+        Worker worker = new Worker(123, DO.WorkerExperience.Manager, "shlomoMendel@gmail.com", 250, "Shlomo Mendel");
+        s_dal!.Worker.Create(worker);
 
         foreach (string name in WorkerNames)
         {

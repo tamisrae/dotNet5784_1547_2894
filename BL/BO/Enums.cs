@@ -42,3 +42,12 @@ public enum PLWorkerExperience
     Manager,
     All
 }
+
+public enum PLStatus
+{
+    Unscheduled,
+    Scheduled,
+    OnTrack,
+    Done,
+    All
+}

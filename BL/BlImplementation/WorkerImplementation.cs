@@ -24,6 +24,8 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException("The worker has WORNG VALUE!");
+        if (worker.Level == BO.WorkerExperience.Manager && dal.Worker.ReadAll().FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null)
+            throw new BlManagerException("There is already a manager for the project");
 
         DO.Worker doWorker = new DO.Worker
            (worker.Id, (DO.WorkerExperience)((int)worker.Level), worker.Email, worker.Cost, worker.Name);
@@ -143,6 +145,8 @@ internal class WorkerImplementation : BlApi.IWorker
     {
         if (worker.Name.IsEmptyString() || worker.Email.IsEmptyString() || worker.Id.IsGreaterThanZero() || worker.Cost.IsGreaterThanZero())
             throw new BlWorngValueException($"The worker has WORNG VALUE!");
+        if (worker.Level == BO.WorkerExperience.Manager && dal.Worker.ReadAll().FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null)
+            throw new BlManagerException("There is already a manager for the project");
 
         if (worker.CurrentTask != null)
         {

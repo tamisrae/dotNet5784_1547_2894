@@ -24,14 +24,33 @@ public partial class WorkerWindow : Window
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
     int ID;
 
-    public BO.Worker? CurrentWorker
+
+
+    public BO.Worker CurrentWorker
     {
-        get { return (BO.Worker)GetValue(WorkerProperty); }
-        set { SetValue(WorkerProperty, value); }
+        get { return (BO.Worker)GetValue(CurrentWorkerProperty); }
+        set { SetValue(CurrentWorkerProperty, value); }
     }
-    // Using a DependencyProperty as the backing store for Worker.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty WorkerProperty =
+
+    // Using a DependencyProperty as the backing store for CurrentWorker.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentWorkerProperty =
         DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
+
+
+
+
+
+    public BO.TaskInWorker CurrentTask
+    {
+        get { return (BO.TaskInWorker)GetValue(CurrentTaskProperty); }
+        set { SetValue(CurrentTaskProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CurrentTask.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentTaskProperty =
+        DependencyProperty.Register("CurrentTask", typeof(BO.TaskInWorker), typeof(WorkerWindow), new PropertyMetadata(null));
+
+
 
     public WorkerWindow(int Id = 0)//ctor
     {
@@ -92,4 +111,22 @@ public partial class WorkerWindow : Window
         }
     }
 
+    private void DeleteClick(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+        if (CurrentWorker != null) 
+        {
+            try
+            {
+                bl.Worker.Delete(CurrentWorker.Id);
+                MessageBox.Show("The worker was successfully deleted", "DELETE", MessageBoxButton.OK);
+                CurrentWorker = null!;
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
+        }
+    }
 }

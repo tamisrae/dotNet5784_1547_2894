@@ -8,8 +8,10 @@
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="454,0,0,0" VerticalAlignment="Top" Width="346" Height="34" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
-        <Label Content="Filter options" HorizontalAlignment="Left" Margin="363,0,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
+        <ComboBox HorizontalAlignment="Left" Margin="586,0,0,0" VerticalAlignment="Top" Width="214" Height="34" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
+        <ComboBox HorizontalAlignment="Left" Margin="372,0,0,0" VerticalAlignment="Top" Width="214" Height="34" ItemsSource="{Binding Source={StaticResource PLStatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}" SelectionChanged="FilterListByStatus"/>
+
+        <Label Content="Filter options" HorizontalAlignment="Left" Margin="281,0,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
 
         <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,34,0,0" ItemsSource="{Binding TaskList}" MouseDoubleClick="UpdateTask">
             <ListView.View>

@@ -66,3 +66,9 @@ public class BlScheduledDateException : Exception
     public BlScheduledDateException(string? message) : base(message) { }
 }
 
+[Serializable]
+public class BlManagerException : Exception
+{
+    public BlManagerException(string? message) : base(message) { }
+}
+

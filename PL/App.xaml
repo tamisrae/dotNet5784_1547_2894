@@ -11,5 +11,6 @@
         <local:ConvertDateToBool x:Key="ConvertDateToBoolKey"/>
         <local:ProjectStatusCollection x:Key="ProjectStatusCollectionKey"/>
         <local:StatusCollection x:Key="StatusCollectionKey"/>
+        <local:PLStatusCollection x:Key="PLStatusCollectionKey"/>
     </Application.Resources>
 </Application>
