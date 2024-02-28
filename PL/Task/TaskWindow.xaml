@@ -79,15 +79,16 @@
 
 
         <Label Content="Dependencies" HorizontalAlignment="Left" Margin="52,479,0,0" VerticalAlignment="Top" Width="109"/>
-        <ListView ItemsSource="{Binding Dependencies}" Margin="214,479,273,174" IsEnabled="{Binding Dependencies, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.ColumnSpan="2">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+
 
         <Button HorizontalAlignment="Left" Margin="443,555,0,0" VerticalAlignment="Top" Height="39" Width="86" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Column="1" Click="AddUpdateTask"/>
+        <ListBox ItemsSource="{Binding Dependencies}" Margin="251,488,306,181" Grid.ColumnSpan="2" MouseDoubleClick="OpenTaskWindow">
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate>
+                    <CheckBox Content="{Binding Alias}" Tag="{Binding Id}"/>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
     </Grid>
 </Window>

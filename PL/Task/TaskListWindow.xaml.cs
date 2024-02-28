@@ -65,5 +65,4 @@ public partial class TaskListWindow : Window
             this.Close();
         }
     }
-
 }

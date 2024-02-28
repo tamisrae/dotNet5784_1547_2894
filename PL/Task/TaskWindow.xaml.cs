@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,23 @@ public partial class TaskWindow : Window
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
     int ID;
 
+    public IEnumerable<BO.TaskInList> TaskList
+    {
+        get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
+        set { SetValue(TaskListProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TaskListProperty =
+        DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
+
+
     public TaskWindow(int Id = 0)
     {
         InitializeComponent();
         ID = Id;
+        TaskList = bl.Task.ReadAll();
+
         if (Id == 0)//create new worker window with default values
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
         else//create new worker window with the worker's data
@@ -90,4 +104,29 @@ public partial class TaskWindow : Window
             }
         }
     }
+
+    private void OpenTaskWindow(object sender, MouseButtonEventArgs e)
+    {
+        BO.TaskInList? taskInList = (sender as ListBox)?.SelectedItem as BO.TaskInList;
+        BO.Task? task = null;
+        try
+        {
+            if (taskInList != null)
+                task = bl.Task.Read(taskInList.Id);
+            if (task != null)
+                new TaskWindow(task.Id).ShowDialog();
+        }
+        catch (BlDoesNotExistsException mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
+    }
+
+
+
+
+  
+
+
 }
