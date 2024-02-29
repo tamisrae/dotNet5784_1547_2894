@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Worker>
-    <Id>273739226</Id>
+    <Id>123</Id>
+    <Level>Manager</Level>
+    <Email>shlomoMendel@gmail.com</Email>
+    <Cost>250</Cost>
+    <Name>Shlomo Mendel</Name>
+  </Worker>
+  <Worker>
+    <Id>1212</Id>
+    <Level>Cleaner</Level>
+    <Email>dani@gmail.com</Email>
+    <Cost>35</Cost>
+    <Name>dani</Name>
+  </Worker>
+  <Worker>
+    <Id>288837497</Id>
     <Level>Chef</Level>
     <Email>eyalShani@gmail.com</Email>
     <Cost>200</Cost>
     <Name>Eyal Shani</Name>
   </Worker>
   <Worker>
-    <Id>237114023</Id>
+    <Id>256348189</Id>
     <Level>SousChef</Level>
     <Email>nathanWeiss@gmail.com</Email>
     <Cost>140</Cost>
     <Name>Nathan Weiss</Name>
   </Worker>
   <Worker>
-    <Id>394280172</Id>
+    <Id>387518104</Id>
     <Level>Waiter</Level>
     <Email>yossiChaimson@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yossi Chaimson</Name>
   </Worker>
   <Worker>
-    <Id>219681626</Id>
+    <Id>392714353</Id>
     <Level>Waiter</Level>
     <Email>yanoBikel@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yanon Bikel</Name>
   </Worker>
   <Worker>
-    <Id>202142202</Id>
+    <Id>253468239</Id>
     <Level>Waiter</Level>
     <Email>bennyChoen@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Benny Choen</Name>
   </Worker>
   <Worker>
-    <Id>296093394</Id>
+    <Id>288313695</Id>
     <Level>Cleaner</Level>
     <Email>ilanaShalom@gmail.com</Email>
     <Cost>35</Cost>
     <Name>Ilana Shalom</Name>
   </Worker>
   <Worker>
-    <Id>365617601</Id>
+    <Id>204237401</Id>
     <Level>Driver</Level>
     <Email>dannyAmar@gmail.com</Email>
     <Cost>50</Cost>
     <Name>Danny Amar</Name>
   </Worker>
   <Worker>
-    <Id>363833336</Id>
+    <Id>220576121</Id>
     <Level>Secretary</Level>
     <Email>shimritNechama@gmail.com</Email>
     <Cost>45</Cost>
     <Name>Shimrit Nechama</Name>
-  </Worker>
-  <Worker>
-    <Id>379382951</Id>
-    <Level>Manager</Level>
-    <Email>shlomoMendel@gmail.com</Email>
-    <Cost>175</Cost>
-    <Name>Shlomo Mendel</Name>
   </Worker>
 </ArrayOfWorker>

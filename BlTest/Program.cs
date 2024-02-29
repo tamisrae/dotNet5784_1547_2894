@@ -548,7 +548,7 @@ partial class Program
         List<BO.TaskInList> dependencies = new List<BO.TaskInList>();
         Console.WriteLine("If you want to change the dependencies of this task enter yes else enter no");
         answer = Console.ReadLine()!;
-        if (answer == "yes")
+        if(answer == "yes")
         {
             IEnumerable<BO.TaskInList> tasks = s_bl.Task.ReadAll();
             do

@@ -34,6 +34,9 @@ public static class Initialization
 
         Worker worker = new Worker(123, DO.WorkerExperience.Manager, "shlomoMendel@gmail.com", 250, "Shlomo Mendel");
         s_dal!.Worker.Create(worker);
+        worker = new Worker(1212, DO.WorkerExperience.Cleaner, "dani@gmail.com", 35, "dani");
+        s_dal!.Worker.Create(worker);
+
 
         foreach (string name in WorkerNames)
         {

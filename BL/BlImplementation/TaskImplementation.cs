@@ -4,7 +4,7 @@ using DO;
 using System.Data;
 
 namespace BlImplementation;
-internal class TaskImplementation : BlApi.ITask
+internal class TaskImplementation : ITask
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
 
@@ -262,13 +262,24 @@ internal class TaskImplementation : BlApi.ITask
         {
             if (task.Dependencies != null)
             {
-                IEnumerable<DO.Dependency>? dependencies = FindDependencies(task.Id);
+                List<DO.Dependency> dependencies = new List<DO.Dependency>();
+                dependencies = FindDependencies(task.Id);
+
+                List<DO.Dependency>? temp = (from TaskInList taskInList in task.Dependencies
+                                             where dependencies.FirstOrDefault(depnc => depnc.DependsOnTask == taskInList.Id) == null
+                                             select new DO.Dependency(0, task.Id, taskInList.Id)).ToList();
+                foreach(DO.Dependency dep in temp)
+                {
+                    dependencies.Add(dep);
+                }
+
+
                 if (GetDependency(task.Id, dependencies))
                 {
-                    IEnumerable<int> createDependencies = from BO.TaskInList task1 in task.Dependencies
-                                                          let dependency = dal.Dependency.ReadAll().FirstOrDefault(dependency => dependency.DependentTask != task.Id || dependency.DependsOnTask != task1.Id)
-                                                          where dependency == null
-                                                          select dal.Dependency.Create(dependency);
+                    List<int> createDependencies = (from BO.TaskInList task1 in task.Dependencies
+                                                    where dal.Dependency.ReadAll().FirstOrDefault(depndc => depndc.DependentTask == task.Id && depndc.DependsOnTask == task1.Id) == null
+                                                    let dep = new DO.Dependency(0, task.Id, task1.Id)
+                                                    select dal.Dependency.Create(dep)).ToList();
                 }
                 else
                     throw new BlCantUpdateException($"Task with ID={task.Id} cannot be update");
@@ -352,9 +363,11 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    private List<DO.Dependency>? FindDependencies(int id)
+    private List<DO.Dependency> FindDependencies(int id)
     {
-        List<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
+        List <DO.Dependency> dependencies = new List<DO.Dependency>();
+
+        dependencies = (from dependency in dal.Dependency.ReadAll()
                                              where dependency.DependentTask == id
                                              select dependency).ToList();
         return dependencies;
@@ -366,14 +379,16 @@ internal class TaskImplementation : BlApi.ITask
     /// <param name="taskId"></param>
     /// <param name="dependencies"></param>
     /// <returns></returns>
-    private bool GetDependency(int taskId, IEnumerable<DO.Dependency>? dependencies)
+    private bool GetDependency(int taskId, IEnumerable<DO.Dependency> dependencies)
     {
-        if (dependencies == null)
+        if (!dependencies.Any())
             return true;
         else
         {
-            if (dependencies.Any(dependency => dependency.DependentTask == taskId || GetDependency(taskId, FindDependencies(dependency.Id)) == false))
+            if (dependencies.Any(dependency => dependency.DependsOnTask == taskId || GetDependency(taskId, FindDependencies(dependency.DependsOnTask)) == false))
+            {
                 return false;
+            }
             return true;
         }
     }

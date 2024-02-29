@@ -28,9 +28,8 @@
         <ComboBox HorizontalAlignment="Left" Height="NaN" Margin="266,203,0,0" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" 
         SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-        <!--<TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>-->
-        <TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" HorizontalAlignment="Left" Margin="266,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-        <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <TextBox Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}" HorizontalAlignment="Left" Margin="266,349,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsEnabled="False"/>
+        <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="266,391,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" IsEnabled="False"/>
 
 
 
@@ -43,8 +42,8 @@
         <Label Content="Id" HorizontalAlignment="Left" Margin="198,345,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.055,-1.339"/>
         <Label Content="Alias" HorizontalAlignment="Left" Margin="191,387,0,0" VerticalAlignment="Top"/>
 
-        <!--<Button HorizontalAlignment="Left" Margin="12,405,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Column="1"/>-->
-        <Menu Margin="0,10,330,443">
+        <Button HorizontalAlignment="Left" Margin="12,405,0,0" VerticalAlignment="Top" Height="39" Width="86" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Column="1"/>
+        <!--<Menu Margin="0,10,330,443">
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5" Click="AddUpdateClick">
                 <MenuItem.RenderTransform>
                     <TransformGroup>
@@ -57,6 +56,6 @@
                 <MenuItem Header="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}"/>
                 <MenuItem Header="Delete" Click="DeleteClick"/>
             </MenuItem>
-        </Menu>
+        </Menu>-->
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace PL;
@@ -41,6 +42,21 @@ class ConvertDateToBool : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         return  bl.ProjectStatusPL() == BO.ProjectStatus.Execution ? false : true;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertLevelToVisibale : IValueConverter
+{
+    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.WorkerExperience)value == BO.WorkerExperience.Manager ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
