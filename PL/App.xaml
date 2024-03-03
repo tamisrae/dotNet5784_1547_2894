@@ -28,6 +28,14 @@
             <Setter Property="BorderBrush" Value="Black"/>
         </Style>
 
+        <Style x:Key="MainButtonKey" TargetType="Button">
+            <Setter Property="FontFamily" Value="Gill Sans MT"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#FF267513"/>
+            <Setter Property="BorderBrush" Value="#FF52AC3D"/>
+        </Style>
+
         <Style x:Key="GridKey" TargetType="Grid">
             <Setter Property="Background" Value="#FFE4EEDF"/>
         </Style>

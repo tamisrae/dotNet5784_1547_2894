@@ -15,9 +15,12 @@
 
   <ItemGroup>
     <None Remove="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <None Remove="Task\סושי.jpeg" />
     <None Remove="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <None Remove="User\סושי.jpeg" />
     <None Remove="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
     <None Remove="Worker\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <None Remove="Worker\סושי.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,9 +30,12 @@
 
   <ItemGroup>
     <Resource Include="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <Resource Include="Task\סושי.jpeg" />
     <Resource Include="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <Resource Include="User\סושי.jpeg" />
     <Resource Include="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
     <Resource Include="Worker\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <Resource Include="Worker\סושי.jpeg" />
   </ItemGroup>
 
 </Project>

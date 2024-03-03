@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Style="{StaticResource GridKey}">
         <Grid.Background>
-            <ImageBrush ImageSource="/User/WhatsApp Image 2024-03-03 at 23.29.16.jpeg"/>
+            <ImageBrush ImageSource="/User/סושי.jpeg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
