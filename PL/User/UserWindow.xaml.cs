@@ -13,7 +13,6 @@ public partial class UserWindow : Window
 
     public UserWindow(int Id = 0)
     {
-        InitializeComponent();
         ID = Id;
         if (Id == 0)//create new user window with default values
             CurrentUser = new BO.User { Id = 0, UserName = "", Password = "" };
@@ -30,6 +29,7 @@ public partial class UserWindow : Window
                 this.Close();
             }
         }
+        InitializeComponent();
     }
 
     public BO.User CurrentUser

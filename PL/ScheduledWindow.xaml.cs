@@ -40,8 +40,23 @@ namespace PL
 
         private void SetStartProjectDate(object sender, RoutedEventArgs e)
         {
-            
-            bl.Task.AutomaticSchedule();
+            Button button=(Button)sender;
+            Grid grid = (Grid)button.Parent;
+            DatePicker datePicker = (DatePicker)grid.Children[1];
+            DateTime dateTime = (DateTime)datePicker.SelectedDate!;
+            try
+            {
+                bl.StartProjectDate(dateTime);
+                bl.Task.AutomaticSchedule();
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                this.Close();
+            }
         }
     }
 }

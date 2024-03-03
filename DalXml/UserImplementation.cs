@@ -38,7 +38,7 @@ internal class UserImplementation : IUser
         List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);
         User? user = Read(id);
         if (user == null)
-            throw new DalDoesNotExistsException($"User with ID={id} doe's NOT exists");
+            return;
         users.Remove(user);
         XMLTools.SaveListToXMLSerializer<DO.User>(users, s_users_xml);
     }
@@ -54,7 +54,7 @@ internal class UserImplementation : IUser
     {
         List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);
 
-        return users.FirstOrDefault(user => user.Id == id) ?? throw new DalDoesNotExistsException($"User with ID={id} doe's NOT exists");
+        return users.FirstOrDefault(user => user.Id == id);
     }
 
     public IEnumerable<User> ReadAll(Func<User, bool>? filter = null)
@@ -83,6 +83,6 @@ internal class UserImplementation : IUser
     {
         List<DO.User> users = XMLTools.LoadListFromXMLSerializer<DO.User>(s_users_xml);
 
-        return users.FirstOrDefault(user => user.Password == password) ?? throw new DalDoesNotExistsException($"User with Password= {password} doe's NOT exists");
+        return users.FirstOrDefault(user => user.Password == password);
     }
 }

@@ -8,6 +8,9 @@
         Title="WorkerWindow" Height="550" Width="489"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Margin="0,0,0,-6" RenderTransformOrigin="0.449,0.429" Style="{StaticResource GridKey}">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Worker/WhatsApp Image 2024-03-03 at 23.29.16.jpeg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -40,7 +43,7 @@
         <Label Content="Cost" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Style="{StaticResource LabelKey}"/>
 
         <ComboBox HorizontalAlignment="Center" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" Grid.Row="4" Grid.Column="1"
-        SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+        SelectedValue="{Binding CurrentWorker.Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         <Label Content="Level" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Style="{StaticResource LabelKey}"/>
 
 
@@ -52,6 +55,12 @@
         <TextBox Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Grid.Column="1" Grid.Row="5" IsEnabled="False"/>
         <Label Content="Alias" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="5" Grid.Column="1" Height="25" FontFamily="Gill Sans MT"/>
 
-        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="6" Width="70" Height="40" Grid.ColumnSpan="2" Margin="210,0,0,0" Style="{StaticResource ButtonKey}"/>
+        <Button HorizontalAlignment="Left" VerticalAlignment="Center" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="6" Width="70" Height="40" Grid.ColumnSpan="2" Margin="210,0,0,0" Style="{StaticResource ButtonKey}"/>
+
+        <Menu Grid.Column="0" Grid.Row="0" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5" Click="AddUpdateClick">
+                <MenuItem Header="Delete" Click="DeleteClick"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

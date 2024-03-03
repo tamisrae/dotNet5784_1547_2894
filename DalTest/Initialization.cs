@@ -32,14 +32,14 @@ public static class Initialization
              "dannyAmar@gmail.com", "shimritNechama@gmail.com"/*, "shlomoMendel@gmail.com"*/
         };
 
-        Worker worker = new Worker(123, DO.WorkerExperience.Manager, "shir@gmail.com", 250, "Shir");
+        Worker manager = new Worker(123, DO.WorkerExperience.Manager, "shir@gmail.com", 250, "Shir");
+        s_dal!.Worker.Create(manager);
+        User managerUser = new User(123, "shir", "123");
+        s_dal!.User.Create(managerUser);
+        Worker worker = new Worker(1212, DO.WorkerExperience.Cleaner, "dani@gmail.com", 35, "dani");
         s_dal!.Worker.Create(worker);
-        User user = new User(123, "shir", "123");
-        s_dal!.User.Create(user);
-        worker = new Worker(1212, DO.WorkerExperience.Cleaner, "dani@gmail.com", 35, "dani");
-        s_dal!.Worker.Create(worker);
-        user = new User(1212, "Dani", "1212");
-        s_dal!.User.Create(user);
+        User workerUser = new User(1212, "Dani", "1212");
+        s_dal!.User.Create(workerUser);
 
 
         foreach (string name in WorkerNames)
@@ -262,6 +262,7 @@ public static class Initialization
         //s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");//stage 2
         //s_dal = dal ?? throw new NullReferenceException("DAL can not be null!");//stage 2
         s_dal = DalApi.Factory.Get; //stage 4
+        Reset();
 
         createWorker();
         createTask();
@@ -274,5 +275,6 @@ public static class Initialization
         s_dal!.Worker.Clear();
         s_dal!.Task.Clear();
         s_dal!.Dependency.Clear();
+        s_dal!.User.Clear();
     }
 }

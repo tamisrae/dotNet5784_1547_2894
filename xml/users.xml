@@ -10,9 +10,4 @@
     <UserName>Dani</UserName>
     <Password>1212</Password>
   </User>
-  <User>
-    <Id>202886310</Id>
-    <UserName>ff</UserName>
-    <Password>111</Password>
-  </User>
 </ArrayOfUser>

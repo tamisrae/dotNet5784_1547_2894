@@ -50,7 +50,6 @@ public partial class WorkerWindow : Window
 
     public WorkerWindow(int Id = 0)//ctor
     {
-        InitializeComponent();
         ID = Id;
         if (Id == 0)//create new worker window with default values
             CurrentWorker = new BO.Worker { Id = 0, Level = (BO.WorkerExperience)7, Email = "", Cost = 0, Name = "", CurrentTask = null };
@@ -67,9 +66,10 @@ public partial class WorkerWindow : Window
                 this.Close();
             }
         }
+        InitializeComponent();
     }
-     
-   
+
+
 
     private void AddUpdateClick(object sender, RoutedEventArgs e)
     {

@@ -37,7 +37,6 @@ public partial class TaskWindow : Window
 
     public TaskWindow(int Id = 0)
     {
-        InitializeComponent();
         ID = Id;
         TaskList = bl.Task.ReadAll();
 
@@ -56,6 +55,7 @@ public partial class TaskWindow : Window
                 this.Close();
             }
         }
+        InitializeComponent();
     }
 
 

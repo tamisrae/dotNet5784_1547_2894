@@ -11,10 +11,10 @@ public partial class TaskListWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-    public TaskListWindow()
+    public TaskListWindow(BO.WorkerExperience workerExperience = BO.WorkerExperience.Waiter)
     {
-        InitializeComponent();
         TaskList = bl?.Task.ReadAll()!;
+        InitializeComponent();
     }
 
     public IEnumerable<BO.TaskInList> TaskList

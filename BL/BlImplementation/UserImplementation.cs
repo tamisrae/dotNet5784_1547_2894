@@ -36,7 +36,7 @@ internal class UserImplementation : IUser
         {
             DO.User? doUser = dal.User.Read(id);
             if (doUser == null)
-                throw new BO.BlDoesNotExistsException($"User with ID= {id} doe's NOT exists");
+                return null;
 
             return new BO.User
             {
@@ -84,8 +84,7 @@ internal class UserImplementation : IUser
         {
             DO.User? doUser = dal.User.ReadByPassword(password);
             if (doUser == null)
-                throw new BO.BlDoesNotExistsException($"User with Password={password} doe's NOT exists");
-
+                return null;
             return new BO.User
             {
                 Id = doUser.Id,

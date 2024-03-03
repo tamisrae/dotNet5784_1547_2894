@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="FirstWindow" Height="350" Width="350"
          DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -17,15 +17,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Content="User name" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontFamily="Arial"/>
+        <Label Content="User name" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" FontFamily="Arial" Foreground="White"/>
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="Black"/>
 
-        <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" FontFamily="Arial"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.Password, Mode=OneWayToSource}" Grid.Row="3" BorderBrush="Black"/>
+        <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" FontFamily="Arial" Foreground="White"/>
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Text="{Binding CurrentUser.Password, Mode=OneWayToSource}" Grid.Row="3" BorderBrush="Black"/>
 
-        <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Center" Click="LogInButton" Grid.Row="4" Width="50" Height="30" Background="White"/>
+        <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LogInButton" Grid.Row="4" Width="50" Height="30" Background="Black" Foreground="White" BorderThickness="2,2,2,2"/>
 
-        <Label Content="Dont have an account?" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Margin="62,0,0,0" FontFamily="Arial"/>
-        <Button Content="Sign in" FontFamily="Arial" VerticalAlignment="Center" Grid.Row="5" Width="50" Height="30" HorizontalAlignment="Left" Margin="210,0,0,0" Background="White" Click="SignInButton"/>
+        <Label Content="Dont have an account?" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Margin="62,0,0,0" FontFamily="Arial" Foreground="White"/>
+        <Button Content="Sign in" FontFamily="Arial" VerticalAlignment="Center" Grid.Row="5" Width="50" Height="30" HorizontalAlignment="Left" Margin="210,0,0,0" Background="Black" Click="SignInButton" Foreground="White" BorderThickness="2,2,2,3"/>
     </Grid>
 </Window>

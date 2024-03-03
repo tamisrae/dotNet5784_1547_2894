@@ -12,8 +12,8 @@ public partial class WorkerListWindow : Window
 
     public WorkerListWindow()//ctor  
     {
-        InitializeComponent();
         WorkersList = s_bl?.Worker.ReadAll()!;
+        InitializeComponent();
     }
 
 

@@ -8,6 +8,9 @@
         Title="UserWindow" Height="450" Width="450"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Style="{StaticResource GridKey}">
+        <Grid.Background>
+            <ImageBrush ImageSource="/User/WhatsApp Image 2024-03-03 at 23.29.16.jpeg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -27,6 +30,6 @@
         <TextBox Text="{Binding CurrentUser.UserName}" Grid.Row="1" Grid.Column="1" Width="150" Height="20"/>
         <TextBox Text="{Binding CurrentUser.Password}" Grid.Row="2" Grid.Column="1" Width="150" Height="20"/>
 
-        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}}" Grid.Row="3" HorizontalAlignment="Left" Width="70" Height="40" Click="AddUpdateUser" Grid.ColumnSpan="2" Margin="190,34,0,34" Style="{StaticResource ButtonKey}"/>
+        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" HorizontalAlignment="Left" Width="70" Height="40" Click="AddUpdateUser" Grid.ColumnSpan="2" Margin="190,34,0,34" Style="{StaticResource ButtonKey}"/>
     </Grid>
 </Window>

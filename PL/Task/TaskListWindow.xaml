@@ -28,6 +28,6 @@
             </ListView.View>
         </ListView>
 
-        <Button Content="Add" HorizontalAlignment="Left" Width="100" Margin="356,321,0,75" Click="AddTask" Style="{StaticResource ButtonKey}"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="AddTask" Style="{StaticResource ButtonKey}" Margin="0,312,0,0"/>
     </Grid>
 </Window>

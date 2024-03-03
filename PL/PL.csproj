@@ -14,8 +14,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <None Remove="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <None Remove="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
+    <None Remove="Worker\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DalTest\DalTest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <Resource Include="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
+    <Resource Include="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
+    <Resource Include="Worker\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
   </ItemGroup>
 
 </Project>

@@ -31,20 +31,20 @@ internal class UserImplementation : IUser
     {
         User? user = Read(id);
         if (user == null)
-            throw new DalDoesNotExistsException($"User with ID={id} doe's NOT exists");
+            return;
         DataSource.Users.Remove(user);
     }
 
     public User? ReadByPassword(string password)
     {
-        return DataSource.Users.FirstOrDefault(user => user.Password == password) ?? throw new DalDoesNotExistsException($"User with Password={password} doe's NOT exists");
+        return DataSource.Users.FirstOrDefault(user => user.Password == password);
     }
 
     public User? Read(Func<User, bool> filter) => Users.FirstOrDefault(filter);
 
     public User? Read(int id)
     {
-        return DataSource.Users.FirstOrDefault(user => user.Id == id) ?? throw new DalDoesNotExistsException($"User with ID={id} doe's NOT exists");
+        return DataSource.Users.FirstOrDefault(user => user.Id == id);
     }
 
     public IEnumerable<User> ReadAll(Func<User, bool>? filter = null)

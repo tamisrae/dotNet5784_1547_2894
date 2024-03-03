@@ -36,6 +36,10 @@ partial class Program
                         SubMenuTask();
                         break;
                     case 3:
+                        Console.WriteLine("enter date");
+                        if (!DateTime.TryParse(Console.ReadLine(), out DateTime startProject))
+                            throw new BlWorngValueException("WORNG DATE");
+                        s_bl.StartProjectDate(startProject);
                         s_bl.Task.AutomaticSchedule();
                         break;
                     case 4:
