@@ -13,5 +13,26 @@
         <local:StatusCollection x:Key="StatusCollectionKey"/>
         <local:PLStatusCollection x:Key="PLStatusCollectionKey"/>
         <local:ConvertLevelToVisibale x:Key="ConvertLevelToVisibaleKey"/>
+
+        <Style x:Key="LabelKey" TargetType="Label">
+            <Setter Property="FontFamily" Value="Gill Sans MT"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        
+        <Style x:Key="ButtonKey" TargetType="Button">
+            <Setter Property="FontFamily" Value="Gill Sans MT"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="#FFB5EEB7"/>
+            <Setter Property="BorderBrush" Value="#FF7EB871"/>
+        </Style>
+
+        <Style x:Key="GridKey" TargetType="Grid">
+            <Setter Property="Background" Value="#FFE4EEDF"/>
+        </Style>
+
+        <Style x:Key="ListViewKey" TargetType="ListView">
+            <Setter Property="Background" Value="#FFE4EEDF"/>
+        </Style>
     </Application.Resources>
 </Application>
+

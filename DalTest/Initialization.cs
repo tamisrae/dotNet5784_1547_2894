@@ -32,10 +32,14 @@ public static class Initialization
              "dannyAmar@gmail.com", "shimritNechama@gmail.com"/*, "shlomoMendel@gmail.com"*/
         };
 
-        Worker worker = new Worker(123, DO.WorkerExperience.Manager, "shlomoMendel@gmail.com", 250, "Shlomo Mendel");
+        Worker worker = new Worker(123, DO.WorkerExperience.Manager, "shir@gmail.com", 250, "Shir");
         s_dal!.Worker.Create(worker);
+        User user = new User(123, "shir", "123");
+        s_dal!.User.Create(user);
         worker = new Worker(1212, DO.WorkerExperience.Cleaner, "dani@gmail.com", 35, "dani");
         s_dal!.Worker.Create(worker);
+        user = new User(1212, "Dani", "1212");
+        s_dal!.User.Create(user);
 
 
         foreach (string name in WorkerNames)

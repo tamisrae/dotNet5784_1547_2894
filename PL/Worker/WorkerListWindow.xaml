@@ -5,36 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="WorkerListWindow" Height="450" Width="800"
+        Title="WorkerListWindow" Height="450" Width="790"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="49*"/>
-            <ColumnDefinition Width="351*"/>
-        </Grid.ColumnDefinitions>
+    <Grid Style="{StaticResource GridKey}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--Internal, Upper Grid-->
-        <Grid HorizontalAlignment="Left" Height="auto" Grid.Row="0" Width="800" Grid.ColumnSpan="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Content="Filter options" HorizontalAlignment="Left" Margin="95,-2,0,0" VerticalAlignment="Top" Grid.Column="1" Height="32" Width="95"/>
-            <!--screening workers-->
-            <ComboBox Grid.Column="1"  ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectionChanged="ListFliterByExperince" SelectedValue="{Binding Path=Experience, Mode=TwoWay}" Margin="190,0,0,0"/>
-        </Grid>
-        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="UpdateWorker" Grid.ColumnSpan="2" >
+        <Label Content="Filter options" HorizontalAlignment="Left" Margin="159,0,0,0" VerticalAlignment="Center" Height="32" Width="110" Style="{StaticResource LabelKey}"/>
+        <ComboBox Grid.Row="0"  ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectionChanged="ListFliterByExperince" SelectedValue="{Binding Path=Experience, Mode=TwoWay}" HorizontalAlignment="Right" Width="500" Height="40"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="UpdateWorker" Style="{StaticResource ListViewKey}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="130"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="160"/>
+                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" Width="100"/>
+                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}" Width="100"/>
+                    <GridViewColumn Header=" Current task Id" DisplayMemberBinding="{Binding CurrentTask.Id}" Width="105"/>
+                    <GridViewColumn Header="Current task Alias" DisplayMemberBinding="{Binding CurrentTask.Alias}" Width="105"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Width="100" Margin="252,342,0,10" Click="AddWorker" Grid.Column="1"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Width="100" Margin="252,342,0,10" Click="AddWorker" Grid.Column="1" Style="{StaticResource ButtonKey}"/>
     </Grid>
 
 </Window>

@@ -3,9 +3,9 @@
   <Worker>
     <Id>123</Id>
     <Level>Manager</Level>
-    <Email>shlomoMendel@gmail.com</Email>
+    <Email>shir@gmail.com</Email>
     <Cost>250</Cost>
-    <Name>Shlomo Mendel</Name>
+    <Name>Shir</Name>
   </Worker>
   <Worker>
     <Id>1212</Id>
@@ -15,56 +15,56 @@
     <Name>dani</Name>
   </Worker>
   <Worker>
-    <Id>288837497</Id>
+    <Id>202886310</Id>
     <Level>Chef</Level>
     <Email>eyalShani@gmail.com</Email>
     <Cost>200</Cost>
     <Name>Eyal Shani</Name>
   </Worker>
   <Worker>
-    <Id>256348189</Id>
+    <Id>362378889</Id>
     <Level>SousChef</Level>
     <Email>nathanWeiss@gmail.com</Email>
     <Cost>140</Cost>
     <Name>Nathan Weiss</Name>
   </Worker>
   <Worker>
-    <Id>387518104</Id>
+    <Id>332748143</Id>
     <Level>Waiter</Level>
     <Email>yossiChaimson@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yossi Chaimson</Name>
   </Worker>
   <Worker>
-    <Id>392714353</Id>
+    <Id>230252524</Id>
     <Level>Waiter</Level>
     <Email>yanoBikel@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Yanon Bikel</Name>
   </Worker>
   <Worker>
-    <Id>253468239</Id>
+    <Id>333721267</Id>
     <Level>Waiter</Level>
     <Email>bennyChoen@gmail.com</Email>
     <Cost>30</Cost>
     <Name>Benny Choen</Name>
   </Worker>
   <Worker>
-    <Id>288313695</Id>
+    <Id>373136532</Id>
     <Level>Cleaner</Level>
     <Email>ilanaShalom@gmail.com</Email>
     <Cost>35</Cost>
     <Name>Ilana Shalom</Name>
   </Worker>
   <Worker>
-    <Id>204237401</Id>
+    <Id>361023579</Id>
     <Level>Driver</Level>
     <Email>dannyAmar@gmail.com</Email>
     <Cost>50</Cost>
     <Name>Danny Amar</Name>
   </Worker>
   <Worker>
-    <Id>220576121</Id>
+    <Id>294743493</Id>
     <Level>Secretary</Level>
     <Email>shimritNechama@gmail.com</Email>
     <Cost>45</Cost>

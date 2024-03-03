@@ -18,8 +18,3 @@ public record Dependency
 {
     public Dependency() : this(0, 0, 0) { }//empty ctor
 }
-//1 tluy 2
-//2 tluy 3
-//id=2
-//3
-//1

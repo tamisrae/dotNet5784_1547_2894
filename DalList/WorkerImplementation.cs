@@ -75,9 +75,11 @@ internal class WorkerImplementation : IWorker
     /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Worker item)
     {
-        if (Read(item.Id) == null)
+        Worker? worker = Read(item.Id);
+        if (worker == null)
             throw new DalDoesNotExistsException($"Worker with ID={item.Id} doe's NOT exists");
-        if (item.Level == DO.WorkerExperience.Manager && Workers.FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null)
+
+        if (item.Level == DO.WorkerExperience.Manager && worker.Level != DO.WorkerExperience.Manager && Workers.FirstOrDefault(w => w.Level == DO.WorkerExperience.Manager) != null) 
             throw new DalManagerException("There is already a manager for the project");
 
         Delete(item.Id);

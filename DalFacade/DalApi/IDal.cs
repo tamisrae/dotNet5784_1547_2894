@@ -11,10 +11,10 @@ namespace DalApi
         IWorker Worker { get; }
         ITask Task { get; }
         IDependency Dependency { get; }
+        IUser User { get; }
 
 
         public  DateTime? StartProjectDate { get; set; }
         public DateTime? EndProjectDate { get; set; }
-
     }
 }

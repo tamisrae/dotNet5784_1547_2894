@@ -21,6 +21,5 @@ public record Worker
  )
 {
     public Worker() : this(0, 0, "", 0.0, "") { }//empty ctor
-  
 }
 

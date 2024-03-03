@@ -265,7 +265,7 @@ internal class TaskImplementation : ITask
                 List<DO.Dependency> dependencies = new List<DO.Dependency>();
                 dependencies = FindDependencies(task.Id);
 
-                List<DO.Dependency>? temp = (from TaskInList taskInList in task.Dependencies
+                List<DO.Dependency>? temp = (from TaskInList taskInList in task.Dependencies//add the new dependencies
                                              where dependencies.FirstOrDefault(depnc => depnc.DependsOnTask == taskInList.Id) == null
                                              select new DO.Dependency(0, task.Id, taskInList.Id)).ToList();
                 foreach(DO.Dependency dep in temp)
@@ -435,9 +435,6 @@ internal class TaskImplementation : ITask
     /// <exception cref="BO.BlDoesNotExistsException"></exception>
     public void AutomaticSchedule()
     {
-        //Console.WriteLine("Enter the start project date:");
-        //if (!DateTime.TryParse(Console.ReadLine(), out DateTime startProjectDate))
-        //    throw new BlWorngValueException("WORNG DATE");
         if (dal.StartProjectDate == null)
             throw new BlScheduledDateException("There is not start project date yet");
         else

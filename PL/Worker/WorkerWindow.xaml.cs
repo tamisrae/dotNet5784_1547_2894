@@ -25,7 +25,6 @@ public partial class WorkerWindow : Window
     int ID;
 
 
-
     public BO.Worker CurrentWorker
     {
         get { return (BO.Worker)GetValue(CurrentWorkerProperty); }
@@ -35,9 +34,6 @@ public partial class WorkerWindow : Window
     // Using a DependencyProperty as the backing store for CurrentWorker.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CurrentWorkerProperty =
         DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(WorkerWindow), new PropertyMetadata(null));
-
-
-
 
 
     public BO.TaskInWorker CurrentTask

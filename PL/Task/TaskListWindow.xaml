@@ -7,20 +7,27 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid>
-        <ComboBox HorizontalAlignment="Left" Margin="586,0,0,0" VerticalAlignment="Top" Width="214" Height="34" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity"/>
-        <ComboBox HorizontalAlignment="Left" Margin="372,0,0,0" VerticalAlignment="Top" Width="214" Height="34" ItemsSource="{Binding Source={StaticResource PLStatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}" SelectionChanged="FilterListByStatus"/>
+    <Grid Style="{StaticResource GridKey}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="410"/>
+        </Grid.RowDefinitions>
 
-        <Label Content="Filter options" HorizontalAlignment="Left" Margin="281,0,0,0" VerticalAlignment="Top" Height="34" Width="86"/>
+        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity" HorizontalAlignment="Right"/>
+        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLStatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}" SelectionChanged="FilterListByStatus" Margin="295,0,255,0"/>
 
-        <ListView d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,34,0,0" ItemsSource="{Binding TaskList}" MouseDoubleClick="UpdateTask">
+        <Label Content="Filter options" Height="34" Style="{StaticResource LabelKey}" Margin="161,0,517,400" Grid.RowSpan="2"/>
+        <ListView  ItemsSource="{Binding TaskList}" MouseDoubleClick="UpdateTask" Style="{StaticResource ListViewKey}" Grid.Row="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" Width="160"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="450"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="130"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <Button Content="Add" HorizontalAlignment="Left" Width="100" Margin="356,321,0,75" Click="AddTask"/>
+        <Button Content="Add" HorizontalAlignment="Left" Width="100" Margin="356,321,0,75" Click="AddTask" Style="{StaticResource ButtonKey}"/>
     </Grid>
 </Window>

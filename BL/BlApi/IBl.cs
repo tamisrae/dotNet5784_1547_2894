@@ -7,6 +7,7 @@ public interface IBl
 {
     public IWorker Worker { get; }
     public ITask Task { get; }
+    public IUser User { get; }
 
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
@@ -72,11 +73,9 @@ public interface IBl
     public void InitializeDB();
     public void ResetDB();
 
-    //public void SetStartProjectDate(DateTime? startDate);
-
     public BO.ProjectStatus ProjectStatusPL();
 
-
+    public void StartProjectDate(DateTime projectDate);
 };
 
 

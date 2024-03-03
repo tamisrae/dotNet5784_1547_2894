@@ -1,4 +1,5 @@
 ﻿using BO;
+using PL.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,37 +23,53 @@ public partial class FirstWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-    public int ID
+
+
+    public BO.User CurrentUser
     {
-        get { return (int)GetValue(IDProperty); }
-        set { SetValue(IDProperty, value); }
+        get { return (BO.User)GetValue(CurrentUserProperty); }
+        set { SetValue(CurrentUserProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for ID.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IDProperty =
-        DependencyProperty.Register("ID", typeof(int), typeof(FirstWindow), new PropertyMetadata(0));
+    // Using a DependencyProperty as the backing store for CurrentUser.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentUserProperty =
+        DependencyProperty.Register("CurrentUser", typeof(BO.User), typeof(FirstWindow), new PropertyMetadata(null));
 
     public FirstWindow()
     {
         InitializeComponent();
     }
 
-    private void NextButton(object sender, RoutedEventArgs e)
+    private void LogInButton(object sender, RoutedEventArgs e)
     {
+        Button button = (Button)sender;
+        Grid grid = (Grid)button.Parent;
+
+        TextBox userNameTextBox = (TextBox)grid.Children[1];
+        TextBox passwordTextBox = (TextBox)grid.Children[3];
+
+        string userName = (string)userNameTextBox.Text;
+        string password = (string)passwordTextBox.Text;
+
         try
         {
-            BO.Worker? worker = bl.Worker.Read(ID);
-            if (worker != null)
+            BO.User? user = bl.User.ReadByPassword(password);
+            if (user != null)
             {
-                if (worker.Level == BO.WorkerExperience.Manager)
-                    new MainWindow().ShowDialog();
+                if (userName != user.UserName)
+                    MessageBox.Show("User name is not correct", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
-                    MessageBox.Show("We need to do it");
+                    new MainWindow(user.Id).ShowDialog();
             }
         }
-        catch (BlDoesNotExistsException ex)
+        catch (Exception)
         {
-            MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Password is not correct", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+    }
+
+    private void SignInButton(object sender, RoutedEventArgs e)
+    {
+        new UserWindow().ShowDialog();
     }
 }

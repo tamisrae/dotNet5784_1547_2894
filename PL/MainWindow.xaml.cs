@@ -11,7 +11,7 @@ namespace PL
     {
         static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-        public MainWindow()
+        public MainWindow(int Id = 0)
         {
             InitializeComponent();
         }
