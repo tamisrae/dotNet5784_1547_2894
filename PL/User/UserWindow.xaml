@@ -26,10 +26,11 @@
         <Label Content="User name" Grid.Row="1" Width="88" Height="30" HorizontalAlignment="Center" Style="{StaticResource LabelKey}" Margin="0,39,0,39"/>
         <Label Content="Password" Grid.Row="2" Grid.Column="0" Width="88" Height="30" HorizontalAlignment="Center" Style="{StaticResource LabelKey}" Margin="0,39,0,40"/>
 
-        <TextBox Text="{Binding CurrentUser.Id}" Grid.Row="0" Grid.Column="1" Width="150" Height="20"/>
+        <TextBox Text="{Binding CurrentUser.Id}" Grid.Row="0" Grid.Column="1" Width="150" Height="20" IsEnabled="{Binding CurrentUser.Id, Converter={StaticResource ConvertIdToBoolKey}}"/>
         <TextBox Text="{Binding CurrentUser.UserName}" Grid.Row="1" Grid.Column="1" Width="150" Height="20"/>
         <TextBox Text="{Binding CurrentUser.Password}" Grid.Row="2" Grid.Column="1" Width="150" Height="20"/>
 
         <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" HorizontalAlignment="Left" Width="70" Height="40" Click="AddUpdateUser" Grid.ColumnSpan="2" Margin="190,34,0,34" Style="{StaticResource ButtonKey}"/>
+
     </Grid>
 </Window>

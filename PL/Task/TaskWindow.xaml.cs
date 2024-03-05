@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -35,18 +36,36 @@ public partial class TaskWindow : Window
         DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
 
 
-    public TaskWindow(int Id = 0)
+
+    public List<BO.TaskInList> DependenciesList
     {
-        ID = Id;
+        get { return (List<BO.TaskInList>)GetValue(DependenciesListProperty); }
+        set { SetValue(DependenciesListProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for DependenciesList.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty DependenciesListProperty =
+        DependencyProperty.Register("DependenciesList", typeof(List<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
+
+
+
+
+
+    public TaskWindow(int taskId = 0, int workerId = 0)
+    {
+        ID = taskId;
         TaskList = bl.Task.ReadAll();
 
-        if (Id == 0)//create new worker window with default values
+        if (taskId == 0)//create new worker window with default values
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
         else//create new worker window with the worker's data
         {
             try
             {
-                CurrentTask = bl.Task.Read(Id)!;
+                CurrentTask = bl.Task.Read(taskId)!;
+                if (CurrentTask.Dependencies != null)
+                    DependenciesList = CurrentTask.Dependencies;
+                TaskList = bl.Task.ReadAll();
             }
             catch (BlDoesNotExistsException mess)
             {
@@ -55,19 +74,45 @@ public partial class TaskWindow : Window
                 this.Close();
             }
         }
+        ProjectStatus = bl.ProjectStatusPL();
+
+        if (workerId != 0)
+        {
+            //BO.Worker? worker = bl.Worker.Read(workerId);
+            BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack);
+            if (taskInList != null)
+                CurrentTask = bl.Task.Read(taskInList.Id);
+            CurrentTask = null;
+        }
+
         InitializeComponent();
     }
 
 
-    public BO.Task CurrentTask
+    public BO.Task? CurrentTask
     {
-        get { return (BO.Task)GetValue(CurrentTaskProperty); }
+        get { return (BO.Task?)GetValue(CurrentTaskProperty); }
         set { SetValue(CurrentTaskProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for CurrentTask.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CurrentTaskProperty =
         DependencyProperty.Register("CurrentTask", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
+
+
+
+
+    public BO.ProjectStatus ProjectStatus
+    {
+        get { return (BO.ProjectStatus)GetValue(ProjectStatusProperty); }
+        set { SetValue(ProjectStatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ProjectStatus.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProjectStatusProperty =
+        DependencyProperty.Register("ProjectStatus", typeof(BO.ProjectStatus), typeof(TaskWindow), new PropertyMetadata(null));
+
+
 
     private void AddUpdateTask(object sender, RoutedEventArgs e)
     {
@@ -123,10 +168,22 @@ public partial class TaskWindow : Window
         }
     }
 
-
-
-
-  
-
-
+    private void DeleteTaskClick(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+        if (CurrentTask != null)
+        {
+            try
+            {
+                bl.Worker.Delete(CurrentTask.Id);
+                MessageBox.Show("The task was successfully deleted", "DELETE", MessageBoxButton.OK);
+                CurrentTask = null!;
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
+        }
+    }
 }

@@ -27,7 +27,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Width="100" Margin="252,342,0,10" Click="AddWorker" Grid.Column="1" Style="{StaticResource ButtonKey}"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Margin="0,312,0,0" Click="AddWorker" Grid.Column="1" Style="{StaticResource ButtonKey}"/>
     </Grid>
 
 </Window>

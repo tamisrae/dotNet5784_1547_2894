@@ -57,9 +57,9 @@
 
         <Button HorizontalAlignment="Left" VerticalAlignment="Center" Click="AddUpdateClick" Content="{Binding CurrentWorker.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="6" Width="70" Height="40" Grid.ColumnSpan="2" Margin="210,0,0,0" Style="{StaticResource ButtonKey}"/>
 
-        <Menu Grid.Column="0" Grid.Row="0" Width="30" HorizontalAlignment="Left" VerticalAlignment="Top"> 
+        <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top"> 
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5" Click="AddUpdateClick">
-                <MenuItem Header="Delete" Click="DeleteClick"/>
+                <MenuItem Header="Delete" Click="DeleteWorkerClick"/>
             </MenuItem>
         </Menu>
     </Grid>

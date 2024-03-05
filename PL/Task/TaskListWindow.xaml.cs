@@ -13,7 +13,12 @@ public partial class TaskListWindow : Window
 
     public TaskListWindow(BO.WorkerExperience workerExperience = BO.WorkerExperience.Waiter)
     {
-        TaskList = bl?.Task.ReadAll()!;
+        if (workerExperience == BO.WorkerExperience.Manager)
+            TaskList = bl?.Task.ReadAll()!;
+        else
+            TaskList = bl?.Task.ReadAll(item => (int?)item.Complexity == (int)workerExperience)!;
+        ProjectStatus = bl!.ProjectStatusPL();
+
         InitializeComponent();
     }
 
@@ -26,6 +31,21 @@ public partial class TaskListWindow : Window
     // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty TaskListProperty =
         DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+
+
+
+    public BO.ProjectStatus ProjectStatus
+    {
+        get { return (BO.ProjectStatus)GetValue(ProjectStatusProperty); }
+        set { SetValue(ProjectStatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ProjectStatus.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProjectStatusProperty =
+        DependencyProperty.Register("ProjectStatus", typeof(BO.ProjectStatus), typeof(TaskListWindow), new PropertyMetadata(null));
+
+
+
 
     public BO.PLWorkerExperience Complexity { get; set; } = BO.PLWorkerExperience.All;
 

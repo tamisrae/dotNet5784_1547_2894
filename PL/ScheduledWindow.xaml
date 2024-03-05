@@ -8,7 +8,7 @@
         Title="ScheduledWindow" Height="220" Width="400"
         DataContext="{Binding StartProjectDate, RelativeSource={RelativeSource Mode=Self}}">
 
-    <Grid>
+    <Grid Style="{StaticResource GridKey}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -20,8 +20,8 @@
             <ColumnDefinition Width="90*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Enter the start project date:" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="215" Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelKey}"/>
-        <DatePicker HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30" Width="105" SelectedDate="{Binding StartProjectDate, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" BorderBrush="#FF7EB871"/>
+        <Label Content="Enter the start project date:" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="215" Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelKey}" Foreground="Black"/>
+        <DatePicker HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="25" Width="105" SelectedDate="{Binding StartProjectDate, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" BorderBrush="#FF7EB871"/>
         <Button Content="OK" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="67" Click="SetStartProjectDate" Grid.Row="2" Grid.Column="2" Style="{StaticResource ButtonKey}"/>
     </Grid>
 </Window>

@@ -23,8 +23,6 @@ public partial class FirstWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-
-
     public BO.User CurrentUser
     {
         get { return (BO.User)GetValue(CurrentUserProperty); }
@@ -59,7 +57,7 @@ public partial class FirstWindow : Window
                 if (userName != user.UserName)
                     MessageBox.Show("User name is not correct", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
-                    new MainWindow(user.Id).ShowDialog();
+                    new MainWindow(user.Id).Show();
             }
         }
         catch (Exception)

@@ -51,15 +51,23 @@ namespace PL
         {
             //ask the user if they want to initialize the data
             MessageBoxResult result = MessageBox.Show("Do you want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes://if they want
-                    Factory.Get().InitializeDB();
-                    break;
-                case MessageBoxResult.No://if they dont want
-                    break;
-                default:
-                    break;
+                switch (result)
+                {
+                    case MessageBoxResult.Yes://if they want
+                        Factory.Get().InitializeDB();
+                        break;
+                    case MessageBoxResult.No://if they dont want
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 
@@ -67,15 +75,23 @@ namespace PL
         {
             //ask the user if they want to reset the data
             MessageBoxResult result = MessageBox.Show("Do you want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes://if they want
-                    Factory.Get().ResetDB();
-                    break;
-                case MessageBoxResult.No://if they dont want
-                    break;
-                default:
-                    break;
+                switch (result)
+                {
+                    case MessageBoxResult.Yes://if they want
+                        Factory.Get().ResetDB();
+                        break;
+                    case MessageBoxResult.No://if they dont want
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 
@@ -98,7 +114,7 @@ namespace PL
         private void CurrentTaskClick(object sender, RoutedEventArgs e)
         {
             if (CurrentWorker != null)
-                new TaskWindow(CurrentWorker.Id).ShowDialog();
+                new TaskWindow(0, CurrentWorker.Id).ShowDialog();
         }
 
         private void UserClick(object sender, RoutedEventArgs e)
