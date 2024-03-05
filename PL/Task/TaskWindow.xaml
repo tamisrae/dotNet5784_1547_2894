@@ -100,13 +100,7 @@
 
 
         <Label Content="Dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <ListBox ItemsSource="{Binding TaskList}" MouseDoubleClick="OpenTaskWindow" Grid.Row="14" Grid.Column="1" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}">
-            <ListBox.ItemTemplate>
-                <HierarchicalDataTemplate>
-                    <CheckBox Content="{Binding Alias}" Tag="{Binding Id}"/>
-                </HierarchicalDataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Button Content="Show dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="1" Width="120" Height="30" Style="{StaticResource ButtonKey}" Click="ShowDependenciesClick"/>
 
         <Button VerticalAlignment="Top" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="14" Click="AddUpdateTask" Width="70" Height="35" Margin="80,40,240,0" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}"/>
 

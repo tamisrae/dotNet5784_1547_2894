@@ -63,9 +63,6 @@ public partial class TaskWindow : Window
             try
             {
                 CurrentTask = bl.Task.Read(taskId)!;
-                if (CurrentTask.Dependencies != null)
-                    DependenciesList = CurrentTask.Dependencies;
-                TaskList = bl.Task.ReadAll();
             }
             catch (BlDoesNotExistsException mess)
             {
@@ -185,5 +182,11 @@ public partial class TaskWindow : Window
                 this.Close();
             }
         }
+    }
+
+    private void ShowDependenciesClick(object sender, RoutedEventArgs e)
+    {
+        if (CurrentTask != null)
+            new TaskListWindow(BO.WorkerExperience.Waiter, CurrentTask.Id, true).ShowDialog();
     }
 }

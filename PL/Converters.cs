@@ -1,6 +1,7 @@
 ﻿using PL.Task;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace PL;
@@ -89,31 +90,14 @@ class ConvertStatusToBool : IValueConverter
     }
 }
 
-class ConvertDependencyToContent : IValueConverter
+class ConvertBoolToVisibale : IValueConverter
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-    //public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //{
-    //    object o = TaskWindow.DependenciesListProperty;
-
-    //}
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        //if (value is DependencyObject dependencyObject)
-        //{
-        //DependencyObject dependencyObject = (DependencyObject)TaskWindow.DependenciesListProperty.;
-        //Object obj = dependencyObject.GetValue(TaskWindow.DependenciesListProperty);
-        //if (obj != null && obj.GetType() == typeof(List<>))
-        //{
-        //    return ((List<BO.TaskInList>)obj).FirstOrDefault(item => item.Id == (int)value) == null ? "ADD" : "Delete";
-        //}
-        //}
-
-        return null;
-        //item.PropertyType.IsGenericType && item.PropertyType.GetGenericTypeDefinition() == typeof(List<>)
+        return (bool)value ? Visibility.Visible : Visibility.Hidden;
     }
-
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
