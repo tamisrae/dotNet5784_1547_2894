@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="DependenciesWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Grid Style="{StaticResource GridKey}">
+    <!--<Grid Style="{StaticResource GridKey}">-->
         <!--<ListView  ItemsSource="{Binding DependenciesList, Mode=TwoWay}" Style="{StaticResource ListViewKey}">
             <ListView.ItemTemplate>
             <ListView.View>
@@ -31,19 +31,19 @@
             </ListView.ItemTemplate>
         </ListView>-->
 
-        <ListBox ItemsSource="{Binding DependenciesList}">
+        <!--<ListBox ItemsSource="{Binding DependenciesList}">
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate>
-                    <Button Style="{StaticResource ButtonKey}">
+                    <Button Style="{StaticResource ButtonKey}" Click="task_Click">
                         <Button.Content>
                             <MultiBinding Converter="{StaticResource ConvertDependencyToContentKey}">
                                 <Binding Path="Id"/>
-                                <Binding Path="CurrentTask.Id"/>
+                                <Binding Path="TaskId"/>
                             </MultiBinding>
                         </Button.Content>
                     </Button>
                 </HierarchicalDataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-    </Grid>
+    </Grid>-->
 </Window>

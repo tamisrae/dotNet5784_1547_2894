@@ -265,6 +265,15 @@ internal class TaskImplementation : ITask
                 List<DO.Dependency> dependencies = new List<DO.Dependency>();
                 dependencies = FindDependencies(task.Id);
 
+                if (dependencies.Any())
+                {
+                    foreach(DO.Dependency dependency in dependencies)
+                    {
+                        if (task.Dependencies.FirstOrDefault(item => item.Id == dependency.Id) == null)
+                            dal.Dependency.Delete(dependency.Id);
+                    }
+                }
+
                 List<DO.Dependency>? temp = (from TaskInList taskInList in task.Dependencies//add the new dependencies
                                              where dependencies.FirstOrDefault(depnc => depnc.DependsOnTask == taskInList.Id) == null
                                              select new DO.Dependency(0, task.Id, taskInList.Id)).ToList();
@@ -283,6 +292,14 @@ internal class TaskImplementation : ITask
                 }
                 else
                     throw new BlCantUpdateException($"Task with ID={task.Id} cannot be update");
+            }
+            else
+            {
+                foreach(DO.Dependency dependency in dal.Dependency.ReadAll())
+                {
+                    if (dependency.DependentTask == task.Id)
+                        dal.Dependency.Delete(dependency.Id);
+                }
             }
 
             DO.Task doTask = DataChecking(task);
@@ -565,7 +582,7 @@ internal class TaskImplementation : ITask
             throw new BO.BlDoesNotExistsException($"Task with ID={boTask.Id} doe's NOT exists", ex);
         }
     }
-
+     
     /// <summary>
     /// A worker declares the completion of a task
     /// </summary>

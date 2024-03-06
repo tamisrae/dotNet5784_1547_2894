@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Printing.IndexedProperties;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +26,7 @@ public partial class DependenciesWindow : Window
     public DependenciesWindow(int taskId = 0)
     {
         InitializeComponent();
+        TaskId = taskId;
         try
         {
             BO.Task? task;
@@ -48,6 +50,19 @@ public partial class DependenciesWindow : Window
 
 
 
+    public int TaskId
+    {
+        get { return (int)GetValue(TaskIdProperty); }
+        set { SetValue(TaskIdProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for TaskId.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TaskIdProperty =
+        DependencyProperty.Register("TaskId", typeof(int), typeof(DependenciesWindow), new PropertyMetadata(0));
+
+
+
+
 
     public List<BO.TaskInList> DependenciesList
     {
@@ -59,5 +74,8 @@ public partial class DependenciesWindow : Window
     public static readonly DependencyProperty DependenciesListProperty =
         DependencyProperty.Register("DependenciesList", typeof(List<BO.TaskInList>), typeof(DependenciesWindow), new PropertyMetadata(null));
 
-
+    private void task_Click(object sender, RoutedEventArgs e)
+    {
+        BO.TaskInList? taskInList = (sender as Button)?.DataContext as BO.TaskInList;
+    }
 }
