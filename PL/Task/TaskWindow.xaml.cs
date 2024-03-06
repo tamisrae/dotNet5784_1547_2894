@@ -25,36 +25,9 @@ public partial class TaskWindow : Window
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
     int ID;
 
-    public IEnumerable<BO.TaskInList> TaskList
-    {
-        get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
-        set { SetValue(TaskListProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TaskListProperty =
-        DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
-
-
-
-    public List<BO.TaskInList> DependenciesList
-    {
-        get { return (List<BO.TaskInList>)GetValue(DependenciesListProperty); }
-        set { SetValue(DependenciesListProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for DependenciesList.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty DependenciesListProperty =
-        DependencyProperty.Register("DependenciesList", typeof(List<BO.TaskInList>), typeof(TaskWindow), new PropertyMetadata(null));
-
-
-
-
-
     public TaskWindow(int taskId = 0, int workerId = 0)
     {
         ID = taskId;
-        TaskList = bl.Task.ReadAll();
 
         if (taskId == 0)//create new worker window with default values
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
@@ -187,6 +160,6 @@ public partial class TaskWindow : Window
     private void ShowDependenciesClick(object sender, RoutedEventArgs e)
     {
         if (CurrentTask != null)
-            new TaskListWindow(BO.WorkerExperience.Waiter, CurrentTask.Id, true).ShowDialog();
+            new DependenciesWindow(CurrentTask.Id).ShowDialog();
     }
 }

@@ -34,7 +34,7 @@
             <ColumnDefinition Width="390"/>
         </Grid.ColumnDefinitions>
         <Label Content="ID" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" IsEnabled="False" Width="120" Grid.Row="0" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" IsEnabled="False" Width="45" Grid.Row="0" Grid.Column="1"/>
 
 
         <Label Content="Alias" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelKey}"/>
@@ -100,9 +100,10 @@
 
 
         <Label Content="Dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <Button Content="Show dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="1" Width="120" Height="30" Style="{StaticResource ButtonKey}" Click="ShowDependenciesClick"/>
+        <Button Content="Show dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="1" Width="120" Height="30" 
+        Style="{StaticResource ButtonKey}" Click="ShowDependenciesClick" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}"/>
 
-        <Button VerticalAlignment="Top" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="14" Click="AddUpdateTask" Width="70" Height="35" Margin="80,40,240,0" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}"/>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="15" Click="AddUpdateTask" Width="75" Height="35" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}"/>
 
         <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5">

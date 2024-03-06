@@ -29,8 +29,5 @@
         </ListView>
 
         <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="AddTask" Style="{StaticResource ButtonKey}" Margin="0,317,0,0" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}"/>
-        <TextBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Height="30" Text="{Binding TaskDependencyId, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="Black" Margin="251,337,0,0" Visibility="{Binding IsDependency, Mode=OneTime, Converter={StaticResource ConvertBoolToVisibaleKey}}"/>
-        <Label Content="Enter the Id of the new task" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,68" Style="{StaticResource LabelKey}" Foreground="Black" FontSize="14" Visibility="{Binding IsDependency, Mode=OneTime, Converter={StaticResource ConvertBoolToVisibaleKey}}"/>
-        <Label Content="you want to add to the dependency list:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,47" Style="{StaticResource LabelKey}" Foreground="Black" FontSize="14" Visibility="{Binding IsDependency, Mode=OneTime, Converter={StaticResource ConvertBoolToVisibaleKey}}"/>
     </Grid>
 </Window>
