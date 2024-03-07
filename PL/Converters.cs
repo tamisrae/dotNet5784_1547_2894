@@ -103,30 +103,30 @@ class ConvertBoolToVisibale : IValueConverter
     }
 }
 
-public class ConvertDependencyToContent : IMultiValueConverter
-{
-    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+//public class ConvertDependencyToContent : IMultiValueConverter
+//{
+//    static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    {
-        int Id = (int)values[0];
-        BO.Task? task = bl.Task.Read((int)values[1]);
-        if (task != null && task.Dependencies != null)
-        {
-            if (task.Dependencies.FirstOrDefault(item => item.Id == Id) == null)
-                return "Add";
-            else
-                return "Delete";
-        }
-        else
-            return "Add";
-    }
+//    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        int Id = (int)values[0];
+//        BO.Task? task = bl.Task.Read((int)values[1]);
+//        if (task != null && task.Dependencies != null)
+//        {
+//            if (task.Dependencies.FirstOrDefault(item => item.Id == Id) == null)
+//                return "Add";
+//            else
+//                return "Delete";
+//        }
+//        else
+//            return "Add";
+//    }
 
-    public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
+//    public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
 
 //class ConvertDep : IValueConverter
 //{

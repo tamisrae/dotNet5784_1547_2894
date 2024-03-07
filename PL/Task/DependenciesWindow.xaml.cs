@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace PL.Task;
 public partial class DependenciesWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
+    int TaskId;
 
     public DependenciesWindow(int taskId = 0)
     {
@@ -29,15 +31,17 @@ public partial class DependenciesWindow : Window
         TaskId = taskId;
         try
         {
-            BO.Task? task;
-            DependenciesList = new List<BO.TaskInList>();
-            if (taskId != 0)
+            BO.Task? task = bl.Task.Read(taskId);
+            TaskList = new List<DependencyTask>();
+            List<BO.TaskInList> taskInLists = (bl.Task.ReadAll()).ToList();
+            if (task != null && task.Dependencies != null) 
             {
-                task = bl.Task.Read(taskId);
-                if (task != null && task.Dependencies != null)
+                foreach(BO.TaskInList taskInList in taskInLists)
                 {
-                    foreach (BO.TaskInList dep in task.Dependencies)
-                        DependenciesList.Add(dep);
+                    if (task.Dependencies.FirstOrDefault(item => item.Id == taskInList.Id) == null)
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add" });
+                    else
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete" });
                 }
             }
         }
@@ -50,32 +54,60 @@ public partial class DependenciesWindow : Window
 
 
 
-    public int TaskId
+
+    public List<DependencyTask> TaskList
     {
-        get { return (int)GetValue(TaskIdProperty); }
-        set { SetValue(TaskIdProperty, value); }
+        get { return (List<DependencyTask>)GetValue(TaskListProperty); }
+        set { SetValue(TaskListProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for TaskId.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty TaskIdProperty =
-        DependencyProperty.Register("TaskId", typeof(int), typeof(DependenciesWindow), new PropertyMetadata(0));
+    // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TaskListProperty =
+        DependencyProperty.Register("TaskList", typeof(List<DependencyTask>), typeof(DependenciesWindow), new PropertyMetadata(null));
 
-
-
-
-
-    public List<BO.TaskInList> DependenciesList
+    private void AddDeleteDependency(object sender, RoutedEventArgs e)
     {
-        get { return (List<BO.TaskInList>)GetValue(DependenciesListProperty); }
-        set { SetValue(DependenciesListProperty, value); }
-    }
+        DependencyTask? dependencyTask=(sender as Button)?.DataContext as DependencyTask;
+        try
+        {
+            BO.Task? task = bl.Task.Read(TaskId);
+            if (dependencyTask != null && task != null)
+            {
+                if (dependencyTask.IsDependent == "Add" && task.Dependencies != null)
+                {
+                    task.Dependencies.Add(new BO.TaskInList { Alias = dependencyTask.Alias, Id = dependencyTask.Id, Description = dependencyTask.Description, Status = dependencyTask.Status });
+                    bl.Task.Update(task);
+                }
+                else if (dependencyTask.IsDependent == "Add" && task.Dependencies == null)
+                {
+                    task.Dependencies = new List<BO.TaskInList>();
+                    task.Dependencies.Add(new BO.TaskInList { Alias = dependencyTask.Alias, Id = dependencyTask.Id, Description = dependencyTask.Description, Status = dependencyTask.Status });
+                    bl.Task.Update(task);
+                }
+                else if (dependencyTask.IsDependent == "Delete" && task.Dependencies != null)
+                {
+                    BO.TaskInList taskInList = new BO.TaskInList { Alias = dependencyTask.Alias, Id = dependencyTask.Id, Description = dependencyTask.Description, Status = dependencyTask.Status };
+                    task.Dependencies.Remove(taskInList);
+                    bl.Task.Update(task);
+                }
+            }
 
-    // Using a DependencyProperty as the backing store for DependenciesList.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty DependenciesListProperty =
-        DependencyProperty.Register("DependenciesList", typeof(List<BO.TaskInList>), typeof(DependenciesWindow), new PropertyMetadata(null));
-
-    private void task_Click(object sender, RoutedEventArgs e)
-    {
-        BO.TaskInList? taskInList = (sender as Button)?.DataContext as BO.TaskInList;
+            TaskList = new List<DependencyTask>();
+            List<BO.TaskInList> taskInLists = (bl.Task.ReadAll()).ToList();
+            if (task != null && task.Dependencies != null)
+            {
+                foreach (BO.TaskInList taskInList in taskInLists)
+                {
+                    if (task.Dependencies.FirstOrDefault(item => item.Id == taskInList.Id) == null)
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add" });
+                    else
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete" });
+                }
+            }
+        }
+        catch (Exception mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }
