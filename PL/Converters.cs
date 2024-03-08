@@ -103,6 +103,22 @@ class ConvertBoolToVisibale : IValueConverter
     }
 }
 
+class ConvertLevelToBool : IValueConverter
+{
+    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.WorkerExperience)value == BO.WorkerExperience.Manager ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
 //public class ConvertDependencyToContent : IMultiValueConverter
 //{
 //    static readonly BlApi.IBl bl = BlApi.Factory.Get();

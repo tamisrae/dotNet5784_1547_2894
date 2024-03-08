@@ -56,7 +56,7 @@
             </Grid.ColumnDefinitions>
         </Grid>
         <ListView ItemsSource="{Binding Path=TaskList}" Grid.ColumnSpan="2" 
-                  d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFFFEBCE">
+                  d:ItemsSource="{d:SampleData ItemCount=5}" Style="{StaticResource ListViewKey}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50" />

@@ -23,12 +23,13 @@ namespace PL.Task;
 public partial class TaskWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
-    int ID;
+    int taskID;
+    int workerID;
 
     public TaskWindow(int taskId = 0, int workerId = 0)
     {
-        ID = taskId;
-
+        taskID = taskId;
+        workerID = workerId;
         if (taskId == 0)//create new worker window with default values
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
         else//create new worker window with the worker's data
@@ -46,14 +47,14 @@ public partial class TaskWindow : Window
         }
         ProjectStatus = bl.ProjectStatusPL();
 
-        if (workerId != 0)
-        {
-            //BO.Worker? worker = bl.Worker.Read(workerId);
-            BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack);
-            if (taskInList != null)
-                CurrentTask = bl.Task.Read(taskInList.Id);
-            CurrentTask = null;
-        }
+        //if (workerId != 0)
+        //{
+        //    //BO.Worker? worker = bl.Worker.Read(workerId);
+        //    BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack);
+        //    if (taskInList != null)
+        //        CurrentTask = bl.Task.Read(taskInList.Id);
+        //    CurrentTask = null;
+        //}
 
         InitializeComponent();
     }
@@ -91,7 +92,7 @@ public partial class TaskWindow : Window
         {
             try
             {
-                if (ID != 0)//if the id is not 0 it means that we need to update the data
+                if (taskID != 0)//if the id is not 0 it means that we need to update the data
                 {
                     bl.Task.Update(CurrentTask);
                     MessageBox.Show("The task was successfully updated", "UPDATE", MessageBoxButton.OK);
@@ -161,5 +162,61 @@ public partial class TaskWindow : Window
     {
         if (CurrentTask != null)
             new DependenciesWindow(CurrentTask.Id).ShowDialog();
+        try
+        {
+            if (CurrentTask != null)
+                CurrentTask = bl.Task.Read(CurrentTask.Id);
+        }
+        catch (Exception mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
+    }
+
+    private void SignUpForTaskClick(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl.Task.SignUpForTask(taskID, workerID);
+            CurrentTask = bl.Task.Read(taskID);
+        }
+        catch (Exception mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
+    }
+
+    private void StartTask(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            BO.Task? task = bl.Task.Read(taskID);
+            if (task != null)
+            {
+                bl.Task.StartTask(task, workerID);
+            }
+            CurrentTask = bl.Task.Read(taskID);
+        }
+        catch (Exception mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
+    }
+
+    private void EndTask(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl.Task.EndTask(taskID, workerID);
+            CurrentTask = bl.Task.Read(taskID);
+        }
+        catch (Exception mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
+        }
     }
 }

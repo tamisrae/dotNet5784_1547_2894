@@ -13,7 +13,9 @@
             <RowDefinition Height="410"/>
         </Grid.RowDefinitions>
 
-        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity" HorizontalAlignment="Right"/>
+        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" 
+        SelectionChanged="FilterListByComplexity" HorizontalAlignment="Right" IsEnabled="{Binding Level, Mode=OneTime, Converter={StaticResource ConvertLevelToBoolKey}}"/>
+        
         <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLStatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}" SelectionChanged="FilterListByStatus" Margin="295,0,255,0"/>
 
         <Label Content="Filter options" Height="34" Style="{StaticResource LabelKey}" Margin="161,0,517,400" Grid.RowSpan="2"/>

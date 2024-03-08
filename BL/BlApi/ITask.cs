@@ -24,4 +24,5 @@ public interface ITask
     public void EndTask(int taskId, int workerId);
     public void SignUpForTask(int taskId, int workerId);
     public IEnumerable<IGrouping<int?, BO.TaskInList>> GroupTasksByComplexity();
+    public BO.TaskInList? ReadTaskInList(int id);
 }

@@ -108,6 +108,9 @@
         <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5">
                 <MenuItem Header="Delete" Click="DeleteTaskClick"/>
+                <MenuItem Header="Sign up for this task" Click="SignUpForTaskClick"/>
+                <MenuItem Header="Start this task" Click="StartTask"/>
+                <MenuItem Header="End this task" Click="EndTask"/>
             </MenuItem>
         </Menu>
 

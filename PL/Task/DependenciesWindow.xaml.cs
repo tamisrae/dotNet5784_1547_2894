@@ -86,9 +86,12 @@ public partial class DependenciesWindow : Window
                 }
                 else if (dependencyTask.IsDependent == "Delete" && task.Dependencies != null)
                 {
-                    BO.TaskInList taskInList = new BO.TaskInList { Alias = dependencyTask.Alias, Id = dependencyTask.Id, Description = dependencyTask.Description, Status = dependencyTask.Status };
-                    task.Dependencies.Remove(taskInList);
-                    bl.Task.Update(task);
+                    BO.TaskInList? taskInList = bl.Task.ReadTaskInList(dependencyTask.Id);
+                    if (taskInList != null)
+                    {
+                        (task.Dependencies).Remove(taskInList);
+                        bl.Task.Update(task);
+                    }
                 }
             }
 

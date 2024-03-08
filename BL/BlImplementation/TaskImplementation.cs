@@ -192,7 +192,7 @@ internal class TaskImplementation : ITask
             if (worker != null)
             {
                 IEnumerable<BO.TaskInList>? tasks = from task in dal.Task.ReadAll()
-                                                    where task.WorkerId == null && task.Complexity == worker.Level
+                                                    where task.WorkerId == null && task.Complexity == worker.Level && task.ScheduledDate != null
                                                     select new BO.TaskInList
                                                     {
                                                         Id = task.Id,
@@ -684,5 +684,30 @@ internal class TaskImplementation : ITask
     public void Clear()
     {
         dal.Task.Clear();
+    }
+
+    public BO.TaskInList? ReadTaskInList(int id)
+    {
+        try
+        {
+            DO.Task? doTask = dal.Task.Read(id);
+
+            if (doTask == null)
+                throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
+            else
+            {
+                return new BO.TaskInList
+                {
+                    Id = id,
+                    Alias = doTask.Alias,
+                    Description = doTask.Description,
+                    Status = doTask.GetStatus(),
+                };
+            }
+        }
+        catch (DO.DalDoesNotExistsException ex)
+        {
+            throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists", ex);
+        }
     }
 }
