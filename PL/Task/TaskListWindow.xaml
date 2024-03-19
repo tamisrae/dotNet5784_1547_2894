@@ -13,11 +13,13 @@
             <RowDefinition Height="410"/>
         </Grid.RowDefinitions>
 
-        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" SelectionChanged="FilterListByComplexity" HorizontalAlignment="Right"/>
+        <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLWorkerExperienceCollectionKey}}" SelectedValue="{Binding Complexity, Mode=TwoWay}" 
+        SelectionChanged="FilterListByComplexity" HorizontalAlignment="Right" IsEnabled="{Binding Level, Mode=OneTime, Converter={StaticResource ConvertLevelToBoolKey}}"/>
+        
         <ComboBox Grid.Row="0" Width="250" Height="40" ItemsSource="{Binding Source={StaticResource PLStatusCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay}" SelectionChanged="FilterListByStatus" Margin="295,0,255,0"/>
 
         <Label Content="Filter options" Height="34" Style="{StaticResource LabelKey}" Margin="161,0,517,400" Grid.RowSpan="2"/>
-        <ListView  ItemsSource="{Binding TaskList}" MouseDoubleClick="UpdateTask" Style="{StaticResource ListViewKey}" Grid.Row="1">
+        <ListView  ItemsSource="{Binding TaskList, Mode=TwoWay}" MouseDoubleClick="UpdateTask" Style="{StaticResource ListViewKey}" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="60"/>
@@ -28,6 +30,6 @@
             </ListView.View>
         </ListView>
 
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="AddTask" Style="{StaticResource ButtonKey}" Margin="0,312,0,0" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="50" Click="AddTask" Style="{StaticResource ButtonKey}" Margin="0,317,0,0" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}"/>
     </Grid>
 </Window>

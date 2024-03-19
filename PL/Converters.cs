@@ -1,5 +1,4 @@
-﻿using PL.Task;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
@@ -89,34 +88,84 @@ class ConvertStatusToBool : IValueConverter
     }
 }
 
-class ConvertDependencyToContent : IValueConverter
+class ConvertBoolToVisibale : IValueConverter
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
 
-    //public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //{
-    //    object o = TaskWindow.DependenciesListProperty;
-
-    //}
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        //if (value is DependencyObject dependencyObject)
-        //{
-        //DependencyObject dependencyObject = (DependencyObject)TaskWindow.DependenciesListProperty.;
-        //Object obj = dependencyObject.GetValue(TaskWindow.DependenciesListProperty);
-        //if (obj != null && obj.GetType() == typeof(List<>))
-        //{
-        //    return ((List<BO.TaskInList>)obj).FirstOrDefault(item => item.Id == (int)value) == null ? "ADD" : "Delete";
-        //}
-        //}
-
-        return null;
-        //item.PropertyType.IsGenericType && item.PropertyType.GetGenericTypeDefinition() == typeof(List<>)
+        return (bool)value ? Visibility.Visible : Visibility.Hidden;
     }
-
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
 }
+
+class ConvertLevelToBool : IValueConverter
+{
+    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (BO.WorkerExperience)value == BO.WorkerExperience.Manager ? true : false;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
+//public class ConvertDependencyToContent : IMultiValueConverter
+//{
+//    static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+//    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        int Id = (int)values[0];
+//        BO.Task? task = bl.Task.Read((int)values[1]);
+//        if (task != null && task.Dependencies != null)
+//        {
+//            if (task.Dependencies.FirstOrDefault(item => item.Id == Id) == null)
+//                return "Add";
+//            else
+//                return "Delete";
+//        }
+//        else
+//            return "Add";
+//    }
+
+//    public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
+
+//class ConvertDep : IValueConverter
+//{
+//    //static readonly BlApi.IBl bl = BlApi.Factory.Get();
+
+//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        int Id = (int)value;
+//        if (parameter != null)
+//        {
+//            List<BO.TaskInList> depenndencies = (List<BO.TaskInList>)parameter;
+
+//            if (depenndencies.FirstOrDefault(item => item.Id == Id) == null)
+//                return "Add";
+//            else
+//                return "Delete";
+//        }
+//        else
+//            return "Add";
+//    }
+
+//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}

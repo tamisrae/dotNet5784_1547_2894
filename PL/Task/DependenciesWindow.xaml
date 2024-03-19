@@ -1,0 +1,77 @@
+﻿<Window x:Class="PL.Task.DependenciesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Task"
+        mc:Ignorable="d"
+        Title="DependenciesWindow" Height="450" Width="720"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <!--<Grid Style="{StaticResource GridKey}">-->
+        <!--<ListView  ItemsSource="{Binding DependenciesList, Mode=TwoWay}" Style="{StaticResource ListViewKey}">
+            <ListView.ItemTemplate>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" Width="160"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="450"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="130"/>
+                </GridView>
+            </ListView.View>
+            <HierarchicalDataTemplate>
+                <Button Style="{StaticResource ButtonKey}">
+                    <Button.Content>
+                        <MultiBinding Converter="{StaticResource ConvertDependencyToContentKey}">
+                            <Binding Path="Id"/>
+                            <Binding Path="DependenciesList"/>
+                        </MultiBinding>
+                    </Button.Content>
+                </Button>
+            </HierarchicalDataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+
+        <!--<ListBox ItemsSource="{Binding DependenciesList}">
+            <ListBox.ItemTemplate>
+                <HierarchicalDataTemplate>
+                    <Button Style="{StaticResource ButtonKey}" Click="task_Click">
+                        <Button.Content>
+                            <MultiBinding Converter="{StaticResource ConvertDependencyToContentKey}">
+                                <Binding Path="Id"/>
+                                <Binding Path="TaskId"/>
+                            </MultiBinding>
+                        </Button.Content>
+                    </Button>
+                </HierarchicalDataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>-->
+
+    <Grid>
+        <!--Internal, Upper Grid-->
+        <Grid HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <ListView ItemsSource="{Binding Path=TaskList}" Grid.ColumnSpan="2" 
+                  d:ItemsSource="{d:SampleData ItemCount=5}" Style="{StaticResource ListViewKey}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50" />
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" Width="150"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="300"/>
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="120"/>
+                    <GridViewColumn Header="" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding IsDependent}" Style="{StaticResource ButtonKey}" Width="50" Height="20" Click="AddDeleteDependency"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

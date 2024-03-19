@@ -10,27 +10,47 @@ namespace PL.Task;
 public partial class TaskListWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
+    int workerID;
 
-    public TaskListWindow(BO.WorkerExperience workerExperience = BO.WorkerExperience.Waiter)
+    public TaskListWindow(BO.WorkerExperience workerExperience = BO.WorkerExperience.Waiter, int taskId = 0, int workerId = 0)
     {
-        if (workerExperience == BO.WorkerExperience.Manager)
-            TaskList = bl?.Task.ReadAll()!;
-        else
-            TaskList = bl?.Task.ReadAll(item => (int?)item.Complexity == (int)workerExperience)!;
-        ProjectStatus = bl!.ProjectStatusPL();
-
+        Level = workerExperience;
+        workerID = workerId;
         InitializeComponent();
+
+
+        if (workerExperience == BO.WorkerExperience.Manager)
+            TaskList = (bl?.Task.ReadAll()!).ToList();
+        else if (workerExperience != BO.WorkerExperience.Manager)
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)workerExperience && item.WorkOnTask == null && item.ScheduledDate != null)!).ToList();
+
+        ProjectStatus = bl!.ProjectStatusPL();
     }
 
-    public IEnumerable<BO.TaskInList> TaskList
+
+ 
+    public BO.WorkerExperience Level
     {
-        get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
+        get { return (BO.WorkerExperience)GetValue(LevelProperty); }
+        set { SetValue(LevelProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Level.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty LevelProperty =
+        DependencyProperty.Register("Level", typeof(BO.WorkerExperience), typeof(TaskListWindow), new PropertyMetadata(BO.WorkerExperience.Waiter));
+
+
+
+
+    public List<BO.TaskInList> TaskList
+    {
+        get { return (List<BO.TaskInList>)GetValue(TaskListProperty); }
         set { SetValue(TaskListProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for TaskList.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty TaskListProperty =
-        DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+        DependencyProperty.Register("TaskList", typeof(List<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
 
 
@@ -51,8 +71,14 @@ public partial class TaskListWindow : Window
 
     private void FilterListByComplexity(object sender, SelectionChangedEventArgs e)
     {
-        TaskList = (Complexity == BO.PLWorkerExperience.All) ?
-        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+        if (Complexity == BO.PLWorkerExperience.All && Status == BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll()!).ToList();
+        else if(Complexity == BO.PLWorkerExperience.All && Status != BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Status == (int)Status)!).ToList();
+        else if(Complexity != BO.PLWorkerExperience.All && Status == BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
+        else
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity && (int?)item.Status == (int)Status)!).ToList();
     }
 
 
@@ -60,8 +86,14 @@ public partial class TaskListWindow : Window
 
     private void FilterListByStatus(object sender, SelectionChangedEventArgs e)
     {
-        TaskList = (Status == BO.PLStatus.All) ?
-        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Status == (int)Status)!;
+        if (Complexity == BO.PLWorkerExperience.All && Status == BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll()!).ToList();
+        else if (Complexity == BO.PLWorkerExperience.All && Status != BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Status == (int)Status)!).ToList();
+        else if (Complexity != BO.PLWorkerExperience.All && Status == BO.PLStatus.All)
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
+        else
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity && (int?)item.Status == (int)Status)!).ToList();
     }
 
     private void AddTask(object sender, RoutedEventArgs e)
@@ -69,7 +101,7 @@ public partial class TaskListWindow : Window
         new TaskWindow().ShowDialog();
         //update the list of the tasks after the changes
         TaskList = (Complexity == BO.PLWorkerExperience.All) ?
-        bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+        (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
     }
 
     private void UpdateTask(object sender, RoutedEventArgs e)
@@ -82,10 +114,10 @@ public partial class TaskListWindow : Window
                 task = bl.Task.Read(taskInList.Id);
             if (task != null)
             {
-                new TaskWindow(task.Id).ShowDialog();
+                new TaskWindow(task.Id, workerID).ShowDialog();
                 //update the list of the workers after the changes
                 TaskList = (Complexity == BO.PLWorkerExperience.All) ?
-                bl?.Task.ReadAll()! : bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!;
+                (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
             }
         }
         catch (BlDoesNotExistsException mess)

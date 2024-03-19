@@ -13,7 +13,6 @@ namespace PL
     public partial class MainWindow : Window
     {
         static readonly BlApi.IBl bl = BlApi.Factory.Get();
-
         public MainWindow(int Id = 0)
         {
             try
@@ -99,7 +98,7 @@ namespace PL
         private void TasksListShow(object sender, RoutedEventArgs e)
         {
             if (CurrentWorker != null)
-                new TaskListWindow(CurrentWorker.Level).ShowDialog();
+                new TaskListWindow(CurrentWorker.Level, 0, CurrentWorker.Id).ShowDialog();
         }
 
         private void ScheduledDate(object sender, RoutedEventArgs e)

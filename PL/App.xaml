@@ -15,7 +15,8 @@
         <local:ConvertLevelToVisibaleManager x:Key="ConvertLevelToVisibaleManagerKey"/>
         <local:ConvertLevelToVisibaleWorker x:Key="ConvertLevelToVisibaleWorkerKey"/>
         <local:ConvertStatusToBool x:Key="ConvertStatusToBoolKey"/>
-        <local:ConvertDependencyToContent x:Key="ConvertDependencyToContentKey"/>
+        <local:ConvertBoolToVisibale x:Key="ConvertBoolToVisibaleKey"/>
+        <local:ConvertLevelToBool x:Key="ConvertLevelToBoolKey"/>
 
         <Style x:Key="LabelKey" TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
