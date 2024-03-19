@@ -167,7 +167,7 @@ internal class TaskImplementation : ITask
         else//with filter
         {
             return from item in dal.Task.ReadAll()
-                   where filter!(Read(item.Id)!)
+                   where filter(Read(item.Id)!)
                    select new BO.TaskInList
                    {
                        Id = item.Id,

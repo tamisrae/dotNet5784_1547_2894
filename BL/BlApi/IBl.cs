@@ -12,6 +12,7 @@ public interface IBl
 
     private static DalApi.IDal dal = DalApi.Factory.Get;
 
+
     /// <summary>
     /// This function returns the status of the project
     /// </summary>
@@ -72,10 +73,16 @@ public interface IBl
 
     public void InitializeDB();
     public void ResetDB();
-
     public BO.ProjectStatus ProjectStatusPL();
-
     public void StartProjectDate(DateTime projectDate);
+
+    public DateTime Clock { get; }
+    public void AdvanceTimeByYear();
+    public void AdvanceTimeByDay();
+    public void AdvanceTimeByMonth();
+    public void AdvanceTimeByHour();
+    public void ResetTime();
+
 };
 
 

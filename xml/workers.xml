@@ -1,2 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<ArrayOfWorker xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Worker>
+    <Id>123</Id>
+    <Level>Manager</Level>
+    <Email>shir@gmail.com</Email>
+    <Cost>250</Cost>
+    <Name>Shir</Name>
+  </Worker>
+  <Worker>
+    <Id>1212</Id>
+    <Level>Cleaner</Level>
+    <Email>dani@gmail.com</Email>
+    <Cost>35</Cost>
+    <Name>dani</Name>
+  </Worker>
+  <Worker>
+    <Id>218436529</Id>
+    <Level>Chef</Level>
+    <Email>eyalShani@gmail.com</Email>
+    <Cost>200</Cost>
+    <Name>Eyal Shani</Name>
+  </Worker>
+  <Worker>
+    <Id>331913243</Id>
+    <Level>SousChef</Level>
+    <Email>nathanWeiss@gmail.com</Email>
+    <Cost>140</Cost>
+    <Name>Nathan Weiss</Name>
+  </Worker>
+  <Worker>
+    <Id>236556276</Id>
+    <Level>Waiter</Level>
+    <Email>yanoBikel@gmail.com</Email>
+    <Cost>30</Cost>
+    <Name>Yanon Bikel</Name>
+  </Worker>
+  <Worker>
+    <Id>343492039</Id>
+    <Level>Waiter</Level>
+    <Email>bennyChoen@gmail.com</Email>
+    <Cost>30</Cost>
+    <Name>Benny Choen</Name>
+  </Worker>
+  <Worker>
+    <Id>386633799</Id>
+    <Level>Cleaner</Level>
+    <Email>ilanaShalom@gmail.com</Email>
+    <Cost>35</Cost>
+    <Name>Ilana Shalom</Name>
+  </Worker>
+  <Worker>
+    <Id>351762595</Id>
+    <Level>Driver</Level>
+    <Email>dannyAmar@gmail.com</Email>
+    <Cost>50</Cost>
+    <Name>Danny Amar</Name>
+  </Worker>
+  <Worker>
+    <Id>393385574</Id>
+    <Level>Secretary</Level>
+    <Email>shimritNechama@gmail.com</Email>
+    <Cost>45</Cost>
+    <Name>Shimrit Nechama</Name>
+  </Worker>
+</ArrayOfWorker>

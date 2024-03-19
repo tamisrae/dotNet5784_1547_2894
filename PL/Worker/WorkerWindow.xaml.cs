@@ -107,7 +107,7 @@ public partial class WorkerWindow : Window
         }
     }
 
-    private void DeleteClick(object sender, RoutedEventArgs e)
+    private void DeleteWorkerClick(object sender, RoutedEventArgs e)
     {
         this.Close();
         if (CurrentWorker != null) 

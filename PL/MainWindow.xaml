@@ -30,9 +30,9 @@
         Grid.Column="0" Grid.Row="1" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}"/>
 
         <Button Content="Worker's list" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Click="WorkersListShow" Style="{StaticResource MainButtonKey}" 
-        Grid.Column="1" Grid.Row="1" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}"/>
+        Grid.Column="3" Grid.Row="1" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}"/>
 
-        <Button Content="Task's list" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Click="TasksListShow" Style="{StaticResource MainButtonKey}" Grid.Column="3" Grid.Row="1"/>
+        <Button Content="Task's list" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Click="TasksListShow" Style="{StaticResource MainButtonKey}" Grid.Column="1" Grid.Row="1"/>
 
         <Button Content="Data initialization" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Click="Initialization" Style="{StaticResource MainButtonKey}" 
         Grid.Column="1" Grid.Row="2" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}"/>
@@ -41,9 +41,20 @@
         Grid.Column="2" Grid.Row="2" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}"/>
 
         <Button Content="Current task" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Style="{StaticResource MainButtonKey}" 
-        Grid.Column="1" Grid.Row="1" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleWorkerKey}}" Click="CurrentTaskClick"/>
+        Grid.Column="1" Grid.Row="2" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleWorkerKey}}" Click="CurrentTaskClick"/>
 
-        <Button Content="User" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170" Style="{StaticResource MainButtonKey}" 
-        Grid.Column="0" Grid.Row="1" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleWorkerKey}}" Click="UserClick"/>
+        <Button Content="User" HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Width="70" Style="{StaticResource MainButtonKey}" 
+        Grid.Column="2" Grid.Row="0" Click="UserClick"/>
+
+        <StackPanel  Grid.Column="0" Grid.Row="0" Width="150" Height="86" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Label Content="{Binding CurrentTime, StringFormat=dd/MM/yyyy HH:mm:ss}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="43"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Button Content="hour" Click="HourButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
+                <Button Content="day" Click="MonthButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
+                <Button Content="month" Click="YearButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
+            </StackPanel>
+
+        </StackPanel>
+
     </Grid>
 </Window>

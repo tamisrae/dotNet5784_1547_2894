@@ -38,18 +38,18 @@
 
 
         <Label Content="Alias" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="1" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="1" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
 
         <Label Content="Description" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="2" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="2" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
 
         <Label Content="Deliverables" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="3" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
         <Label Content="Remarks" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="4" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="350" Grid.Row="4" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
 
         <Label Content="Status" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Style="{StaticResource LabelKey}"/>
@@ -60,16 +60,16 @@
 
         <Label Content="Complexity" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Style="{StaticResource LabelKey}"/>
         <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" ItemsSource="{Binding Source={StaticResource WorkerExperienceCollectionKey}}" Grid.Row="6" Grid.Column="1"
-        SelectedValue="{Binding CurrentTask.Complexity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="{Binding Complexity, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.ColumnSpan="2"/>
+        SelectedValue="{Binding CurrentTask.Complexity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.ColumnSpan="2"/>
 
 
         <Label Content="The worker" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="0" Style="{StaticResource LabelKey}"/>
 
         <Label Content="Id" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1" Margin="84,38,0,0" Grid.RowSpan="2" Height="30"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.WorkOnTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.Row="7" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.WorkOnTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.Row="7" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
         <Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="1" Margin="73,0,0,34" Grid.RowSpan="2" Height="30"/>
-        <TextBox HorizontalAlignment="Center" Text="{Binding  CurrentTask.WorkOnTask.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="7" Grid.Column="1"/>
+        <TextBox HorizontalAlignment="Center" Text="{Binding  CurrentTask.WorkOnTask.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="7" Grid.Column="1" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolKey}}"/>
 
 
         <Label Content="Created at date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="8" Grid.Column="0" Style="{StaticResource LabelKey}"/>
@@ -77,8 +77,8 @@
 
 
         <Label Content="Scheduled date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="9" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <DatePicker HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectedDate="{Binding ScheduledDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
-        IsEnabled="{Binding CurrentTask.ScheduledDate, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.Row="9" Grid.Column="1"/>
+        <DatePicker HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" SelectedDate="{Binding CurrentTask.ScheduledDate, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
+        IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.Row="9" Grid.Column="1"/>
 
 
         <Label Content="Start date" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="10" Grid.Column="0" Style="{StaticResource LabelKey}"/>
@@ -96,11 +96,11 @@
 
         <Label Content="Required effort time" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="13" Grid.Column="0" Style="{StaticResource LabelKey}"/>
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentTask.RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
-        IsEnabled="{Binding RequiredEffortTime, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.Row="13" Grid.Column="1"/>
+        IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}" Grid.Row="13" Grid.Column="1"/>
 
 
         <Label Content="Dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="0" Style="{StaticResource LabelKey}"/>
-        <ListBox ItemsSource="{Binding CurrentTask.Dependencies}" MouseDoubleClick="OpenTaskWindow" Grid.Row="14" Grid.Column="1">
+        <ListBox ItemsSource="{Binding TaskList}" MouseDoubleClick="OpenTaskWindow" Grid.Row="14" Grid.Column="1" IsEnabled="{Binding ProjectStatus, Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}">
             <ListBox.ItemTemplate>
                 <HierarchicalDataTemplate>
                     <CheckBox Content="{Binding Alias}" Tag="{Binding Id}"/>
@@ -109,5 +109,12 @@
         </ListBox>
 
         <Button VerticalAlignment="Top" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="14" Click="AddUpdateTask" Width="70" Height="35" Margin="80,40,240,0" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}"/>
+
+        <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5">
+                <MenuItem Header="Delete" Click="DeleteTaskClick"/>
+            </MenuItem>
+        </Menu>
+
     </Grid>
 </Window>

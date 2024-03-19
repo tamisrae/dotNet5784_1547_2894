@@ -2,6 +2,7 @@
 using BO;
 using PL.Task;
 using PL.User;
+using System.Net.NetworkInformation;
 using System.Windows;
 
 namespace PL
@@ -51,15 +52,23 @@ namespace PL
         {
             //ask the user if they want to initialize the data
             MessageBoxResult result = MessageBox.Show("Do you want to initialize the data?", "initializing data", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes://if they want
-                    Factory.Get().InitializeDB();
-                    break;
-                case MessageBoxResult.No://if they dont want
-                    break;
-                default:
-                    break;
+                switch (result)
+                {
+                    case MessageBoxResult.Yes://if they want
+                        Factory.Get().InitializeDB();
+                        break;
+                    case MessageBoxResult.No://if they dont want
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 
@@ -67,15 +76,23 @@ namespace PL
         {
             //ask the user if they want to reset the data
             MessageBoxResult result = MessageBox.Show("Do you want to reset the data?", "reseting data", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes://if they want
-                    Factory.Get().ResetDB();
-                    break;
-                case MessageBoxResult.No://if they dont want
-                    break;
-                default:
-                    break;
+                switch (result)
+                {
+                    case MessageBoxResult.Yes://if they want
+                        Factory.Get().ResetDB();
+                        break;
+                    case MessageBoxResult.No://if they dont want
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception mess)
+            {
+                MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 
@@ -87,7 +104,7 @@ namespace PL
 
         private void ScheduledDate(object sender, RoutedEventArgs e)
         {
-           new ScheduledWindow().ShowDialog();
+            new ScheduledWindow().ShowDialog();
         }
 
         private void GantClick(object sender, RoutedEventArgs e)
@@ -98,7 +115,7 @@ namespace PL
         private void CurrentTaskClick(object sender, RoutedEventArgs e)
         {
             if (CurrentWorker != null)
-                new TaskWindow(CurrentWorker.Id).ShowDialog();
+                new TaskWindow(0, CurrentWorker.Id).ShowDialog();
         }
 
         private void UserClick(object sender, RoutedEventArgs e)
@@ -106,5 +123,49 @@ namespace PL
             if (CurrentWorker != null)
                 new UserWindow(CurrentWorker.Id).ShowDialog();
         }
+
+
+
+        public static readonly DependencyProperty CurrentTimeProperty =
+              DependencyProperty.Register(
+                  "CurrentTime",
+                  typeof(DateTime),
+                  typeof(MainWindow),
+                  new PropertyMetadata(bl.Clock));
+
+        public DateTime CurrentTime
+        {
+            get => (DateTime)GetValue(CurrentTimeProperty);
+            set => SetValue(CurrentTimeProperty, value);
+        }
+
+
+        private void MonthButton(object sender, RoutedEventArgs e)
+        {
+            bl.AdvanceTimeByMonth();
+            CurrentTime = bl.Clock;
+        }
+
+
+        private void DayButton(object sender, RoutedEventArgs e)
+        {
+            bl.AdvanceTimeByDay();
+            CurrentTime = bl.Clock;
+        }
+
+        private void YearButton(object sender, RoutedEventArgs e)
+        {
+            bl.AdvanceTimeByYear();
+            CurrentTime = bl.Clock;
+        }
+
+        private void HourButton(object sender, RoutedEventArgs e)
+        {
+            bl.AdvanceTimeByHour();
+            CurrentTime = bl.Clock;
+        }
+
+        
     }
 }
+       
