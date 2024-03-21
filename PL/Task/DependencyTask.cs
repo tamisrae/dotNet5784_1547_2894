@@ -14,4 +14,6 @@ public class DependencyTask
     public required string Description { get; set; }
     public Status Status { get; set; }
     public required string IsDependent { get; set; }
+    public BO.ProjectStatus ProjectStatus { get; set; }
+    public BO.WorkerExperience Level { get; set; }
 }

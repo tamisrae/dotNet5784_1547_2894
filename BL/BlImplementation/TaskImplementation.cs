@@ -227,8 +227,8 @@ internal class TaskImplementation : ITask
                 //If the user has changed fields that should not be changed at this stage of the project
                 DO.Task? checkingTask = dal.Task.Read(task.Id);
                 if (checkingTask != null && (task.CreatedAtDate != checkingTask.CreatedAtDate || (int?)task.Complexity != (int?)checkingTask.Complexity ||
-                    task.RequiredEffortTime != checkingTask.RequiredEffortTime || task.StartDate != checkingTask.StartDate || task.ScheduledDate != checkingTask.StartDate ||
-                    task.DeadlineDate != checkingTask.Deadlinedate || task.CompleteDate != checkingTask.CompleteDate))
+                    task.RequiredEffortTime != checkingTask.RequiredEffortTime || task.ScheduledDate != checkingTask.ScheduledDate ||
+                    task.DeadlineDate != checkingTask.Deadlinedate))
                     throw new BlProjectStatusException($"You cannot update task with ID={task.Id} in this stage at the project");
                 else if (task.Dependencies != null)
                 {

@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,15 +17,15 @@ public partial class TaskListWindow : Window
     {
         Level = workerExperience;
         workerID = workerId;
+        ProjectStatus = bl!.ProjectStatusPL();
+
         InitializeComponent();
 
 
         if (workerExperience == BO.WorkerExperience.Manager)
             TaskList = (bl?.Task.ReadAll()!).ToList();
         else if (workerExperience != BO.WorkerExperience.Manager)
-            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)workerExperience && item.WorkOnTask == null && item.ScheduledDate != null)!).ToList();
-
-        ProjectStatus = bl!.ProjectStatusPL();
+            TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)workerExperience && (item.WorkOnTask == null || item.WorkOnTask.Id == workerID) && item.ScheduledDate != null)!).ToList();
     }
 
 
@@ -116,8 +117,11 @@ public partial class TaskListWindow : Window
             {
                 new TaskWindow(task.Id, workerID).ShowDialog();
                 //update the list of the workers after the changes
-                TaskList = (Complexity == BO.PLWorkerExperience.All) ?
-                (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
+                if (Level == BO.WorkerExperience.Manager)
+                    TaskList = (Complexity == BO.PLWorkerExperience.All) ?
+                    (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();
+                else
+                    TaskList = (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Level && (item.WorkOnTask == null || item.WorkOnTask.Id == workerID) && item.ScheduledDate != null)!).ToList();
             }
         }
         catch (BlDoesNotExistsException mess)

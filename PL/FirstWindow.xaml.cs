@@ -33,28 +33,22 @@ public partial class FirstWindow : Window
     public static readonly DependencyProperty CurrentUserProperty =
         DependencyProperty.Register("CurrentUser", typeof(BO.User), typeof(FirstWindow), new PropertyMetadata(null));
 
+
+
     public FirstWindow()
     {
+        CurrentUser = new BO.User { Id = 0, UserName = "", Password = "" };
         InitializeComponent();
     }
 
     private void LogInButton(object sender, RoutedEventArgs e)
     {
-        Button button = (Button)sender;
-        Grid grid = (Grid)button.Parent;
-
-        TextBox userNameTextBox = (TextBox)grid.Children[1];
-        TextBox passwordTextBox = (TextBox)grid.Children[3];
-
-        string userName = (string)userNameTextBox.Text;
-        string password = (string)passwordTextBox.Text;
-
         try
         {
-            BO.User? user = bl.User.ReadByPassword(password);
+            BO.User? user = bl.User.ReadByPassword(CurrentUser.Password);
             if (user != null)
             {
-                if (userName != user.UserName)
+                if (CurrentUser.UserName != user.UserName)
                     MessageBox.Show("User name is not correct", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 else
                     new MainWindow(user.Id).Show();
@@ -69,5 +63,12 @@ public partial class FirstWindow : Window
     private void SignInButton(object sender, RoutedEventArgs e)
     {
         new UserWindow().ShowDialog();
+    }
+
+    private void PasswordBox_Click(object sender, RoutedEventArgs e)
+    {
+        PasswordBox passwordBox = (sender as PasswordBox)!;
+        if (passwordBox != null)
+            CurrentUser.Password = passwordBox.Password;
     }
 }

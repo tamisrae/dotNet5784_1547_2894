@@ -17,6 +17,10 @@
         <local:ConvertStatusToBool x:Key="ConvertStatusToBoolKey"/>
         <local:ConvertBoolToVisibale x:Key="ConvertBoolToVisibaleKey"/>
         <local:ConvertLevelToBool x:Key="ConvertLevelToBoolKey"/>
+        <local:ConvertLevelAndDateToBool x:Key="ConvertLevelAndDateToBoolKey"/>
+        <local:ConvertStatusAndLevelToBool x:Key="ConvertStatusAndLevelToBoolKey"/>
+        <local:ConvertStatusToBoolStartTask x:Key="ConvertStatusToBoolStartTaskKey"/>
+        <local:ConvertStatusToBoolEndTask x:Key="ConvertStatusToBoolEndTaskKey"/>
 
         <Style x:Key="LabelKey" TargetType="Label">
             <Setter Property="Foreground" Value="White"/>

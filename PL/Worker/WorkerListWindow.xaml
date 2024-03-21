@@ -17,13 +17,13 @@
         <ListView Grid.Row="1" ItemsSource="{Binding Path=WorkersList}" MouseDoubleClick="UpdateWorker" Style="{StaticResource ListViewKey}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="80"/>
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="130"/>
                     <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="160"/>
-                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" Width="100"/>
-                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}" Width="100"/>
+                    <GridViewColumn Header="Cost" DisplayMemberBinding="{Binding Cost}" Width="80"/>
+                    <GridViewColumn Header="Level" DisplayMemberBinding="{Binding Level}" Width="90"/>
                     <GridViewColumn Header=" Current task Id" DisplayMemberBinding="{Binding CurrentTask.Id}" Width="105"/>
-                    <GridViewColumn Header="Current task Alias" DisplayMemberBinding="{Binding CurrentTask.Alias}" Width="105"/>
+                    <GridViewColumn Header="Current task Alias" DisplayMemberBinding="{Binding CurrentTask.Alias}" Width="155"/>
                 </GridView>
             </ListView.View>
         </ListView>

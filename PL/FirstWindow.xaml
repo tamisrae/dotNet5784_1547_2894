@@ -21,7 +21,7 @@
         <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="Black"/>
 
         <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" FontFamily="Arial" Foreground="White"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Text="{Binding CurrentUser.Password, Mode=OneWayToSource}" Grid.Row="3" BorderBrush="Black"/>
+        <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" PasswordChanged="PasswordBox_Click" Grid.Row="3" BorderBrush="Black"/>
 
         <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LogInButton" Grid.Row="4" Width="50" Height="30" Background="Black" Foreground="White" BorderThickness="2,2,2,2" IsDefault="True"/>
 

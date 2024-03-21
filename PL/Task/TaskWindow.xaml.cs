@@ -30,13 +30,44 @@ public partial class TaskWindow : Window
     {
         taskID = taskId;
         workerID = workerId;
-        if (taskId == 0)//create new worker window with default values
+        if (taskId == 0)//create new task window with default values
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
-        else//create new worker window with the worker's data
+        //else if (taskId < 0) 
+        //{
+        //    try
+        //    {
+        //        BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack)!;
+        //        CurrentWorker = bl.Worker.Read(workerId);
+        //        if (taskInList != null)
+        //        {
+        //            CurrentTask = bl.Task.Read(taskInList.Id);
+        //            if (CurrentTask != null)
+        //                taskID = CurrentTask.Id;
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("You are not working on any tasks at the moment", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            CurrentTask = null;
+        //            this.Close();
+        //        }
+        //    }
+        //    catch (BlDoesNotExistsException mess)
+        //    {
+        //        CurrentTask = null!;
+        //        MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        this.Close();
+        //    }
+        //}
+        else//create new task window with the task's data
         {
             try
             {
                 CurrentTask = bl.Task.Read(taskId)!;
+                CurrentWorker = bl.Worker.Read(workerID)!;
+                if (CurrentTask != null && CurrentTask.WorkOnTask != null)
+                    WorkOnTask = new BO.WorkerInTask { Id = CurrentTask.WorkOnTask.Id, Name = CurrentTask.WorkOnTask.Name };
+                else
+                    WorkOnTask = new BO.WorkerInTask { Id = 0, Name = "" };
             }
             catch (BlDoesNotExistsException mess)
             {
@@ -47,17 +78,21 @@ public partial class TaskWindow : Window
         }
         ProjectStatus = bl.ProjectStatusPL();
 
-        //if (workerId != 0)
-        //{
-        //    //BO.Worker? worker = bl.Worker.Read(workerId);
-        //    BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack);
-        //    if (taskInList != null)
-        //        CurrentTask = bl.Task.Read(taskInList.Id);
-        //    CurrentTask = null;
-        //}
-
         InitializeComponent();
     }
+
+
+
+    public BO.Worker? CurrentWorker
+    {
+        get { return (BO.Worker)GetValue(CurrentWorkerProperty); }
+        set { SetValue(CurrentWorkerProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CurrentWorker.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentWorkerProperty =
+        DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(TaskWindow), new PropertyMetadata(null));
+
 
 
     public BO.Task? CurrentTask
@@ -85,6 +120,19 @@ public partial class TaskWindow : Window
 
 
 
+    public BO.WorkerInTask WorkOnTask
+    {
+        get { return (BO.WorkerInTask)GetValue(WorkOnTaskProperty); }
+        set { SetValue(WorkOnTaskProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for WorkOnTask.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty WorkOnTaskProperty =
+        DependencyProperty.Register("WorkOnTask", typeof(BO.WorkerInTask), typeof(TaskWindow), new PropertyMetadata(null));
+
+
+
+
     private void AddUpdateTask(object sender, RoutedEventArgs e)
     {
         this.Close();
@@ -94,6 +142,16 @@ public partial class TaskWindow : Window
             {
                 if (taskID != 0)//if the id is not 0 it means that we need to update the data
                 {
+                    if (WorkOnTask != null && WorkOnTask.Id != 0) 
+                    {
+                        if (CurrentTask.WorkOnTask == null)
+                            CurrentTask.WorkOnTask = new BO.WorkerInTask { Id = WorkOnTask.Id, Name = WorkOnTask.Name };
+                        else
+                        {
+                            CurrentTask.WorkOnTask.Id = WorkOnTask.Id;
+                            CurrentTask.WorkOnTask.Name = WorkOnTask.Name;
+                        }
+                    }
                     bl.Task.Update(CurrentTask);
                     MessageBox.Show("The task was successfully updated", "UPDATE", MessageBoxButton.OK);
                 }
@@ -146,7 +204,7 @@ public partial class TaskWindow : Window
         {
             try
             {
-                bl.Worker.Delete(CurrentTask.Id);
+                bl.Task.Delete(CurrentTask.Id);
                 MessageBox.Show("The task was successfully deleted", "DELETE", MessageBoxButton.OK);
                 CurrentTask = null!;
             }
@@ -161,7 +219,7 @@ public partial class TaskWindow : Window
     private void ShowDependenciesClick(object sender, RoutedEventArgs e)
     {
         if (CurrentTask != null)
-            new DependenciesWindow(CurrentTask.Id).ShowDialog();
+            new DependenciesWindow(CurrentTask.Id, workerID).ShowDialog();
         try
         {
             if (CurrentTask != null)

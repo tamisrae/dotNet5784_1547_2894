@@ -72,17 +72,23 @@ public interface IBl
     }
 
     public void InitializeDB();
+
     public void ResetDB();
+
     public BO.ProjectStatus ProjectStatusPL();
+
     public void StartProjectDate(DateTime projectDate);
 
     public DateTime Clock { get; }
     public void AdvanceTimeByYear();
-    public void AdvanceTimeByDay();
-    public void AdvanceTimeByMonth();
-    public void AdvanceTimeByHour();
-    public void ResetTime();
 
+    public void AdvanceTimeByDay();
+
+    public void AdvanceTimeByMonth();
+
+    public void AdvanceTimeByHour();
+
+    public void ResetTime();
 };
 
 

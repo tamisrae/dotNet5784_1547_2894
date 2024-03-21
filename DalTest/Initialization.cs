@@ -36,12 +36,16 @@ public static class Initialization
         s_dal!.Worker.Create(manager);
         User managerUser = new User(123, "shir", "123");
         s_dal!.User.Create(managerUser);
-        Worker worker = new Worker(1212, DO.WorkerExperience.Cleaner, "dani@gmail.com", 35, "dani");
-        s_dal!.Worker.Create(worker);
-        User workerUser = new User(1212, "dani", "1212");
-        s_dal!.User.Create(workerUser);
+        Worker chef = new Worker(1212, DO.WorkerExperience.Chef, "dani@gmail.com", 35, "dani");
+        s_dal!.Worker.Create(chef);
+        User chefUser = new User(1212, "dani", "1212");
+        s_dal!.User.Create(chefUser);
+        Worker secretary = new Worker(456, DO.WorkerExperience.Secretary, "nir@gmail.com", 35, "nir");
+        s_dal!.Worker.Create(secretary);
+        User secretaryUser = new User(456, "nir", "456");
+        s_dal!.User.Create(secretaryUser);
 
-
+        
         foreach (string name in WorkerNames)
         {
             int minWorkerId = 200000000, maxWorkerId = 400000000;

@@ -24,24 +24,29 @@ public partial class DependenciesWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
     int TaskId;
+    BO.WorkerExperience Level = BO.WorkerExperience.Waiter;
 
-    public DependenciesWindow(int taskId = 0)
+    public DependenciesWindow(int taskId = 0, int workerId = 0)
     {
         InitializeComponent();
         TaskId = taskId;
         try
         {
             BO.Task? task = bl.Task.Read(taskId);
+            BO.Worker? worker = bl.Worker.Read(workerId);
+            if (worker != null)
+                Level = worker.Level;
+
             TaskList = new List<DependencyTask>();
             List<BO.TaskInList> taskInLists = (bl.Task.ReadAll()).ToList();
-            if (task != null && task.Dependencies != null) 
+            if (task != null && task.Dependencies != null)  
             {
                 foreach(BO.TaskInList taskInList in taskInLists)
                 {
                     if (task.Dependencies.FirstOrDefault(item => item.Id == taskInList.Id) == null)
-                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add" });
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add", ProjectStatus = bl.ProjectStatusPL(), Level = Level });
                     else
-                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete" });
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete", ProjectStatus = bl.ProjectStatusPL(), Level = Level });
                 }
             }
         }
@@ -52,6 +57,16 @@ public partial class DependenciesWindow : Window
         }
     }
 
+
+    public BO.ProjectStatus ProjectStatus
+    {
+        get { return (BO.ProjectStatus)GetValue(ProjectStatusProperty); }
+        set { SetValue(ProjectStatusProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ProjectStatus.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProjectStatusProperty =
+        DependencyProperty.Register("ProjectStatus", typeof(BO.ProjectStatus), typeof(DependenciesWindow), new PropertyMetadata(null));
 
 
 
@@ -86,11 +101,14 @@ public partial class DependenciesWindow : Window
                 }
                 else if (dependencyTask.IsDependent == "Delete" && task.Dependencies != null)
                 {
-                    BO.TaskInList? taskInList = bl.Task.ReadTaskInList(dependencyTask.Id);
-                    if (taskInList != null)
+                    foreach(var dependency in task.Dependencies)
                     {
-                        (task.Dependencies).Remove(taskInList);
-                        bl.Task.Update(task);
+                        if(dependency.Id == dependencyTask.Id)
+                        {
+                            task.Dependencies.Remove(dependency);
+                            bl.Task.Update(task);
+                            break;
+                        }
                     }
                 }
             }
@@ -102,9 +120,9 @@ public partial class DependenciesWindow : Window
                 foreach (BO.TaskInList taskInList in taskInLists)
                 {
                     if (task.Dependencies.FirstOrDefault(item => item.Id == taskInList.Id) == null)
-                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add" });
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add", ProjectStatus = bl.ProjectStatusPL() });
                     else
-                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete" });
+                        TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Delete", ProjectStatus = bl.ProjectStatusPL() });
                 }
             }
         }

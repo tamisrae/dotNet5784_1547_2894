@@ -66,7 +66,7 @@
                     <GridViewColumn Header="" Width="60">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Content="{Binding IsDependent}" Style="{StaticResource ButtonKey}" Width="50" Height="20" Click="AddDeleteDependency"/>
+                                <Button Content="{Binding IsDependent}" Style="{StaticResource ButtonKey}" Width="50" Height="20" Click="AddDeleteDependency" IsEnabled="{Binding ProjectStatus,Mode=OneTime, Converter={StaticResource ConvertDateToBoolKey}}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
