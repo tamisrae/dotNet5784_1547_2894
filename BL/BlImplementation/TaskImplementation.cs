@@ -7,6 +7,9 @@ namespace BlImplementation;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
+    private readonly IBl _bl;
+    internal TaskImplementation(IBl bl) => _bl = bl;
+
 
     /// <summary>
     /// This function create a new logic task
@@ -17,7 +20,7 @@ internal class TaskImplementation : ITask
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Task task)
     {
-        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        BO.ProjectStatus projectStatus = _bl.GetProjectStatus();
         if (projectStatus != BO.ProjectStatus.Unscheduled)
             throw new BlProjectStatusException("You cannot create new task in this stage at the project");
         else
@@ -51,7 +54,7 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlCantDeleteException"></exception>
     public void Delete(int id)
     {
-        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        BO.ProjectStatus projectStatus = _bl.GetProjectStatus();
         if (projectStatus != BO.ProjectStatus.Unscheduled)
             throw new BlProjectStatusException($"You cannot delete task with ID={id} in this stage at the project");
         else
@@ -124,14 +127,14 @@ internal class TaskImplementation : ITask
                     Id = id,
                     Alias = doTask.Alias,
                     Description = doTask.Description,
-                    Status = doTask.GetStatus(),
+                    Status = _bl.GetStatus(doTask),
                     WorkOnTask = workerInTask,
                     Dependencies = taskInLists,
                     CreatedAtDate = doTask.CreatedAtDate,
                     ScheduledDate = doTask.ScheduledDate,
                     StartDate = doTask.StartDate,
                     CompleteDate = doTask.CompleteDate,
-                    ForeCastDate = doTask.GetForeCastDate(),
+                    ForeCastDate = _bl.GetForeCastDate(doTask),
                     DeadlineDate = doTask.Deadlinedate,
                     RequiredEffortTime = doTask.RequiredEffortTime,
                     Deliverables = doTask.Deliverables,
@@ -161,7 +164,7 @@ internal class TaskImplementation : ITask
                        Id = item.Id,
                        Alias = item.Alias,
                        Description = item.Description,
-                       Status = item.GetStatus()
+                       Status = _bl.GetStatus(item)
                    };
         }
         else//with filter
@@ -173,7 +176,7 @@ internal class TaskImplementation : ITask
                        Id = item.Id,
                        Alias = item.Alias,
                        Description = item.Description,
-                       Status = item.GetStatus()
+                       Status = _bl.GetStatus(item)
                    };
         }
     }
@@ -198,7 +201,7 @@ internal class TaskImplementation : ITask
                                                         Id = task.Id,
                                                         Alias = task.Alias,
                                                         Description = task.Description,
-                                                        Status = task.GetStatus()
+                                                        Status = _bl.GetStatus(task)
                                                     };
                 return tasks;
             }
@@ -219,7 +222,7 @@ internal class TaskImplementation : ITask
     /// <exception cref="BlCantUpdateException"></exception>
     public void Update(BO.Task task)
     {
-        BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+        BO.ProjectStatus projectStatus = _bl.GetProjectStatus();
         if (projectStatus == BO.ProjectStatus.Execution)
         {
             try
@@ -337,10 +340,10 @@ internal class TaskImplementation : ITask
                     if (task.WorkOnTask != null)
                     {
                         IEnumerable<DO.Task>? tasksList = from DO.Task doTask in dal.Task.ReadAll()
-                                                          where doTask.WorkerId == task.WorkOnTask.Id
+                                                          where doTask.Id != task.Id && doTask.WorkerId == task.WorkOnTask.Id
                                                           select doTask;
 
-                        if (tasksList.Any(doTask => (scheduledDate > doTask.ScheduledDate || scheduledDate > doTask.StartDate) && scheduledDate < doTask.GetForeCastDate()))
+                        if (tasksList.Any(doTask => (scheduledDate > doTask.ScheduledDate || scheduledDate > doTask.StartDate) && scheduledDate < _bl.GetForeCastDate(doTask)))
                         {
                             throw new BlScheduledDateException($"Worker with ID={task.WorkOnTask.Id} is working on another task at this time");
                         }
@@ -429,7 +432,7 @@ internal class TaskImplementation : ITask
 
         if (task.ScheduledDate != null)
         {
-            BO.ProjectStatus projectStatus = IBl.GetProjectStatus();
+            BO.ProjectStatus projectStatus = _bl.GetProjectStatus();
             if (projectStatus == BO.ProjectStatus.Unscheduled)
                 throw new BlProjectStatusException($"You cannot enter a scheduled start date for Task with ID={task.Id} at this stage of the project");
             else
@@ -500,7 +503,7 @@ internal class TaskImplementation : ITask
 
                     if ((depentsOnTasks.FirstOrDefault(t => t.ScheduledDate == null)) == null)//Check that all tasks that my task depends on have a scheduled date
                     {
-                        DateTime? scheduledDate = IBl.ScheduleDateOffer(task);
+                        DateTime? scheduledDate = _bl.ScheduleDateOffer(task);
                         if (scheduledDate != null)
                         {
                             try
@@ -547,16 +550,16 @@ internal class TaskImplementation : ITask
         {
             DO.Task? doTask = dal.Task.Read(boTask.Id);
             //Check that the worker is registered for this task and it is in progress
-            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
+            DO.Task? task = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && _bl.GetStatus(t) == Status.OnTrack);
 
             if (task != null/* && task.Id != boTask.Id*/)
                 throw new BlTaskInWorkerException($"Worker with ID={workerId} in the middle of a task");
             else if (doTask != null && doTask.WorkerId != null && doTask.WorkerId == workerId)
             {
-                doTask = doTask with { StartDate = DateTime.Now };
+                doTask = doTask with { StartDate = _bl.Clock };
                 dal.Task.Update(doTask);
 
-                if (boTask.ScheduledDate < DateTime.Now)//if the worker started the task later then the scheduled date
+                if (boTask.ScheduledDate < _bl.Clock)//if the worker started the task later then the scheduled date
                 {
                     foreach (BO.TaskInList taskInList in ReadAll())
                     {
@@ -597,14 +600,14 @@ internal class TaskImplementation : ITask
             DO.Task? task = dal.Task.Read(taskId);
             BO.Task? boTask = Read(taskId);
             //Check that the worker really worked on this task
-            DO.Task? doTask = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && t.GetStatus() == Status.OnTrack);
+            DO.Task? doTask = dal.Task.ReadAll().FirstOrDefault(t => t.WorkerId != null && t.WorkerId == workerId && _bl.GetStatus(t) == Status.OnTrack);
 
             if (task != null && doTask != null && doTask.Id == taskId)
             {
-                task = task with { CompleteDate = DateTime.Now };
+                task = task with { CompleteDate = _bl.Clock };
                 dal.Task.Update(task);
 
-                if (boTask != null && boTask.ForeCastDate < DateTime.Now) //if the worker ended the task later then the fore cast date
+                if (boTask != null && boTask.ForeCastDate < _bl.Clock) //if the worker ended the task later then the fore cast date
                 {
                     foreach (BO.TaskInList taskInList in ReadAll())
                     {
@@ -673,7 +676,7 @@ internal class TaskImplementation : ITask
                         Id = task.Id,
                         Alias = task.Alias,
                         Description = task.Description,
-                        Status = task.GetStatus()
+                        Status = _bl.GetStatus(task)
                     } by (int?)task.Complexity;
         return tasks;
     }
@@ -701,7 +704,7 @@ internal class TaskImplementation : ITask
                     Id = id,
                     Alias = doTask.Alias,
                     Description = doTask.Description,
-                    Status = doTask.GetStatus(),
+                    Status = _bl.GetStatus(doTask),
                 };
             }
         }

@@ -6,6 +6,9 @@ namespace BlImplementation;
 internal class WorkerImplementation : IWorker
 {
     private DalApi.IDal dal = DalApi.Factory.Get;
+    private readonly IBl _bl;
+    internal WorkerImplementation(IBl bl) => _bl = bl;
+
 
     public void Clear()
     {
@@ -163,7 +166,7 @@ internal class WorkerImplementation : IWorker
                     DO.Task? task = dal.Task.Read(worker.CurrentTask.Id);
                     if (task != null)
                     {
-                        if (!(Tools.AllowedTask(worker.Id, task)))//check if the worker can take the task
+                        if (!(_bl.AllowedTask(worker.Id, task)))//check if the worker can take the task
                             throw new BlTaskInWorkerException("You cannot take this task");
 
                         BO.TaskInWorker? taskInWorker = CurrentTask(worker.Id);//check if the worker in the middle of another task
@@ -201,7 +204,7 @@ internal class WorkerImplementation : IWorker
     private BO.TaskInWorker? CurrentTask(int id)
     {
         IEnumerable<DO.Task>? tasks = dal.Task.ReadAll().Where(item => item.WorkerId == id);
-        DO.Task? task = tasks.FirstOrDefault(t => t.GetStatus() == BO.Status.OnTrack);
+        DO.Task? task = tasks.FirstOrDefault(t => _bl.GetStatus(t) == BO.Status.OnTrack);
 
         BO.TaskInWorker? taskInWorker = null;
         if (task != null)

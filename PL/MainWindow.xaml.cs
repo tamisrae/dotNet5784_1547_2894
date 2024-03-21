@@ -28,7 +28,6 @@ public partial class MainWindow : Window
     }
 
 
-
     public BO.Worker? CurrentWorker
     {
         get { return (BO.Worker?)GetValue(CurrentWorkerProperty); }
@@ -38,6 +37,16 @@ public partial class MainWindow : Window
     // Using a DependencyProperty as the backing store for CurrentWorker.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CurrentWorkerProperty =
         DependencyProperty.Register("CurrentWorker", typeof(BO.Worker), typeof(MainWindow), new PropertyMetadata(null));
+
+    public DateTime CurrentTime
+    {
+        get { return (DateTime)GetValue(CurrentTimeProperty); }
+        set { SetValue(CurrentTimeProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrentTimeProperty =
+        DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(bl.Clock));
 
 
 
@@ -128,28 +137,11 @@ public partial class MainWindow : Window
             new UserWindow(CurrentWorker.Id).ShowDialog();
     }
 
-
-
-    public static readonly DependencyProperty CurrentTimeProperty =
-          DependencyProperty.Register(
-              "CurrentTime",
-              typeof(DateTime),
-              typeof(MainWindow),
-              new PropertyMetadata(bl.Clock));
-
-    public DateTime CurrentTime
-    {
-        get => (DateTime)GetValue(CurrentTimeProperty);
-        set => SetValue(CurrentTimeProperty, value);
-    }
-
-
     private void MonthButton(object sender, RoutedEventArgs e)
     {
         bl.AdvanceTimeByMonth();
         CurrentTime = bl.Clock;
     }
-
 
     private void DayButton(object sender, RoutedEventArgs e)
     {
@@ -166,6 +158,12 @@ public partial class MainWindow : Window
     private void HourButton(object sender, RoutedEventArgs e)
     {
         bl.AdvanceTimeByHour();
+        CurrentTime = bl.Clock;
+    }
+
+    private void ResetTimeButton(object sender, RoutedEventArgs e)
+    {
+        bl.ResetTime();
         CurrentTime = bl.Clock;
     }
 }

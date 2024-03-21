@@ -17,7 +17,7 @@ public partial class TaskListWindow : Window
     {
         Level = workerExperience;
         workerID = workerId;
-        ProjectStatus = bl!.ProjectStatusPL();
+        ProjectStatus = bl!.GetProjectStatus();
 
         InitializeComponent();
 

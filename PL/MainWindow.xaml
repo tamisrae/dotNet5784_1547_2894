@@ -47,11 +47,15 @@
         Grid.Column="2" Grid.Row="0" Click="UserClick"/>
 
         <StackPanel  Grid.Column="0" Grid.Row="0" Width="150" Height="86" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label Content="{Binding CurrentTime, StringFormat=dd/MM/yyyy HH:mm:ss}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="43"/>
+            <Label Content="{Binding CurrentTime, StringFormat=dd/MM/yyyy HH:mm:ss}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="43" FontFamily="Gill Sans MT" FontSize="15"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
-                <Button Content="hour" Click="HourButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
-                <Button Content="day" Click="MonthButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
-                <Button Content="month" Click="YearButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50"/>
+                <Button Content="hour" Click="HourButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>
+                <Button Content="day" Click="DayButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>
+                <Button Content="month" Click="MonthButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
+                <Button Content="year" Click="YearButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>
+                <Button Content="reset time" Click="ResetTimeButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20" FontSize="11"/>
             </StackPanel>
 
         </StackPanel>

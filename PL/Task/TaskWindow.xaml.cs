@@ -76,7 +76,7 @@ public partial class TaskWindow : Window
                 this.Close();
             }
         }
-        ProjectStatus = bl.ProjectStatusPL();
+        ProjectStatus = bl.GetProjectStatus();
 
         InitializeComponent();
     }
