@@ -18,12 +18,20 @@
         </Grid.RowDefinitions>
 
         <Label Content="User name" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" FontFamily="Arial" Foreground="White"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="Black"/>
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="White" Background="Transparent" BorderThickness="0,0,0,2" Foreground="White"/>
 
         <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" FontFamily="Arial" Foreground="White"/>
-        <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" PasswordChanged="PasswordBox_Click" Grid.Row="3" BorderBrush="Black"/>
+        <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" PasswordChanged="PasswordBox_Click" Grid.Row="3" BorderBrush="White" Background="Transparent" BorderThickness="0,0,0,2" Foreground="White"/>
 
-        <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LogInButton" Grid.Row="4" Width="50" Height="30" Background="Black" Foreground="White" BorderThickness="2,2,2,2" IsDefault="True"/>
+        <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LogInButton" Grid.Row="4" Width="70" Height="30" Background="Black" Foreground="White" BorderThickness="2,2,2,2" IsDefault="True" BorderBrush="White">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="13" Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="2,2,2,2">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
         <Label Content="Dont have an account?" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Margin="62,0,0,0" FontFamily="Arial" Foreground="White"/>
         <Button Content="Sign in" FontFamily="Arial" VerticalAlignment="Center" Grid.Row="5" Width="50" Height="30" HorizontalAlignment="Left" Margin="210,0,0,0" Background="Black" Click="SignInButton" Foreground="White" BorderThickness="2,2,2,3"/>

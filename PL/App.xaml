@@ -50,6 +50,13 @@
         <Style x:Key="ListViewKey" TargetType="ListView">
             <Setter Property="Background" Value="#FFE4EEDF"/>
         </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.User"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="450"
+        Title="UserWindow" Height="450" Width="400"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Style="{StaticResource GridKey}">
         <Grid.Background>
@@ -18,8 +18,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="120*"/>
+            <ColumnDefinition Width="180*"/>
         </Grid.ColumnDefinitions>
 
         <Label Content="ID" Grid.Row="0" Grid.Column="0" Width="30" Height="30" HorizontalAlignment="Center" Style="{StaticResource LabelKey}"/>
@@ -30,7 +30,15 @@
         <TextBox Text="{Binding CurrentUser.UserName}" Grid.Row="1" Grid.Column="1" Width="150" Height="20"/>
         <TextBox Text="{Binding CurrentUser.Password}" Grid.Row="2" Grid.Column="1" Width="150" Height="20"/>
 
-        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" HorizontalAlignment="Left" Width="70" Height="40" Click="AddUpdateUser" Grid.ColumnSpan="2" Margin="190,34,0,34" Style="{StaticResource ButtonKey}"/>
+        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Width="90" Height="40" Click="AddUpdateUser" Style="{StaticResource ButtonKey}">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
     </Grid>
 </Window>

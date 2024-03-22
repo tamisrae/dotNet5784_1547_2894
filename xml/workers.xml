@@ -36,13 +36,6 @@
     <Name>Nathan Weiss</Name>
   </Worker>
   <Worker>
-    <Id>399094349</Id>
-    <Level>Waiter</Level>
-    <Email>yossiChaimson@gmail.com</Email>
-    <Cost>30</Cost>
-    <Name>Yossi Chaimson</Name>
-  </Worker>
-  <Worker>
     <Id>205167107</Id>
     <Level>Waiter</Level>
     <Email>yanoBikel@gmail.com</Email>
@@ -76,5 +69,12 @@
     <Email>shimritNechama@gmail.com</Email>
     <Cost>45</Cost>
     <Name>Shimrit Nechama</Name>
+  </Worker>
+  <Worker>
+    <Id>399094349</Id>
+    <Level>Waiter</Level>
+    <Email>yossiChaimson@gmail.com</Email>
+    <Cost>30</Cost>
+    <Name>Yossi Chaimson</Name>
   </Worker>
 </ArrayOfWorker>

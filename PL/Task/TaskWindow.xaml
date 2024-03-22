@@ -5,33 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Task"
         mc:Ignorable="d"
-        Title="TaskWindow" Height="690" Width="500"
+        Title="TaskWindow" Height="700" Width="500"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Margin="0,0,0,-6" Style="{StaticResource GridKey}">
         <Grid.Background>
             <ImageBrush ImageSource="/Task/סושי.jpeg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
-            <ColumnDefinition Width="390"/>
+            <ColumnDefinition Width="315"/>
         </Grid.ColumnDefinitions>
         <Label Content="ID" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelKey}"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding CurrentTask.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Center" IsEnabled="False" Width="45" Grid.Row="0" Grid.Column="1"/>
@@ -117,7 +117,15 @@
         <Button Content="Show dependencies" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="14" Grid.Column="1" Width="120" Height="30" 
         Style="{StaticResource ButtonKey}" Click="ShowDependenciesClick" />
 
-        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="15" Click="AddUpdateTask" Width="75" Height="35" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}"/>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding CurrentTask.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" IsDefault="True" Grid.Row="15" Click="AddUpdateTask" Width="90" Height="40" Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource ButtonKey}">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
 
         <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5">
