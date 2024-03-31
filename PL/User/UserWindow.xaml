@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:PL.User"
         mc:Ignorable="d"
         Title="UserWindow" Height="450" Width="400"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Icon="/user (1).png">
     <Grid Style="{StaticResource GridKey}">
         <Grid.Background>
-            <ImageBrush ImageSource="/User/סושי.jpeg"/>
+            <ImageBrush ImageSource="/User/Sushi.jpeg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

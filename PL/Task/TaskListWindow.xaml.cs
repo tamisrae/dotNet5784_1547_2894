@@ -116,7 +116,7 @@ public partial class TaskListWindow : Window
             if (task != null)
             {
                 new TaskWindow(task.Id, workerID).ShowDialog();
-                //update the list of the workers after the changes
+                //update the list of the tasks after the changes
                 if (Level == BO.WorkerExperience.Manager)
                     TaskList = (Complexity == BO.PLWorkerExperience.All) ?
                     (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();

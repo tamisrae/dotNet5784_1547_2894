@@ -35,6 +35,19 @@ public partial class FirstWindow : Window
 
 
 
+    public bool ShowPassword
+    {
+        get { return (bool)GetValue(ShowPasswordProperty); }
+        set { SetValue(ShowPasswordProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ShowPassword.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ShowPasswordProperty =
+        DependencyProperty.Register("ShowPassword", typeof(bool), typeof(FirstWindow), new PropertyMetadata(true));
+
+
+
+
     public FirstWindow()
     {
         CurrentUser = new BO.User { Id = 0, UserName = "", Password = "" };
@@ -70,5 +83,10 @@ public partial class FirstWindow : Window
         PasswordBox passwordBox = (sender as PasswordBox)!;
         if (passwordBox != null)
             CurrentUser.Password = passwordBox.Password;
+    }
+
+    private void ShowPasswordClick(object sender, MouseButtonEventArgs e)
+    {
+        return;
     }
 }

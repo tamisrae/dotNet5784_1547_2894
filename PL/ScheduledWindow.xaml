@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ScheduledWindow" Height="220" Width="400"
-        DataContext="{Binding StartProjectDate, RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding StartProjectDate, RelativeSource={RelativeSource Mode=Self}}" Icon="/calendar.png">
 
     <Grid Style="{StaticResource GridKey}">
         <Grid.RowDefinitions>

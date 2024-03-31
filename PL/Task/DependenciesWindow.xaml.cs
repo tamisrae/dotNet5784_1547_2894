@@ -1,19 +1,7 @@
 ﻿using BO;
-using DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Printing.IndexedProperties;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Task;
 
@@ -23,13 +11,14 @@ namespace PL.Task;
 public partial class DependenciesWindow : Window
 {
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
-    int TaskId;
+    int TaskId, WorkerId;
     BO.WorkerExperience Level = BO.WorkerExperience.Waiter;
 
     public DependenciesWindow(int taskId = 0, int workerId = 0)
     {
         InitializeComponent();
         TaskId = taskId;
+        WorkerId = workerId;
         try
         {
             BO.Task? task = bl.Task.Read(taskId);
@@ -39,9 +28,9 @@ public partial class DependenciesWindow : Window
 
             TaskList = new List<DependencyTask>();
             List<BO.TaskInList> taskInLists = (bl.Task.ReadAll()).ToList();
-            if (task != null && task.Dependencies != null)  
+            if (task != null && task.Dependencies != null)
             {
-                foreach(BO.TaskInList taskInList in taskInLists)
+                foreach (BO.TaskInList taskInList in taskInLists)
                 {
                     if (task.Dependencies.FirstOrDefault(item => item.Id == taskInList.Id) == null)
                         TaskList.Add(new DependencyTask { Alias = taskInList.Alias, Id = taskInList.Id, Description = taskInList.Description, Status = taskInList.Status, IsDependent = "Add", ProjectStatus = bl.GetProjectStatus(), Level = Level });
@@ -82,7 +71,7 @@ public partial class DependenciesWindow : Window
 
     private void AddDeleteDependency(object sender, RoutedEventArgs e)
     {
-        DependencyTask? dependencyTask=(sender as Button)?.DataContext as DependencyTask;
+        DependencyTask? dependencyTask = (sender as Button)?.DataContext as DependencyTask;
         try
         {
             BO.Task? task = bl.Task.Read(TaskId);
@@ -101,9 +90,9 @@ public partial class DependenciesWindow : Window
                 }
                 else if (dependencyTask.IsDependent == "Delete" && task.Dependencies != null)
                 {
-                    foreach(var dependency in task.Dependencies)
+                    foreach (var dependency in task.Dependencies)
                     {
-                        if(dependency.Id == dependencyTask.Id)
+                        if (dependency.Id == dependencyTask.Id)
                         {
                             task.Dependencies.Remove(dependency);
                             bl.Task.Update(task);
@@ -129,6 +118,24 @@ public partial class DependenciesWindow : Window
         catch (Exception mess)
         {
             MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    private void ShowTaskClick(object sender, MouseButtonEventArgs e)
+    {
+        DependencyTask? dependencyTask = (sender as ListView)?.SelectedItem as DependencyTask;
+        BO.Task? task = null;
+        try
+        {
+            if (dependencyTask != null)
+                task = bl.Task.Read(dependencyTask.Id);
+            if (task != null)
+                new TaskWindow(task.Id, WorkerId).ShowDialog();
+        }
+        catch (BlDoesNotExistsException mess)
+        {
+            MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            this.Close();
         }
     }
 }

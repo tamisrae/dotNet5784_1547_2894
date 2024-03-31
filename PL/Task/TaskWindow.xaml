@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Margin="0,0,0,-6" Style="{StaticResource GridKey}">
         <Grid.Background>
-            <ImageBrush ImageSource="/Task/סושי.jpeg"/>
+            <ImageBrush ImageSource="/Task/Sushi.jpeg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="43*"/>
@@ -136,6 +136,9 @@
                             <Binding Path="ProjectStatus"/>
                         </MultiBinding>
                     </MenuItem.IsEnabled>
+                    <MenuItem.Background>
+                        <ImageBrush Stretch="None" AlignmentX="Left" ImageSource="/Task/trash.png"/>
+                    </MenuItem.Background>
                 </MenuItem>
                 <MenuItem Header="Sign up for this task" Click="SignUpForTaskClick" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolStartTaskKey}}"/>
                 <MenuItem Header="Start this task" Click="StartTask" IsEnabled="{Binding CurrentTask.Status, Mode=OneTime, Converter={StaticResource ConvertStatusToBoolStartTaskKey}}"/>

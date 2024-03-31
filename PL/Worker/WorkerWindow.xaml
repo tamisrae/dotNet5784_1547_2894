@@ -9,7 +9,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Grid Margin="0,0,0,-6" RenderTransformOrigin="0.449,0.429" Style="{StaticResource GridKey}">
         <Grid.Background>
-            <ImageBrush ImageSource="/Worker/סושי.jpeg"/>
+            <ImageBrush ImageSource="/Worker/Sushi.jpeg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -67,7 +67,11 @@
 
         <Menu Grid.Column="0" Grid.Row="0" Width="28" HorizontalAlignment="Left" VerticalAlignment="Top"> 
             <MenuItem Header="•••" Height="28" Width="28" RenderTransformOrigin="0.5,0.5" Click="AddUpdateClick">
-                <MenuItem Header="Delete" Click="DeleteWorkerClick"/>
+                <MenuItem Header="Delete" Click="DeleteWorkerClick">
+                    <MenuItem.Background>
+                        <ImageBrush Stretch="None" AlignmentX="Left" ImageSource="/Worker/trash.png"/>
+                    </MenuItem.Background>
+                </MenuItem>
             </MenuItem>
         </Menu>
     </Grid>

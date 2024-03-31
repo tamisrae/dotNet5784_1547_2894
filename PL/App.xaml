@@ -21,6 +21,7 @@
         <local:ConvertStatusAndLevelToBool x:Key="ConvertStatusAndLevelToBoolKey"/>
         <local:ConvertStatusToBoolStartTask x:Key="ConvertStatusToBoolStartTaskKey"/>
         <local:ConvertStatusToBoolEndTask x:Key="ConvertStatusToBoolEndTaskKey"/>
+        <local:ConvertBoolToPasswordChar x:Key="ConvertBoolToPasswordCharKey"/>
 
         <Style x:Key="LabelKey" TargetType="Label">
             <Setter Property="Foreground" Value="White"/>

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="FirstWindow" Height="350" Width="350"
-         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" 
+        Icon="/user (1).png">
     <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -18,10 +19,21 @@
         </Grid.RowDefinitions>
 
         <Label Content="User name" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" FontFamily="Arial" Foreground="White"/>
-        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="White" Background="Transparent" BorderThickness="0,0,0,2" Foreground="White"/>
+        <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Width="120" Text="{Binding CurrentUser.UserName, Mode=OneWayToSource}" Grid.Row="1" BorderBrush="White" BorderThickness="0,0,0,2" Foreground="White" CaretBrush="White" Padding="15,0,0,0">
+            <TextBox.Background>
+                <ImageBrush Stretch="None" AlignmentX="Left" ImageSource="/user1.png"/>
+            </TextBox.Background>
+        </TextBox>
 
         <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" FontFamily="Arial" Foreground="White"/>
-        <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" PasswordChanged="PasswordBox_Click" Grid.Row="3" BorderBrush="White" Background="Transparent" BorderThickness="0,0,0,2" Foreground="White"/>
+        <PasswordBox HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" PasswordChanged="PasswordBox_Click" Grid.Row="3" BorderBrush="White" 
+         BorderThickness="0,0,0,2" Foreground="White" CaretBrush="White" Padding="15,0,0,0">
+            <PasswordBox.Background>
+                <ImageBrush Stretch="None" AlignmentX="Left" ImageSource="/hide.png"/>
+            </PasswordBox.Background>
+        </PasswordBox>
+
+
 
         <Button Content="Log in" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Click="LogInButton" Grid.Row="4" Width="70" Height="30" Background="Black" Foreground="White" BorderThickness="2,2,2,2" IsDefault="True" BorderBrush="White">
             <Button.Template>

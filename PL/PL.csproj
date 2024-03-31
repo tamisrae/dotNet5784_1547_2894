@@ -14,12 +14,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="calendar.png" />
+    <None Remove="hide.png" />
+    <None Remove="home.png" />
+    <None Remove="register.png" />
+    <None Remove="sign-in.png" />
+    <None Remove="Task\Sushi.jpeg" />
+    <None Remove="Task\trash.png" />
     <None Remove="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
-    <None Remove="Task\סושי.jpeg" />
+    <None Remove="user %281%29.png" />
+    <None Remove="user %282%29.png" />
+    <None Remove="user small.png" />
+    <None Remove="user white.png" />
+    <None Remove="user.png" />
+    <None Remove="user1.png" />
+    <None Remove="User\Sushi.jpeg" />
+    <None Remove="User\user %281%29.png" />
     <None Remove="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
-    <None Remove="User\סושי.jpeg" />
     <None Remove="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
-    <None Remove="Worker\סושי.jpeg" />
+    <None Remove="Worker\Sushi.jpeg" />
+    <None Remove="Worker\trash.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,12 +42,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="calendar.png" />
+    <Resource Include="hide.png" />
+    <Resource Include="home.png" />
+    <Resource Include="register.png" />
+    <Resource Include="sign-in.png" />
+    <Resource Include="Task\Sushi.jpeg" />
+    <Resource Include="Task\trash.png" />
     <Resource Include="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
-    <Resource Include="Task\סושי.jpeg" />
+    <Resource Include="user (1).png" />
+    <Resource Include="user (2).png" />
+    <Resource Include="user1.png" />
+    <Resource Include="User\Sushi.jpeg" />
+    <Resource Include="User\user (1).png" />
     <Resource Include="User\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
-    <Resource Include="User\סושי.jpeg" />
     <Resource Include="WhatsApp Image 2024-03-03 at 01.52.35.jpeg" />
-    <Resource Include="Worker\סושי.jpeg" />
+    <Resource Include="Worker\Sushi.jpeg" />
+    <Resource Include="Worker\trash.png" />
   </ItemGroup>
 
 </Project>
