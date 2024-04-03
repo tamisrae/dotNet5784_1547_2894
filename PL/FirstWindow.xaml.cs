@@ -84,9 +84,4 @@ public partial class FirstWindow : Window
         if (passwordBox != null)
             CurrentUser.Password = passwordBox.Password;
     }
-
-    private void ShowPasswordClick(object sender, MouseButtonEventArgs e)
-    {
-        return;
-    }
 }

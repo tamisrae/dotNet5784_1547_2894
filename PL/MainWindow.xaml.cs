@@ -2,6 +2,7 @@
 using BO;
 using PL.Task;
 using PL.User;
+using System.ComponentModel;
 using System.Windows;
 
 namespace PL;
@@ -14,6 +15,7 @@ public partial class MainWindow : Window
     static readonly BlApi.IBl bl = BlApi.Factory.Get();
     public MainWindow(int Id = 0)
     {
+        Activated += MainWindow_Activated;
         try
         {
             CurrentWorker = bl.Worker.Read(Id);
@@ -27,6 +29,10 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    private void MainWindow_Activated(object? sender, EventArgs e)
+    {
+        CurrentTime = bl.Clock;
+    }
 
     public BO.Worker? CurrentWorker
     {
@@ -47,8 +53,6 @@ public partial class MainWindow : Window
     // Using a DependencyProperty as the backing store for CurrentTime.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CurrentTimeProperty =
         DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(bl.Clock));
-
-
 
     private void WorkersListShow(object sender, RoutedEventArgs e)
     {
@@ -116,7 +120,7 @@ public partial class MainWindow : Window
 
     private void GantClick(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show("wish us luck", "yalla", MessageBoxButton.OK);
+       new GantWindow().ShowDialog();
     }
 
     private void CurrentTaskClick(object sender, RoutedEventArgs e)

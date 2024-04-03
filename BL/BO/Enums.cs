@@ -21,7 +21,8 @@ public enum Status
     Unscheduled,
     Scheduled,
     OnTrack,
-    Done
+    Done,
+    InJeopardy
 }
 
 public enum ProjectStatus
@@ -49,5 +50,6 @@ public enum PLStatus
     Scheduled,
     OnTrack,
     Done,
-    All
+    All,
+    InJeopardy
 }

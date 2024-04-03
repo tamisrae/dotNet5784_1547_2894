@@ -8,12 +8,6 @@ namespace BlImplementation;
 using BlApi;
 using BO;
 
-//using DalApi;
-
-//using DalApi;
-
-//using DalApi;
-
 internal class Bl : IBl
 {
     private static DalApi.IDal dal = DalApi.Factory.Get;
@@ -25,10 +19,20 @@ internal class Bl : IBl
     private static DateTime s_Clock = DateTime.Now;
     public DateTime Clock { get { return s_Clock; } private set { s_Clock = value; } }
 
+    /// <summary>
+    /// This function initializes the data
+    /// </summary>
     public void InitializeDB() => DalTest.Initialization.Do();
 
+    /// <summary>
+    /// This function reset the data
+    /// </summary>
     public void ResetDB() => DalTest.Initialization.Reset();
 
+    /// <summary>
+    /// This function calculate the project status
+    /// </summary>
+    /// <returns></returns>
     public BO.ProjectStatus GetProjectStatus()
     {
         BO.ProjectStatus projectStatus = BO.ProjectStatus.Scheduled;
@@ -41,13 +45,20 @@ internal class Bl : IBl
         return projectStatus;
     }
 
+    /// <summary>
+    /// This function returns an offer of scheduled date
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistsException"></exception>
+    /// <exception cref="BlScheduledDateException"></exception>
     public DateTime? ScheduleDateOffer(BO.Task task)
     {
         DateTime? dateTime = null;
-        IEnumerable<DO.Dependency>? dependencies = (from dependency in dal.Dependency.ReadAll()
+        List<DO.Dependency> dependencies = ((from dependency in dal.Dependency.ReadAll()
                                                     where dependency.DependentTask == task.Id
-                                                    select dependency);
-        if (dependencies == null && dal.StartProjectDate != null)
+                                                    select dependency)).ToList();
+        if (dependencies.Count() == 0 && dal.StartProjectDate != null) 
             return dal.StartProjectDate;
         else
         {
@@ -70,12 +81,24 @@ internal class Bl : IBl
                 if (tasksList.FirstOrDefault(t => t.ScheduledDate == null) != null)
                     throw new BlScheduledDateException($"You cannot enter scheduled date for This with ID={task.Id} task");
                 else
+                {
                     dateTime = GetForeCastDate(tasksList.MaxBy(t => GetForeCastDate(t))!);
+                    foreach(DO.Task tsk in tasksList)
+                    {
+                        if (tsk.CompleteDate != null && tsk.CompleteDate > dateTime)
+                            dateTime = tsk.CompleteDate;
+                    }
+                }
             }
         }
         return (DateTime)dateTime!;
     }
 
+    /// <summary>
+    /// This function calculate the task status
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public Status GetStatus(DO.Task task)
     {
         Status status;
@@ -91,6 +114,11 @@ internal class Bl : IBl
         return status;
     }
 
+    /// <summary>
+    /// This function calculate the fore cast date of task
+    /// </summary>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public DateTime? GetForeCastDate(DO.Task task)
     {
         DateTime? startDate;
@@ -103,6 +131,12 @@ internal class Bl : IBl
         return foreCastDate;
     }
 
+    /// <summary>
+    /// This function returns if a worker can take the task or not
+    /// </summary>
+    /// <param name="workerId"></param>
+    /// <param name="task"></param>
+    /// <returns></returns>
     public bool AllowedTask(int workerId, DO.Task task)
     {
         if (task.WorkerId != null && workerId != task.WorkerId)//if another worker work on this task
@@ -123,9 +157,10 @@ internal class Bl : IBl
 
     public void StartProjectDate(DateTime projectDate) => dal.StartProjectDate = projectDate;
 
+
     public void AdvanceTimeByYear()
     {
-        Clock= Clock.AddYears(1);
+        Clock = Clock.AddYears(1);
     }
 
     public void AdvanceTimeByDay()
@@ -145,6 +180,69 @@ internal class Bl : IBl
 
     public void ResetTime()
     {
-        Clock= DateTime.Now;
+        Clock = DateTime.Now;
+    }
+
+
+    /// <summary>
+    /// This function create list of gant tasks
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<GantTask>? CreateGantList()
+    {
+        var list = from item in Task.ReadAll()
+                  let task = Task.Read(item.Id)
+                  select new GantTask
+                  {
+                      Id = task.Id,
+                      Alias = task.Alias,
+                      WorkerId = task.WorkOnTask?.Id,
+                      WorkerName = task.WorkOnTask?.Name,
+                      StartDate = CalculateStartDate(task.StartDate, task.ScheduledDate),
+                      CompleteDate = CalculateCompleteDate(task.ForeCastDate, task.CompleteDate),
+                      DependentTasks = DependenciesId(task.Dependencies),
+                      Status = task.Status
+                  };
+        return list.OrderBy(task => task.StartDate);
+    }
+
+    /// <summary>
+    /// This function returns a list of Id of dependencies
+    /// </summary>
+    /// <param name="dependencies"></param>
+    /// <returns></returns>
+    private IEnumerable<int> DependenciesId(IEnumerable<TaskInList>? dependencies)
+    {
+        return from dependency in dependencies
+               select dependency.Id;
+    }
+
+    /// <summary>
+    /// This function calculate the start date of the task
+    /// </summary>
+    /// <param name="startDate"></param>
+    /// <param name="scheduledDate"></param>
+    /// <returns></returns>
+    private DateTime CalculateStartDate(DateTime? startDate, DateTime? scheduledDate)
+    {
+        if (startDate == null)
+            return scheduledDate ?? Clock;
+        else
+            return startDate ?? Clock;
+    }
+
+    /// <summary>
+    /// This function calculate the complete date of the task
+    /// </summary>
+    /// <param name="forecastDate"></param>
+    /// <param name="completeDate"></param>
+    /// <returns></returns>
+    private DateTime CalculateCompleteDate(DateTime? forecastDate, DateTime? completeDate)
+    {
+        if (completeDate == null)
+            return forecastDate ?? Clock;
+        else
+            return completeDate ?? Clock;
     }
 }
+

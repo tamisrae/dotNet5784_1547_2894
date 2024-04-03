@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-using DO;
 using System.Data;
 
 namespace BlImplementation;
@@ -270,7 +269,7 @@ internal class TaskImplementation : ITask
 
                 if (dependencies.Any())
                 {
-                    foreach(DO.Dependency dependency in dependencies)
+                    foreach (DO.Dependency dependency in dependencies)
                     {
                         if (task.Dependencies.FirstOrDefault(item => item.Id == dependency.Id) == null)
                             dal.Dependency.Delete(dependency.Id);
@@ -280,7 +279,7 @@ internal class TaskImplementation : ITask
                 List<DO.Dependency>? temp = (from TaskInList taskInList in task.Dependencies//add the new dependencies
                                              where dependencies.FirstOrDefault(depnc => depnc.DependsOnTask == taskInList.Id) == null
                                              select new DO.Dependency(0, task.Id, taskInList.Id)).ToList();
-                foreach(DO.Dependency dep in temp)
+                foreach (DO.Dependency dep in temp)
                 {
                     dependencies.Add(dep);
                 }
@@ -298,7 +297,7 @@ internal class TaskImplementation : ITask
             }
             else
             {
-                foreach(DO.Dependency dependency in dal.Dependency.ReadAll())
+                foreach (DO.Dependency dependency in dal.Dependency.ReadAll())
                 {
                     if (dependency.DependentTask == task.Id)
                         dal.Dependency.Delete(dependency.Id);
@@ -385,11 +384,11 @@ internal class TaskImplementation : ITask
     /// <returns></returns>
     private List<DO.Dependency> FindDependencies(int id)
     {
-        List <DO.Dependency> dependencies = new List<DO.Dependency>();
+        List<DO.Dependency> dependencies = new List<DO.Dependency>();
 
         dependencies = (from dependency in dal.Dependency.ReadAll()
-                                             where dependency.DependentTask == id
-                                             select dependency).ToList();
+                        where dependency.DependentTask == id
+                        select dependency).ToList();
         return dependencies;
     }
 
@@ -459,6 +458,14 @@ internal class TaskImplementation : ITask
             throw new BlScheduledDateException("There is not start project date yet");
         else
         {
+            foreach (BO.TaskInList taskInList in ReadAll())
+            {
+                DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
+                if (task1 != null)
+                    dal.Task.Update(task1);
+            }
+
+
             List<BO.Task> tasks = (from DO.Task task in dal.Task.ReadAll()
                                    where FindDependencies(task.Id)!.Count == 0
                                    select Read(task.Id)).ToList();//All the tasks that didn't have dependencies
@@ -563,7 +570,7 @@ internal class TaskImplementation : ITask
                 {
                     foreach (BO.TaskInList taskInList in ReadAll())
                     {
-                        if (taskInList.Status != Status.Done || taskInList.Status != Status.OnTrack)
+                        if (taskInList.Status != Status.Done && taskInList.Status != Status.OnTrack && (Read(taskInList.Id)!.Dependencies != null && Read(taskInList.Id)!.Dependencies!.Count > 0))
                         {
                             DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
                             if (task1 != null)
@@ -585,7 +592,7 @@ internal class TaskImplementation : ITask
             throw new BO.BlDoesNotExistsException($"Task with ID={boTask.Id} doe's NOT exists", ex);
         }
     }
-     
+
     /// <summary>
     /// A worker declares the completion of a task
     /// </summary>
@@ -611,9 +618,9 @@ internal class TaskImplementation : ITask
                 {
                     foreach (BO.TaskInList taskInList in ReadAll())
                     {
-                        if (taskInList.Status != Status.Done || taskInList.Status != Status.OnTrack)
+                        if (taskInList.Status != Status.Done && taskInList.Status != Status.OnTrack && (Read(taskInList.Id)!.Dependencies != null && Read(taskInList.Id)!.Dependencies!.Count > 0))
                         {
-                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
+                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null};
                             if (task1 != null)
                                 dal.Task.Update(task1);
                         }
@@ -682,35 +689,37 @@ internal class TaskImplementation : ITask
     }
 
     /// <summary>
+    /// this function checks if the task in jeopardy or not
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public bool InJeopardyCheck(int id)
+    {
+        BO.Task? task = Read(id);
+        if (task != null && task.ScheduledDate != null && task.StartDate == null) 
+        {
+            if (_bl.Clock.Date > task.ScheduledDate)
+                return true;
+            else if (task.Dependencies == null || task.Dependencies.Count == 0)
+                return false;
+            else
+            {
+                foreach(BO.TaskInList dep in task.Dependencies)
+                {
+                    BO.Task? tsk = Read(dep.Id);
+                    if (tsk != null && tsk.StartDate != null && tsk.StartDate > tsk.ScheduledDate && tsk.CompleteDate == null)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// This function clear all the data from the data layer
     /// </summary>
     public void Clear()
     {
         dal.Task.Clear();
-    }
-
-    public BO.TaskInList? ReadTaskInList(int id)
-    {
-        try
-        {
-            DO.Task? doTask = dal.Task.Read(id);
-
-            if (doTask == null)
-                throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists");
-            else
-            {
-                return new BO.TaskInList
-                {
-                    Id = id,
-                    Alias = doTask.Alias,
-                    Description = doTask.Description,
-                    Status = _bl.GetStatus(doTask),
-                };
-            }
-        }
-        catch (DO.DalDoesNotExistsException ex)
-        {
-            throw new BO.BlDoesNotExistsException($"Task with ID={id} doe's NOT exists", ex);
-        }
     }
 }

@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" Icon="/home.png">
-    <Grid x:Name="back" Style="{StaticResource GridKey}">
+
+    <Grid Style="{StaticResource GridKey}">
         <Grid.Background>
             <ImageBrush ImageSource="/WhatsApp Image 2024-03-03 at 01.52.35.jpeg"/>
         </Grid.Background>
@@ -21,7 +22,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Content="We need to decide" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource LabelKey}" Grid.Row="0" Grid.Column="1" FontSize="30" Width="250" BorderBrush="Black" Foreground="White"/>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource LabelKey}" Grid.Row="0" Grid.Column="1" FontSize="30" Width="250" BorderBrush="Black" Foreground="White">
+            <Label.Background>
+                <ImageBrush/>
+            </Label.Background>
+        </Label>
 
         <Button Content="Gant" HorizontalAlignment="Center" VerticalAlignment="Center" Height="55" Width="170"  Style="{StaticResource MainButtonKey}" 
         Grid.Column="0" Grid.Row="2" Visibility="{Binding CurrentWorker.Level, Mode=OneTime, Converter={StaticResource ConvertLevelToVisibaleManagerKey}}" Click="GantClick"/>
@@ -47,7 +52,7 @@
         Grid.Column="2" Grid.Row="0" Click="UserClick"/>
 
         <StackPanel  Grid.Column="0" Grid.Row="0" Width="150" Height="86" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Label Content="{Binding CurrentTime, StringFormat=dd/MM/yyyy HH:mm:ss}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="43" FontFamily="Gill Sans MT" FontSize="15"/>
+            <Label Content="{Binding CurrentTime, Mode=TwoWay, StringFormat=dd/MM/yyyy HH:mm:ss}" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="43" FontFamily="Gill Sans MT" FontSize="15"/>
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                 <Button Content="hour" Click="HourButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>
                 <Button Content="day" Click="DayButton" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource MainButtonKey}" Width="50" Height="20"/>

@@ -1,0 +1,44 @@
+﻿<Window x:Class="PL.GantWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="GantWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="390"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="DataGridCell">
+                <Setter Property="Background"
+              Value="{Binding Content.Text, RelativeSource={RelativeSource Mode=Self},Converter={StaticResource ConvertStatusToBackgroundKey}}"/>
+                <Setter Property="Foreground" 
+              Value="{Binding Content.Text, RelativeSource={RelativeSource Mode=Self},Converter={StaticResource ConvertStatusToForegroundKey}}"/>
+            </Style>
+        </Grid.Resources>
+        <DataGrid Initialized="GantGrid_Initialized" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False" RowDetailsVisibilityMode="Visible" ScrollViewer.CanContentScroll="True"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Unscheduled" Grid.Column="0" Background="Gray" Foreground="Black" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label Content="Scheduled" Grid.Column="1" Background="GreenYellow" Foreground="Black" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label Content="On track" Grid.Column="2" Background="LawnGreen" Foreground="Black" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label Content="Done" Grid.Column="3" Background="Green" Foreground="Black" VerticalAlignment="Top" Grid.Row="1"/>
+            <Label Content="In jeopardy" Grid.Column="4" Background="Red" Foreground="Black" VerticalAlignment="Top" Grid.Row="1"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -19,7 +19,10 @@
     <None Remove="home.png" />
     <None Remove="register.png" />
     <None Remove="sign-in.png" />
+    <None Remove="Task\checked.png" />
+    <None Remove="Task\log-in.png" />
     <None Remove="Task\Sushi.jpeg" />
+    <None Remove="Task\task.png" />
     <None Remove="Task\trash.png" />
     <None Remove="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
     <None Remove="user %281%29.png" />
@@ -47,7 +50,10 @@
     <Resource Include="home.png" />
     <Resource Include="register.png" />
     <Resource Include="sign-in.png" />
+    <Resource Include="Task\checked.png" />
+    <Resource Include="Task\log-in.png" />
     <Resource Include="Task\Sushi.jpeg" />
+    <Resource Include="Task\task.png" />
     <Resource Include="Task\trash.png" />
     <Resource Include="Task\WhatsApp Image 2024-03-03 at 23.29.16.jpeg" />
     <Resource Include="user (1).png" />

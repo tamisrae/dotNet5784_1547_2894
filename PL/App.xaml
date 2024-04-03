@@ -21,7 +21,8 @@
         <local:ConvertStatusAndLevelToBool x:Key="ConvertStatusAndLevelToBoolKey"/>
         <local:ConvertStatusToBoolStartTask x:Key="ConvertStatusToBoolStartTaskKey"/>
         <local:ConvertStatusToBoolEndTask x:Key="ConvertStatusToBoolEndTaskKey"/>
-        <local:ConvertBoolToPasswordChar x:Key="ConvertBoolToPasswordCharKey"/>
+        <local:ConvertStatusToBackground x:Key="ConvertStatusToBackgroundKey"/>
+        <local:ConvertStatusToForeground x:Key="ConvertStatusToForegroundKey"/>
 
         <Style x:Key="LabelKey" TargetType="Label">
             <Setter Property="Foreground" Value="White"/>
@@ -34,6 +35,13 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Blue"/>
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="MainButtonKey" TargetType="Button">
@@ -42,6 +50,13 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="#FF267513"/>
             <Setter Property="BorderBrush" Value="#FF52AC3D"/>
+            <Setter Property="Cursor" Value="Hand"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Foreground" Value="Blue"/>
+                        <Setter Property="BorderBrush" Value="Blue"/>
+                    </Trigger>
+                </Style.Triggers>
         </Style>
 
         <Style x:Key="GridKey" TargetType="Grid">

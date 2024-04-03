@@ -56,6 +56,7 @@ public partial class UserWindow : Window
                 }
                 else//if the id is 0 it means that we need to creat new user
                 {
+                    BO.Worker? worker = bl.Worker.Read(CurrentUser.Id);
                     bl.User.Create(CurrentUser);
                     MessageBox.Show("The user was successfully added", "ADD", MessageBoxButton.OK);
                 }

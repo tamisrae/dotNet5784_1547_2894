@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace PL;
 
@@ -135,32 +136,6 @@ public class ConvertLevelAndDateToBool : IMultiValueConverter
     }
 }
 
-//class ConvertDep : IValueConverter
-//{
-//    static readonly BlApi.IBl bl = BlApi.Factory.Get();
-
-//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        int Id = (int)value;
-//        if (parameter != null)
-//        {
-//            List<BO.TaskInList> depenndencies = (List<BO.TaskInList>)parameter;
-
-//            if (depenndencies.FirstOrDefault(item => item.Id == Id) == null)
-//                return "Add";
-//            else
-//                return "Delete";
-//        }
-//        else
-//            return "Add";
-//    }
-
-//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
-
 public class ConvertStatusAndLevelToBool : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -205,14 +180,52 @@ class ConvertStatusToBoolEndTask : IValueConverter
     }
 }
 
-class ConvertBoolToPasswordChar : IValueConverter
+class ConvertStatusToBackground : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if ((bool)value)
-            return (char)'0';
-        else
-            return (char)'*';
+        switch (value)
+        {
+            case "Unscheduled":
+                return Brushes.Gray;
+            case "Scheduled":
+                return Brushes.GreenYellow;
+            case "OnTrack":
+                return Brushes.Green;
+            case "InJeopardy":
+                return Brushes.Red;
+            case "Done":
+                return Brushes.DarkGreen;
+            case "All":
+                return Brushes.White;
+            default:
+                return Brushes.LightGreen;
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+class ConvertStatusToForeground : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        switch (value)
+        {
+            case "Unscheduled":
+            case "Scheduled":
+            case "OnTrack":
+            case "InJeopardy":
+            case "Done":
+                return Brushes.Black;
+            case "All":
+                return Brushes.White;
+            default:
+                return Brushes.Black;
+        }
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

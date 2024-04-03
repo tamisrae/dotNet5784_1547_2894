@@ -10,8 +10,6 @@ public interface IBl
     public IUser User { get; }
 
 
-    private static DalApi.IDal dal = DalApi.Factory.Get;
-
     public BO.ProjectStatus GetProjectStatus();
 
     public DateTime? ScheduleDateOffer(BO.Task task);
@@ -29,6 +27,7 @@ public interface IBl
     public void StartProjectDate(DateTime projectDate);
 
     public DateTime Clock { get; }
+
     public void AdvanceTimeByYear();
 
     public void AdvanceTimeByDay();
@@ -38,6 +37,8 @@ public interface IBl
     public void AdvanceTimeByHour();
 
     public void ResetTime();
+
+    public IEnumerable<GantTask>? CreateGantList();
 };
 
 
