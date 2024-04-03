@@ -99,7 +99,7 @@ public partial class TaskListWindow : Window
 
     private void AddTask(object sender, RoutedEventArgs e)
     {
-        new TaskWindow().ShowDialog();
+        new TaskWindow(0, workerID).ShowDialog();
         //update the list of the tasks after the changes
         TaskList = (Complexity == BO.PLWorkerExperience.All) ?
         (bl?.Task.ReadAll()!).ToList() : (bl?.Task.ReadAll(item => (int?)item.Complexity == (int)Complexity)!).ToList();

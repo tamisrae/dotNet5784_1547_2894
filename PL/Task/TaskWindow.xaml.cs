@@ -31,33 +31,11 @@ public partial class TaskWindow : Window
         taskID = taskId;
         workerID = workerId;
         if (taskId == 0)//create new task window with default values
+        {
             CurrentTask = new BO.Task { Id = 0, Alias = "", Description = "" };
-        //else if (taskId < 0) 
-        //{
-        //    try
-        //    {
-        //        BO.TaskInList? taskInList = bl.Task.ReadAll().FirstOrDefault(item => bl.Task.Read(item.Id)!.WorkOnTask != null && bl.Task.Read(item.Id)!.WorkOnTask!.Id == workerId && bl.Task.Read(item.Id)!.Status == BO.Status.OnTrack)!;
-        //        CurrentWorker = bl.Worker.Read(workerId);
-        //        if (taskInList != null)
-        //        {
-        //            CurrentTask = bl.Task.Read(taskInList.Id);
-        //            if (CurrentTask != null)
-        //                taskID = CurrentTask.Id;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("You are not working on any tasks at the moment", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //            CurrentTask = null;
-        //            this.Close();
-        //        }
-        //    }
-        //    catch (BlDoesNotExistsException mess)
-        //    {
-        //        CurrentTask = null!;
-        //        MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        this.Close();
-        //    }
-        //}
+            CurrentWorker = bl.Worker.Read(workerID)!;
+
+        }
         else//create new task window with the task's data
         {
             try

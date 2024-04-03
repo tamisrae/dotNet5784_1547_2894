@@ -68,7 +68,7 @@ internal class TaskImplementation : ITask
                                                            let taskId = item.DependsOnTask
                                                            where taskId == id
                                                            select item;
-                if (dependencies != null)
+                if (dependencies != null && dependencies.Count() > 0) 
                     throw new BlCantDeleteException($"Task with ID={id} Cannot be deleted");
 
                 dal.Task.Delete(id);
