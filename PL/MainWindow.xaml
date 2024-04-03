@@ -22,9 +22,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource LabelKey}" Grid.Row="0" Grid.Column="1" FontSize="30" Width="250" BorderBrush="Black" Foreground="White">
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource LabelKey}" Grid.Row="0" Grid.Column="1" FontSize="30" Width="270" Height="90" BorderBrush="Black" Foreground="White">
             <Label.Background>
-                <ImageBrush/>
+                <ImageBrush ImageSource="/itamar.png" />
             </Label.Background>
         </Label>
 

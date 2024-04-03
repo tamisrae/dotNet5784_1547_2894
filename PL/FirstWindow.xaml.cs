@@ -50,6 +50,20 @@ public partial class FirstWindow : Window
 
     public FirstWindow()
     {
+        try
+        {
+            if (bl.Worker.Read(123) == null)
+            {
+            }
+        }
+        catch (BlDoesNotExistsException)
+        {
+            CurrentUser = new BO.User { Id = 0, UserName = "", Password = "" };
+            Worker manager = new BO.Worker { Id = 123, Level = BO.WorkerExperience.Manager, Email = "shir@gmail.com", Cost = 250, Name = "Shir" };
+            bl!.Worker.Create(manager);
+            BO.User managerUser = new BO.User { Id = 123, UserName = "shir", Password = "123" };
+            bl!.User.Create(managerUser);
+        }
         CurrentUser = new BO.User { Id = 0, UserName = "", Password = "" };
         InitializeComponent();
     }

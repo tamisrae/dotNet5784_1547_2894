@@ -17,6 +17,7 @@
     <None Remove="calendar.png" />
     <None Remove="hide.png" />
     <None Remove="home.png" />
+    <None Remove="itamar.png" />
     <None Remove="register.png" />
     <None Remove="sign-in.png" />
     <None Remove="Task\checked.png" />
@@ -48,6 +49,7 @@
     <Resource Include="calendar.png" />
     <Resource Include="hide.png" />
     <Resource Include="home.png" />
+    <Resource Include="itamar.png" />
     <Resource Include="register.png" />
     <Resource Include="sign-in.png" />
     <Resource Include="Task\checked.png" />

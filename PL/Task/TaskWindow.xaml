@@ -65,7 +65,7 @@
 
         <Label Content="The worker" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="7" Grid.Column="0" Style="{StaticResource LabelKey}"/>
 
-        <Label Content="Id" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="6" Grid.Column="1" Margin="84,38,0,0" Grid.RowSpan="2" Height="30" Foreground="White"/>
+        <Label Content="Id" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="7" Grid.Column="1" Grid.RowSpan="2" Height="30" Foreground="White"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding WorkOnTask.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="120" Grid.Row="7" Grid.Column="1">
             <TextBox.IsEnabled>
                 <MultiBinding Mode="OneTime" Converter="{StaticResource ConvertStatusAndLevelToBoolKey}">
@@ -75,7 +75,7 @@
             </TextBox.IsEnabled>
         </TextBox>
 
-        <Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="1" Margin="73,0,0,34" Grid.RowSpan="2" Height="30" Foreground="White"/>
+        <Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="7" Grid.Column="1" Height="30" Foreground="White"/>
         <TextBox HorizontalAlignment="Center" Text="{Binding  WorkOnTask.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" VerticalAlignment="Bottom" Width="120" Grid.Row="7" Grid.Column="1">
             <TextBox.IsEnabled>
                 <MultiBinding Mode="OneTime" Converter="{StaticResource ConvertStatusAndLevelToBoolKey}">

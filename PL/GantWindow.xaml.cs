@@ -101,6 +101,7 @@ public partial class GantWindow : Window
                         else
                         {
                             row[rows] = gant.Status;
+
                             if (s_bl.Task.InJeopardyCheck(gant.Id))
                                 row[rows] = BO.PLStatus.InJeopardy;
                         }

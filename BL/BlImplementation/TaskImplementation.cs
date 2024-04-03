@@ -68,7 +68,7 @@ internal class TaskImplementation : ITask
                                                            let taskId = item.DependsOnTask
                                                            where taskId == id
                                                            select item;
-                if (dependencies != null && dependencies.Count() > 0) 
+                if (dependencies != null && dependencies.Count() > 0)
                     throw new BlCantDeleteException($"Task with ID={id} Cannot be deleted");
 
                 dal.Task.Delete(id);
@@ -620,7 +620,7 @@ internal class TaskImplementation : ITask
                     {
                         if (taskInList.Status != Status.Done && taskInList.Status != Status.OnTrack && (Read(taskInList.Id)!.Dependencies != null && Read(taskInList.Id)!.Dependencies!.Count > 0))
                         {
-                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null};
+                            DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
                             if (task1 != null)
                                 dal.Task.Update(task1);
                         }
@@ -696,7 +696,7 @@ internal class TaskImplementation : ITask
     public bool InJeopardyCheck(int id)
     {
         BO.Task? task = Read(id);
-        if (task != null && task.ScheduledDate != null && task.StartDate == null) 
+        if (task != null && task.ScheduledDate != null && task.StartDate == null)
         {
             if (_bl.Clock.Date > task.ScheduledDate)
                 return true;
@@ -704,14 +704,21 @@ internal class TaskImplementation : ITask
                 return false;
             else
             {
-                foreach(BO.TaskInList dep in task.Dependencies)
+                foreach (BO.TaskInList dep in task.Dependencies)
                 {
                     BO.Task? tsk = Read(dep.Id);
-                    if (tsk != null && tsk.StartDate != null && tsk.StartDate > tsk.ScheduledDate && tsk.CompleteDate == null)
+                    if (tsk != null && tsk.StartDate == null && _bl.Clock.Date > tsk.ScheduledDate)
+                        return true;
+                    else if (tsk != null && tsk.CompleteDate == null && _bl.Clock.Date > task.ForeCastDate)
+                        return true;
+                    if (InJeopardyCheck(dep.Id))
                         return true;
                 }
             }
         }
+        else if (task != null && task.StartDate != null && task.CompleteDate == null)
+            if (_bl.Clock.Date > task.ForeCastDate)
+                return true;
         return false;
     }
 
