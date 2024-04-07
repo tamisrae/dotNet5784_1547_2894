@@ -208,7 +208,7 @@ internal class WorkerImplementation : IWorker
 
         BO.TaskInWorker? taskInWorker = null;
         if (task != null)
-            taskInWorker = new BO.TaskInWorker { Id = id, Alias = task.Alias };
+            taskInWorker = new BO.TaskInWorker { Id = task.Id, Alias = task.Alias };
         return taskInWorker;
     }
 }

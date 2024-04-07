@@ -458,7 +458,10 @@ internal class TaskImplementation : ITask
             throw new BlScheduledDateException("There is not start project date yet");
         else
         {
-            foreach (BO.TaskInList taskInList in ReadAll())
+            List<BO.TaskInList> tasksInList = (from BO.TaskInList taskInList in ReadAll()
+                                               select taskInList).ToList();
+
+            foreach (BO.TaskInList taskInList in tasksInList)
             {
                 DO.Task? task1 = dal.Task.Read(taskInList.Id)! with { ScheduledDate = null };
                 if (task1 != null)

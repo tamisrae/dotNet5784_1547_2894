@@ -30,7 +30,7 @@
         <TextBox Text="{Binding CurrentUser.UserName}" Grid.Row="1" Grid.Column="1" Width="150" Height="20"/>
         <TextBox Text="{Binding CurrentUser.Password}" Grid.Row="2" Grid.Column="1" Width="150" Height="20"/>
 
-        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Width="90" Height="40" Click="AddUpdateUser" Style="{StaticResource ButtonKey}">
+        <Button Content="{Binding CurrentUser.Id, Converter={StaticResource ConverIdToContentKey}, Mode=OneTime}" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Width="90" Height="40" Click="AddUpdateUser" Style="{StaticResource ButtonKey}" IsDefault="True">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="10" Background="{TemplateBinding Background}">

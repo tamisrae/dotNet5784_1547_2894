@@ -6,11 +6,11 @@ namespace Dal;
     {
         internal const int taskId = 1;
         private static int nextTaskId = taskId;
-        internal static int NextTaskId { get => nextTaskId++; }
+        internal static int NextTaskId { get => nextTaskId++; set => nextTaskId = value; }
 
         internal const int dependencyId = 1;
         private static int nextDependencyId = dependencyId;
-        internal static int NextDependencyId { get => nextDependencyId++; }
+        internal static int NextDependencyId { get => nextDependencyId++; set => nextDependencyId = value; }
 
         public static DateTime? StartProjectDate { get; set; } = null;
         public static DateTime? EndProjectDate { get; set; } = null;

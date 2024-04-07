@@ -58,10 +58,13 @@ public partial class WorkerWindow : Window
             try
             {
                 CurrentWorker = bl.Worker.Read(Id)!;
+                if (CurrentWorker.CurrentTask != null)
+                    CurrentTask = CurrentWorker.CurrentTask;
             }
             catch(BlDoesNotExistsException mess)
             {
                 CurrentWorker = null!;
+                CurrentTask = null!;
                 MessageBox.Show(mess.Message, "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
             }
@@ -76,6 +79,8 @@ public partial class WorkerWindow : Window
         this.Close();
         if (CurrentWorker != null)
         {
+            if (CurrentTask != null)
+                CurrentWorker.CurrentTask = CurrentTask;
             try
             {
                 if (ID != 0)//if the id is not 0 it means that we need to update the data
@@ -117,6 +122,7 @@ public partial class WorkerWindow : Window
                 bl.Worker.Delete(CurrentWorker.Id);
                 MessageBox.Show("The worker was successfully deleted", "DELETE", MessageBoxButton.OK);
                 CurrentWorker = null!;
+                CurrentTask = null!;
             }
             catch (Exception mess)
             {

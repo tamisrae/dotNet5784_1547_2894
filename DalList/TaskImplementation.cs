@@ -88,5 +88,6 @@ internal class TaskImplementation : ITask
     public void Clear()
     {
         Tasks.Clear();
+        Config.NextTaskId = 1;
     }
 }

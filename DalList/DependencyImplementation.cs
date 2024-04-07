@@ -87,5 +87,6 @@ internal class DependencyImplementation : IDependency
     public void Clear()
     {
         Dependencies.Clear();
+        Config.NextDependencyId = 1;
     }
 }

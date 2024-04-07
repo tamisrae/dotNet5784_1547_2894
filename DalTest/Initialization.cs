@@ -178,17 +178,17 @@ public static class Initialization
                 complexity = (DO.WorkerExperience)6;
 
 
-            Random rand = new Random(DateTime.Now.Millisecond);
-            DateTime start = new DateTime(2024, 5, 28, 0, 0, 0);
-            int rangeStart = (start - DateTime.Today).Days;
-            DateTime ranDay = start.AddDays(rand.Next(rangeStart));
+            //Random rand = new Random(DateTime.Now.Millisecond);
+            //DateTime start = new DateTime(2024, 5, 28, 0, 0, 0);
+            //int rangeStart = (start - DateTime.Today).Days;
+            //DateTime ranDay = start.AddDays(rand.Next(rangeStart));
 
             Random random = new Random();
             int days = random.Next(1, 4);
             int hours = random.Next(1, 12);
             TimeSpan randRequiredEffortTime = TimeSpan.FromDays(days) + TimeSpan.FromHours(hours);
 
-            DateTime createdAtDate = ranDay; 
+            DateTime createdAtDate = DateTime.Now; 
             DateTime? startDate = null;
             DateTime? scheduledDate = null;
             DateTime? deadlinedate = null;

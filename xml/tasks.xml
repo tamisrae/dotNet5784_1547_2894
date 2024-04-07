@@ -3,183 +3,183 @@
   <Task>
     <Alias>Prepare the first course</Alias>
     <Description>Check which course the orders have chosen for the first course, tell the sous chef what he should prepare and then cook the courses</Description>
-    <CreatedAtDate>2024-06-19T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:25.9846302+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>1</Id>
     <Complexity>Chef</Complexity>
-    <RequiredEffortTime>P3DT7H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT5H</RequiredEffortTime>
     <Deliverables>First Courses</Deliverables>
     <Remarks>Don't forget to add salt to the first course</Remarks>
   </Task>
   <Task>
     <Alias>Prepare the second course</Alias>
     <Description>Check which course the orders have chosen for the second course, tell the sous chef what he should prepare and then cook the courses</Description>
-    <CreatedAtDate>2024-06-07T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.0044538+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>2</Id>
     <Complexity>Chef</Complexity>
-    <RequiredEffortTime>P2DT11H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT6H</RequiredEffortTime>
     <Deliverables>Second Courses</Deliverables>
     <Remarks>Don't forget to add salt to the second course</Remarks>
   </Task>
   <Task>
     <Alias>Make the desserts</Alias>
     <Description>Check which types of desserts the orders have chosen, tell the sous chef what he needs to prepares and cook the desserts</Description>
-    <CreatedAtDate>2024-06-30T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.0800686+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>3</Id>
     <Complexity>Chef</Complexity>
-    <RequiredEffortTime>P1DT2H</RequiredEffortTime>
+    <RequiredEffortTime>P2DT6H</RequiredEffortTime>
     <Deliverables>Desserts</Deliverables>
     <Remarks>Don't forget to melt chocolate before serving</Remarks>
   </Task>
   <Task>
     <Alias>Make the salads</Alias>
     <Description>Check which types of salads the orders have chosen, tell the sous chef what he needs to prepares and cook the salads</Description>
-    <CreatedAtDate>2024-06-23T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.1408761+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>4</Id>
     <Complexity>Chef</Complexity>
-    <RequiredEffortTime>P2DT5H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT8H</RequiredEffortTime>
     <Deliverables>Salads</Deliverables>
     <Remarks>Chop the onion finely</Remarks>
   </Task>
   <Task>
     <Alias>Cut the vegetables</Alias>
     <Description>Prepare for cooking all the vegetables that the chef asked for</Description>
-    <CreatedAtDate>2024-06-19T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.2035228+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>5</Id>
     <Complexity>SousChef</Complexity>
-    <RequiredEffortTime>P3DT4H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT6H</RequiredEffortTime>
     <Deliverables>Vegetables ready to cook</Deliverables>
     <Remarks>cut them chopped</Remarks>
   </Task>
   <Task>
     <Alias>Boil the oil</Alias>
     <Description>Prepare the pans, pots and ovens for cooking</Description>
-    <CreatedAtDate>2024-06-12T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.2814775+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>6</Id>
     <Complexity>SousChef</Complexity>
-    <RequiredEffortTime>P1DT11H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT8H</RequiredEffortTime>
     <Deliverables>Dishes ready for cooking</Deliverables>
     <Remarks>Be careful not to burn the oil</Remarks>
   </Task>
   <Task>
     <Alias>Slice the meat</Alias>
     <Description>Prepare the meat that the chef asked for cooking</Description>
-    <CreatedAtDate>2024-07-17T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.3641401+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>7</Id>
     <Complexity>SousChef</Complexity>
-    <RequiredEffortTime>P2DT4H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT5H</RequiredEffortTime>
     <Deliverables>Meat ready for cooking</Deliverables>
     <Remarks>Don't forget to sharpen the knife</Remarks>
   </Task>
   <Task>
     <Alias>Make a grocery list</Alias>
     <Description>Check which of the ingredients the chef asked to prepare are in stock and make a list of all the ingredients that are missing</Description>
-    <CreatedAtDate>2024-07-13T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.4359832+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>8</Id>
     <Complexity>SousChef</Complexity>
-    <RequiredEffortTime>P3DT1H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT11H</RequiredEffortTime>
     <Deliverables>Grocery list</Deliverables>
     <Remarks>Only what is really necessary</Remarks>
   </Task>
   <Task>
     <Alias>Serveing</Alias>
     <Description>Serve the food</Description>
-    <CreatedAtDate>2024-07-06T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.4945311+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>9</Id>
     <Complexity>Waiter</Complexity>
-    <RequiredEffortTime>P3DT9H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT3H</RequiredEffortTime>
     <Deliverables>Ready tables</Deliverables>
     <Remarks>Don't forget to smile at the customer and bring a tooth pices</Remarks>
   </Task>
   <Task>
     <Alias>Clear the tables</Alias>
     <Description>Clear the food from the tables between the courses</Description>
-    <CreatedAtDate>2024-06-01T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.5692209+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>10</Id>
     <Complexity>Waiter</Complexity>
-    <RequiredEffortTime>P3DT8H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT10H</RequiredEffortTime>
     <Deliverables>Clear tables</Deliverables>
     <Remarks>Don't forget to wipe the tables</Remarks>
   </Task>
   <Task>
     <Alias>Open the bottles of wine</Alias>
     <Description>Serve the wine bottles to the tables, open them and pour into glasses</Description>
-    <CreatedAtDate>2024-07-17T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.6466447+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>11</Id>
     <Complexity>Waiter</Complexity>
-    <RequiredEffortTime>P1DT10H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT6H</RequiredEffortTime>
     <Deliverables>Wine in the glasses</Deliverables>
     <Remarks>Do not leave the cork on the diner's table</Remarks>
   </Task>
   <Task>
     <Alias>Wash the dishes</Alias>
     <Description>wash the dirty dishes</Description>
-    <CreatedAtDate>2024-07-13T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.7092082+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>12</Id>
     <Complexity>Cleaner</Complexity>
-    <RequiredEffortTime>P1DT9H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT3H</RequiredEffortTime>
     <Deliverables>Clean dishes</Deliverables>
     <Remarks>Don't forget to use hot water for greasy dishes</Remarks>
   </Task>
   <Task>
     <Alias>Wash the floor</Alias>
     <Description>Wash the floor after finishing preparing the food</Description>
-    <CreatedAtDate>2024-06-08T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.7836639+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>13</Id>
     <Complexity>Cleaner</Complexity>
-    <RequiredEffortTime>P2DT7H</RequiredEffortTime>
+    <RequiredEffortTime>P2DT1H</RequiredEffortTime>
     <Deliverables>Clean floor</Deliverables>
     <Remarks>Don't forget before to pick things up from the floor</Remarks>
   </Task>
   <Task>
     <Alias>Wipe the dishes</Alias>
     <Description>wipe the wet dishes</Description>
-    <CreatedAtDate>2024-06-27T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.855391+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>14</Id>
     <Complexity>Cleaner</Complexity>
-    <RequiredEffortTime>P2DT3H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT4H</RequiredEffortTime>
     <Deliverables>Dry dishes</Deliverables>
     <Remarks>Don't forget to wipe inside the glass</Remarks>
   </Task>
   <Task>
     <Alias>Put the dishes in place</Alias>
     <Description>Put the dishes in place after the wiping</Description>
-    <CreatedAtDate>2024-07-17T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.9233887+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>15</Id>
     <Complexity>Cleaner</Complexity>
-    <RequiredEffortTime>P2DT3H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT2H</RequiredEffortTime>
     <Deliverables>Dishes at place</Deliverables>
     <Remarks>Put every tool in its place and do not change the order</Remarks>
   </Task>
   <Task>
     <Alias>Drives the food</Alias>
     <Description>Transport the food from the catering kitchen to the event location</Description>
-    <CreatedAtDate>2024-07-11T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:26.9984197+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>16</Id>
     <Complexity>Driver</Complexity>
-    <RequiredEffortTime>P2DT5H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT10H</RequiredEffortTime>
     <Deliverables>The food at the event location</Deliverables>
     <Remarks>Don't forget to turn on the cooling in the truck</Remarks>
   </Task>
   <Task>
     <Alias>Returns the dishes</Alias>
     <Description>Return the dishes that belong to the catering kitchen after the end of the event</Description>
-    <CreatedAtDate>2024-07-04T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.0604234+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>17</Id>
     <Complexity>Driver</Complexity>
@@ -190,7 +190,7 @@
   <Task>
     <Alias>Load the food</Alias>
     <Description>Load the food to the truck</Description>
-    <CreatedAtDate>2024-07-03T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.1561695+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>18</Id>
     <Complexity>Driver</Complexity>
@@ -201,55 +201,55 @@
   <Task>
     <Alias>Accepting the order</Alias>
     <Description>Coordinates the details of the transaction with the customer</Description>
-    <CreatedAtDate>2024-06-26T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.2311601+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>19</Id>
     <Complexity>Secretary</Complexity>
-    <RequiredEffortTime>P3DT9H</RequiredEffortTime>
+    <RequiredEffortTime>P1DT11H</RequiredEffortTime>
     <Deliverables>The transaction details are coordinated with the customer</Deliverables>
     <Remarks>Don't forget to ask what event it is</Remarks>
   </Task>
   <Task>
     <Alias>Collects the payment</Alias>
     <Description>Collects the payment from the orders</Description>
-    <CreatedAtDate>2024-06-24T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.304398+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>20</Id>
     <Complexity>Secretary</Complexity>
-    <RequiredEffortTime>P3DT5H</RequiredEffortTime>
+    <RequiredEffortTime>P3DT11H</RequiredEffortTime>
     <Deliverables>The transaction payment has been made</Deliverables>
     <Remarks>Ask whether to split into payments</Remarks>
   </Task>
   <Task>
     <Alias>Take care of a shopping list</Alias>
     <Description>Ordering the groceries from the grocery list</Description>
-    <CreatedAtDate>2024-06-18T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.373782+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>21</Id>
     <Complexity>Secretary</Complexity>
-    <RequiredEffortTime>P1DT2H</RequiredEffortTime>
+    <RequiredEffortTime>P2DT7H</RequiredEffortTime>
     <Deliverables>The shoppings has been made</Deliverables>
     <Remarks>Check that there are no duplicates</Remarks>
   </Task>
   <Task>
     <Alias>Take care of the salaries of the employees</Alias>
     <Description>Transfers the salaries to the employees on the 10th of the month</Description>
-    <CreatedAtDate>2024-06-16T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.4448778+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>22</Id>
     <Complexity>Manager</Complexity>
-    <RequiredEffortTime>P1DT9H</RequiredEffortTime>
+    <RequiredEffortTime>P2DT4H</RequiredEffortTime>
     <Deliverables>All the employees got their salaryies</Deliverables>
     <Remarks>Don't forget to add bonuses</Remarks>
   </Task>
   <Task>
     <Alias>Coordinate with suppliers</Alias>
     <Description>Talks with the suppliers and makes sure that there is no shortage of equipment in the kitchen</Description>
-    <CreatedAtDate>2024-07-14T00:00:00</CreatedAtDate>
+    <CreatedAtDate>2024-04-07T14:28:27.5126776+03:00</CreatedAtDate>
     <IsMilestone>false</IsMilestone>
     <Id>23</Id>
     <Complexity>Manager</Complexity>
-    <RequiredEffortTime>P3DT10H</RequiredEffortTime>
+    <RequiredEffortTime>P2DT7H</RequiredEffortTime>
     <Deliverables>The catering kitchen is equipped with all the necessary dishes</Deliverables>
     <Remarks>Don't forget to talk to the chef to know what equipment is missing</Remarks>
   </Task>
